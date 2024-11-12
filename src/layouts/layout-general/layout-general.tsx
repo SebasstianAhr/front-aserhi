@@ -7,7 +7,7 @@ interface LayoutGeneralProps {
     children: ReactNode
 }
 
-const LayoutGeneral = ({ children }: LayoutGeneralProps): JSX.Element => {
+const LayoutGeneral = ({ children }: Readonly<LayoutGeneralProps>): JSX.Element => {
     return (
         <div>
             <SideBar />
