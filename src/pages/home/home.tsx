@@ -4,7 +4,7 @@ import './home.css'
 const Home = (): JSX.Element => {
   return (
     <LayoutGeneral>
-      <div>Home</div>
+      <div className='home__page'>Home</div>
     </LayoutGeneral>
   )
 }

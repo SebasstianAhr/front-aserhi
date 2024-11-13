@@ -1,0 +1,21 @@
+.profile__component{
+    display: flex;
+    padding: 3px 0.5rem 3px 3px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    align-items: center;
+    gap: 1rem;
+
+    p{
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+}
+.img__profile{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}

@@ -1,0 +1,26 @@
+.sidebar{
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar__logo-aserhi{
+    display: flex;
+    justify-content: center;
+}
+
+.sidebar__image-logo-aserhi{
+    width: 100%;
+    max-width: 68%;
+    object-fit: cover;
+}
+
+.navigation__component{
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    p{
+        font-size: 1.1rem;
+    }
+}
