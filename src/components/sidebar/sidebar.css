@@ -1,26 +1,37 @@
-.sidebar{
+.sidebar {
     display: flex;
     flex-direction: column;
 }
 
-.sidebar__logo-aserhi{
+.sidebar__logo-aserhi {
     display: flex;
     justify-content: center;
 }
 
-.sidebar__image-logo-aserhi{
+.sidebar__image-logo-aserhi {
     width: 100%;
     max-width: 68%;
     object-fit: cover;
 }
 
-.navigation__component{
-    margin: 1rem;
+.navigation__component {
+    padding: 0.7rem 1.5rem;
     display: flex;
     align-items: center;
     gap: 1rem;
 
-    p{
+    p {
         font-size: 1.1rem;
     }
+}
+
+.log__out{
+    display: flex;
+    gap: 1rem;
+    padding: 0.7rem 1.5rem;
+    align-items: center;
+}
+
+.log__out:hover{
+    background-color: #d2d2d2;
 }

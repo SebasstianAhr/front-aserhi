@@ -10,12 +10,12 @@ interface LayoutGeneralProps {
 const LayoutGeneral = ({ children }: Readonly<LayoutGeneralProps>): JSX.Element => {
     return (
         <div className="layout__general">
-            <div className="sidebar__part">
+            <div className="layout__sidebar-part">
                 <Sidebar />
             </div>
-            <div className="next__content">
+            <div className="layout__next-content">
                 <Navbar />
-                <div className="principal__content">{children}</div>
+                <div className="layout__principal-content">{children}</div>
             </div>
         </div>
     )

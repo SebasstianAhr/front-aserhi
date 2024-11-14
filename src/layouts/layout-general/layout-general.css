@@ -3,18 +3,24 @@
     width: 100%;
 } 
 
-.sidebar__part{
+.layout__sidebar-part{
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
     background-color: #fff;
+    border-right: 1px solid #e5e7eb;
     width: 100%;
     max-width: 16%;
     height: 100vh;
 }
 
-.next__content{
+.layout__next-content{
+    margin-left: 16%;
     width: 100%;
     max-width: 84%;
 }
 
-.principal__content{
-    padding: 3rem 1rem;
+.layout__principal-content{
+    padding: 5rem 1.5rem;
 }

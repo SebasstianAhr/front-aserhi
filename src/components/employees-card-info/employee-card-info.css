@@ -1,0 +1,28 @@
+.card__component{
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    border-top: 4px solid #84cc16;
+    border-radius: 9px;
+    padding: 1.5rem;
+    h4{
+        color: #6b7280;
+    }
+}
+
+.card__component h5{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.card__component p{
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+}
+.card__percentage-bar{
+    width: 100%;
+    height: 8px;
+    background-color: #3b82f6;
+    border-radius: 50px;
+}

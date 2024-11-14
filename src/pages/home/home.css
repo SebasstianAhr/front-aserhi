@@ -1,3 +1,35 @@
-.home__page{
-background-color: blue;
+.home__section-top {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.home--page-content-left {
+    width: 100%;
+    max-width: 67%;
+}
+.home__section-cards{
+    display: flex;
+    gap: 1.3rem;
+}
+
+.home--page-content-right {
+    width: 100%;
+    max-width: 33%;
+}
+
+.home__page-content {
+    background-color: #fff;
+
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+
+    h3 {
+        font-size: 1.4rem;
+        margin-bottom: 1.8rem;
+    }
+}
+
+.home__section-bottom {
+    margin-top: 1.5rem;
 }
