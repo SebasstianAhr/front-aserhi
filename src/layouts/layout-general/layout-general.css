@@ -1,26 +1,25 @@
-.layout__general{
+.layout__general {
+    position: relative;
+    height: 100vh;
     display: flex;
     width: 100%;
-} 
+}
 
-.layout__sidebar-part{
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
+.layout__sidebar-part {
+    position: sticky;
     background-color: #fff;
     border-right: 1px solid #e5e7eb;
     width: 100%;
     max-width: 16%;
-    height: 100vh;
 }
 
-.layout__next-content{
-    margin-left: 16%;
+.layout__next-content {
+    overflow-y: scroll;
+    height: 100%;
     width: 100%;
     max-width: 84%;
 }
 
-.layout__principal-content{
-    padding: 5rem 1.5rem;
+.layout__principal-content {
+    padding: 5rem 1.5rem 1.5rem 1.5rem;
 }

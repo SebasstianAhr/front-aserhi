@@ -1,7 +1,7 @@
-import carouselImage1 from '../../../public/1-image-carousel.jpg'
+import carouselImage1 from '../../assets/2-image-carousel.jpg'
 import './carousel-images.css'
 
-const Carousel = () => {
+const Carousel = (): JSX.Element => {
   return (
     <div className='carousel__component'>
         <img className='carousel__image' src={carouselImage1} alt="Image to carousel" />

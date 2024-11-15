@@ -1,8 +1,8 @@
 import EmployeeCardInfo from '../../components/employees-card-info/employee-card-info'
 import LayoutGeneral from '../../layouts/layout-general/layout-general'
-import imgStatistics from '../../../public/image-statistics.png'
-import './home.css'
 import Carousel from '../../components/carousel-images/carousel-images'
+import imgStatistics from '../../assets/image-statistics.png'
+import './home.css'
 
 const Home = (): JSX.Element => {
   return (

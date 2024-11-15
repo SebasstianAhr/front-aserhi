@@ -1,0 +1,25 @@
+.item__dropdown-with-submodules {
+    cursor: pointer;
+    padding: 0.7rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+}
+.item__dropdown-with-submodules:hover {
+    background-color: #d2d2d2;
+    ;
+}
+.item__submodule-list {
+    list-style: none;
+}
+.item__submodule {
+    border-left: 4px solid #fff;
+    margin-left: 2.5rem;
+    padding: 0.7rem 1.5rem 0.7rem 0.5rem;
+    cursor: pointer;
+    display: flex;
+    gap: 1rem;
+}
+.item__submodule:hover {
+    border-left: 4px solid var(--primary-bg-color);
+    background-color: #02a5e639;
+}

@@ -1,7 +1,7 @@
 import Sidebar from "../../components/sidebar/sidebar"
 import Navbar from "../../components/navbar/navbar"
-import './layout-general.css'
 import { ReactNode } from "react"
+import './layout-general.css'
 
 interface LayoutGeneralProps {
     children: ReactNode

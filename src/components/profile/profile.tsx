@@ -1,5 +1,5 @@
-import imgProfile from '../../../public/profile-image.jpg'
 import MenuProfile from '../menu-profile/menu-profile';
+import imgProfile from '../../assets/profile-image.jpg'
 import './profile.css'
 
 const Profile = (): JSX.Element => {
