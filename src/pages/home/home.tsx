@@ -1,12 +1,10 @@
 import EmployeeCardInfo from '../../components/employees-card-info/employee-card-info'
-import LayoutGeneral from '../../layouts/layout-general/layout-general'
 import Carousel from '../../components/carousel-images/carousel-images'
 import imgStatistics from '../../assets/image-statistics.png'
 import './home.css'
 
 const Home = (): JSX.Element => {
   return (
-    <LayoutGeneral>
       <main className='home__page'>
         <section className='home__section-top'>
           <div className='home__page-content home--page-content-left'>
@@ -29,7 +27,6 @@ const Home = (): JSX.Element => {
           </div>
         </section>
       </main>
-    </LayoutGeneral>
   )
 }
 

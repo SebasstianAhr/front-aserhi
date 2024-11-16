@@ -1,22 +1,13 @@
-import { useState, ReactNode } from 'react';
+import { useState} from 'react';
+import { MenuItem } from '../../core/interface/menu-item.interface';
 import './item-navigation-menu.css';
+import { Link } from 'react-router-dom';
 
-interface Submodule {
-    name: string;
-    icon?: ReactNode; 
-}
-
-interface MenuItem {
-    title: string;
-    icon?: ReactNode; 
-    submodules: Submodule[];
-}
-
-interface MenuItems {
+interface ItemNavigationMenuProps{
     menuItems: MenuItem[];
 }
 
-const ItemNavigationMenu = ({ menuItems }: MenuItems): JSX.Element => {
+const ItemNavigationMenu = ({ menuItems }: ItemNavigationMenuProps): JSX.Element => {
     const [openMenu, setOpenMenu] = useState<string | null>(null);
 
     const toggleMenu = (title: string) => {
@@ -31,17 +22,17 @@ const ItemNavigationMenu = ({ menuItems }: MenuItems): JSX.Element => {
                         className="item__dropdown-with-submodules"
                         onClick={() => toggleMenu(item.title)}
                     >
-                        {item.icon && <span className="menu-icon">{item.icon}</span>}
-                        <span className="menu-title">{item.title}</span>
+                        {item.icon && <span>{item.icon}</span>}
+                        <span>{item.title}</span>
                     </div>
                     {openMenu === item.title && (
                         <ul className="item__submodule-list">
-                            {item.submodules.map((submodule: Submodule) => (
-                                <li key={submodule.name} className="item__submodule">
-                                    {submodule.icon && (
-                                        <span className="submodule-icon">{submodule.icon}</span>
-                                    )}
-                                    <span className="submodule-name">{submodule.name}</span>
+                            {item.subMenus.map((subMenu: MenuItem) => (
+                                <li key={subMenu.title} className="item__submodule">
+                                    {subMenu.icon}
+                                    <Link to={subMenu.link}>
+                                    <span>{subMenu.title}</span>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>

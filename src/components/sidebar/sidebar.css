@@ -22,15 +22,16 @@
     gap: 2rem;
 }
 
-.navigation__item{
+.navigation__link{
     cursor: pointer;
-    width: 100%;
     display: flex;
     gap: 1rem;
     padding: 0.7rem 1.5rem;
+    text-decoration: none;
+    color: #000;
 }
 
-.navigation__item:hover{
+.navigation__link:hover{
     background-color: #d2d2d2;
 }
 
