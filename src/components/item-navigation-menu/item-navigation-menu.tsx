@@ -1,7 +1,7 @@
-import { useState} from 'react';
 import { MenuItem } from '../../core/interface/menu-item.interface';
-import './item-navigation-menu.css';
 import { Link } from 'react-router-dom';
+import './item-navigation-menu.css';
+import { useState} from 'react';
 
 interface ItemNavigationMenuProps{
     menuItems: MenuItem[];
@@ -19,7 +19,7 @@ const ItemNavigationMenu = ({ menuItems }: ItemNavigationMenuProps): JSX.Element
             {menuItems.map((item: MenuItem) => (
                 <div key={item.title} className="item__dropdown">
                     <div
-                        className="item__dropdown-with-submodules"
+                        className="item__dropdown-with-submenu"
                         onClick={() => toggleMenu(item.title)}
                     >
                         {item.icon && <span>{item.icon}</span>}
@@ -28,9 +28,9 @@ const ItemNavigationMenu = ({ menuItems }: ItemNavigationMenuProps): JSX.Element
                     {openMenu === item.title && (
                         <ul className="item__submodule-list">
                             {item.subMenus.map((subMenu: MenuItem) => (
-                                <li key={subMenu.title} className="item__submodule">
+                                <li key={subMenu.title} className="item__submenu">
                                     {subMenu.icon}
-                                    <Link to={subMenu.link}>
+                                    <Link to={subMenu.link} className='item__submenu-link'>
                                     <span>{subMenu.title}</span>
                                     </Link>
                                 </li>

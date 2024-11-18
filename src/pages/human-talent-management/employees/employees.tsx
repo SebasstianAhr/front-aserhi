@@ -1,4 +1,6 @@
-const Employees = () => {
+import './employees.css'
+
+const Employees = ():JSX.Element => {
     return (
 
         <div>
