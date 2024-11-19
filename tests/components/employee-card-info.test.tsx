@@ -1,46 +1,71 @@
- 
-import EmployeeCardInfo from '../../src/components/employees-card-info/employee-card-info';
- import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import ItemNavigationMenu from '../../src/components/item-navigation-menu/item-navigation-menu';
+import { BrowserRouter } from 'react-router-dom';
 
+const mockMenuItems = [
+  {
+    title: 'Menu 1',
+    subMenus: [
+      { title: 'Submenu 1', link: '/submenu1' },
+      { title: 'Submenu 2', link: '/submenu2' },
+    ],
+  },
+  {
+    title: 'Menu 2',
+    subMenus: [
+      { title: 'Submenu 3', link: '/submenu3' },
+    ],
+  },
+];
 
+describe('ItemNavigationMenu Component', () => {
+  test('renders menu items correctly', () => {
+    render(
+      <BrowserRouter>
+        <ItemNavigationMenu menuItems={mockMenuItems} />
+      </BrowserRouter>
+    );
 
-describe('EmployeeCardInfo', () => {
-  test('renders the employee card info correctly', () => {
-    const { container } = render(<EmployeeCardInfo />);
+    // Verifica que los títulos principales están presentes
+    const menu1 = screen.getByText('Menu 1');
+    const menu2 = screen.getByText('Menu 2');
+    expect(menu1).toBeDefined();
+    expect(menu2).toBeDefined();
 
-     // Verificar que el título "Empleados" está presente
-     expect(screen.getByText('Empleados')).toBeDefined();
+    // Verifica que los submenús no se muestran inicialmente
+    expect(screen.queryByText('Submenu 1')).toBeNull();
+    expect(screen.queryByText('Submenu 3')).toBeNull();
+  });
 
-    // Verificar que el número "4" está presente
-    expect(screen.getByText('4')).toBeDefined();
+  test('opens and closes submenus on click', () => {
+    render(
+      <BrowserRouter>
+        <ItemNavigationMenu menuItems={mockMenuItems} />
+      </BrowserRouter>
+    );
 
-    // Verificar que el texto "100% de empleados" está presente
-    expect(screen.getByText('100% de empleados')).toBeDefined();
+    const menu1 = screen.getByText('Menu 1');
 
-    // Verificar que la barra de porcentaje está presente usando querySelector
-    const percentageBar = container.querySelector('.card__percentage-bar');
-    expect(percentageBar).toBeDefined();
+    // Abre el submenú de "Menu 1"
+    fireEvent.click(menu1);
+    expect(screen.getByText('Submenu 1')).toBeDefined();
+
+    // Cierra el submenú de "Menu 1"
+    fireEvent.click(menu1);
+    expect(screen.queryByText('Submenu 1')).toBeNull();
+  });
+
+  test('renders links with correct paths', () => {
+    render(
+      <BrowserRouter>
+        <ItemNavigationMenu menuItems={mockMenuItems} />
+      </BrowserRouter>
+    );
+
+    // Abre el primer menú
+    fireEvent.click(screen.getByText('Menu 1'));
+
+    const submenuLink = screen.getByText('Submenu 1');
+    expect(submenuLink.closest('a')).toHaveAttribute('href', '/submenu1');
   });
 });
-
-/*
-import { add } from '../../src/components/employees-card-info/employee-card-info';
-
-describe('Funciones dentro del componente EmployeeCardInfo', () => {
-  describe('add', () => {
-    test('Debe retornar la suma de dos números', () => {
-      const result = add(4, 5); // Llama a la función con los valores 4 y 5
-      expect(result).toBe(9);  // Asegúrate de que el resultado sea 9
-    });
-
-    test('Debe retornar 0 cuando ambos números son 0', () => {
-      const result = add(0, 0);
-      expect(result).toBe(0); // Asegúrate de que 0 + 0 sea 0
-    });
-
-    test('Debe manejar números negativos correctamente', () => {
-      const result = add(-3, 5);
-      expect(result).toBe(2); // Asegúrate de que -3 + 5 sea 2
-    });
-  });
-});*/
