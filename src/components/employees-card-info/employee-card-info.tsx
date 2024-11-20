@@ -1,15 +1,5 @@
 import './employee-card-info.css'
 
-
-export const add = (a: number, b: number) => {
-  return a + b
-
-}
-console.log(add(2,3));
-
-
-
-
 const EmployeeCardInfo = (): JSX.Element => {
   return (
     <div className='card__component'>
