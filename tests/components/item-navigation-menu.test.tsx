@@ -1,23 +1,24 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import ItemNavigationMenu from '../../src/components/item-navigation-menu/item-navigation-menu';
+import { MenuItem } from '../../src/core/interface/menu-item.interface';
 import '@testing-library/jest-dom';
 
-// Definir los mockMenuItems aquí
-const mockMenuItems = [
+// Datos de ejemplo para las pruebas
+const mockMenuItems: MenuItem[] = [
     {
         title: 'Menu 1',
-        icon: '📁',  // Puedes usar iconos como texto o componentes JSX si es necesario
+        link: '/menu-1',
         subMenus: [
-            { title: 'Submenu 1.1', link: '/submenu-1-1', icon: '🔗' },
-            { title: 'Submenu 1.2', link: '/submenu-1-2', icon: '🔗' },
+            { title: 'Submenu 1.1', link: '/submenu-1-1', subMenus: [] },
+            { title: 'Submenu 1.2', link: '/submenu-1-2', subMenus: [] },
         ],
     },
     {
         title: 'Menu 2',
-        icon: '📂',
+        link: '/menu-2',
         subMenus: [
-            { title: 'Submenu 2.1', link: '/submenu-2-1', icon: '🔗' },
+            { title: 'Submenu 2.1', link: '/submenu-2-1', subMenus: [] },
         ],
     },
 ];
