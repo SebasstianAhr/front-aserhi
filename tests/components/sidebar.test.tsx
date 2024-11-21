@@ -1,9 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Sidebar from '../../src/components/sidebar/sidebar';
 import '@testing-library/jest-dom';
 
-// Mock del util para obtener items del menú
 jest.mock('../../src/core/utils/menu-items.util', () => ({
   MenuItemsUtil: {
     getMenuItems: jest.fn(),
@@ -12,7 +11,6 @@ jest.mock('../../src/core/utils/menu-items.util', () => ({
 
 describe('Sidebar Component', () => {
   beforeEach(() => {
-    // Mock de los elementos del menú
     const mockedMenuItems = [
       { label: 'Item 1', route: '/item1' },
       { label: 'Item 2', route: '/item2' },
@@ -55,7 +53,9 @@ describe('Sidebar Component', () => {
     const menuItem2 = screen.getByText('Item 2');
 
     expect(menuItem1).toBeInTheDocument();
+    expect(menuItem1.closest('a')).toHaveAttribute('href', '/item1');
     expect(menuItem2).toBeInTheDocument();
+    expect(menuItem2.closest('a')).toHaveAttribute('href', '/item2');
   });
 
   test('debería mostrar el botón de cerrar sesión', () => {
@@ -65,7 +65,29 @@ describe('Sidebar Component', () => {
       </Router>
     );
 
-    const logoutText = screen.getByText(/Cerrar sesión/i);
-    expect(logoutText).toBeInTheDocument();
+    const logoutButton = screen.getByRole('button', { name: /Cerrar sesión/i });
+    expect(logoutButton).toBeInTheDocument();
+
+    // Simular clic en el botón de cerrar sesión
+    fireEvent.click(logoutButton);
+    // Aquí puedes agregar una expectativa adicional, como redirigir a una página de login
+  });
+
+  test('debería colapsar o expandir el menú al hacer clic en el ícono', () => {
+    render(
+      <Router>
+        <Sidebar />
+      </Router>
+    );
+
+    const toggleButton = screen.getByRole('button', { name: /Toggle Menu/i });
+    expect(toggleButton).toBeInTheDocument();
+
+    // Simular el clic para colapsar o expandir el menú
+    fireEvent.click(toggleButton);
+
+    // Puedes validar algún cambio en los estilos, clases o visibilidad de elementos
+    const menu = screen.getByTestId('sidebar-menu');
+    expect(menu).toHaveClass('expanded'); // Ajusta según la implementación de tu componente
   });
 });
