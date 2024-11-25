@@ -1,7 +1,8 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { PageRouterEnum } from '../../core/enum/page-router.enum';
-import { Link } from 'react-router-dom';
-import './forgot-password.css';
+import { PageRouterEnum } from "../../core/enum/page-router.enum";
+import { Link } from "react-router-dom";
+import { users } from "../../core/mocks/mock-data";
+import "./forgot-password.css";
 
 interface ForgotPasswordFormInputs {
   email: string;
@@ -15,7 +16,13 @@ const ForgotPassword = (): JSX.Element => {
   } = useForm<ForgotPasswordFormInputs>();
 
   const onSubmit: SubmitHandler<ForgotPasswordFormInputs> = (data) => {
-    console.log("Correo enviado:", data.email);
+    const user = users.find((u) => u.email === data.email);
+
+    if (user) {
+      console.log("Correo encontrado, enviando información:", user.email);
+    } else {
+      console.log("Correo no encontrado");
+    }
   };
 
   return (
@@ -25,7 +32,7 @@ const ForgotPassword = (): JSX.Element => {
       <form className="forgot__form" onSubmit={handleSubmit(onSubmit)}>
         <label>Correo Electrónico</label>
         <input
-          className={`forgot__input ${errors.email ? 'input__error' : ''}`}
+          className={`forgot__input ${errors.email ? "input__error" : ""}`}
           type="email"
           placeholder="Introduce tu correo"
           {...register("email", {
