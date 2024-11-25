@@ -68,9 +68,7 @@ describe('Sidebar Component', () => {
     const logoutButton = screen.getByRole('button', { name: /Cerrar sesión/i });
     expect(logoutButton).toBeInTheDocument();
 
-    // Simular clic en el botón de cerrar sesión
     fireEvent.click(logoutButton);
-    // Aquí puedes agregar una expectativa adicional, como redirigir a una página de login
   });
 
   test('debería colapsar o expandir el menú al hacer clic en el ícono', () => {
@@ -83,11 +81,9 @@ describe('Sidebar Component', () => {
     const toggleButton = screen.getByRole('button', { name: /Toggle Menu/i });
     expect(toggleButton).toBeInTheDocument();
 
-    // Simular el clic para colapsar o expandir el menú
     fireEvent.click(toggleButton);
 
-    // Puedes validar algún cambio en los estilos, clases o visibilidad de elementos
     const menu = screen.getByTestId('sidebar-menu');
-    expect(menu).toHaveClass('expanded'); // Ajusta según la implementación de tu componente
+    expect(menu).toHaveClass('expanded');
   });
 });
