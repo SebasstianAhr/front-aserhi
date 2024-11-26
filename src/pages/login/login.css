@@ -1,5 +1,12 @@
+.login__main{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .login__container {
-    width: 30%;
+    width: 24%;
     border-radius: 12px;
     padding: 2rem;
     background-color: #ffff;
@@ -79,7 +86,7 @@
     color: #8cbe42;
 }
 
-.input__error {
+.login__input--error {
     border: 1px solid #ff0000;
 }
 

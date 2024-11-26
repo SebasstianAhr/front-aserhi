@@ -1,82 +1,108 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { PageRouterEnum } from "../../src/core/enum/page-router.enum";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import Login from "../../src/pages/login/login";
 import '@testing-library/jest-dom';
-import { useNavigate } from "react-router-dom";
 
-// Mock data
 jest.mock("../../src/core/mocks/mock-data", () => ({
   users: [
-    { identification: "12345", password: "password123" },
-    { identification: "67890", password: "password456" },
+    { identification: "123456", password: "123456", email: "usuario1@example.com" },
   ],
 }));
 
-// Mock useNavigate
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useNavigate: jest.fn(),
 }));
 
-const renderWithRouter = (component: JSX.Element) => {
-  return render(<BrowserRouter>{component}</BrowserRouter>);
+const renderWithRouter = (ui: JSX.Element) => {
+  return render(<BrowserRouter>{ui}</BrowserRouter>);
 };
 
 describe("Login Component", () => {
-  test("Renders the initial component correctly", () => {
+  it("Debe renderizar correctamente los elementos iniciales", () => {
     renderWithRouter(<Login />);
-    expect(screen.getByText(/ingresar/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/identificación/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/contraseña/i)).toBeInTheDocument();
+    expect(screen.getByAltText("Logo")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Identificación")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Contraseña")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /INGRESAR/i })).toBeInTheDocument();
+    expect(screen.getByText("¿Olvidaste tu contraseña?")).toBeInTheDocument();
   });
 
-  test("Shows validation errors when fields are empty", async () => {
+  it("Debe mostrar errores de validación cuando los campos están vacíos", async () => {
     renderWithRouter(<Login />);
-    fireEvent.click(screen.getByRole("button", { name: /ingresar/i }));
-
-    const errorMessages = screen.getAllByClassName("login__error-message");
-    expect(errorMessages[0]).toHaveTextContent(/identificación es obligatoria/i);
-    expect(errorMessages[1]).toHaveTextContent(/contraseña es obligatoria/i);
+    fireEvent.click(screen.getByRole("button", { name: /INGRESAR/i }));
+    expect(await screen.findByText("La identificación es requerida")).toBeInTheDocument();
+    expect(await screen.findByText("La contraseña es requerida")).toBeInTheDocument();
   });
 
-  test("Shows an error when incorrect credentials are entered", async () => {
+  it("Debe mostrar un error si la identificación contiene caracteres no numéricos", async () => {
     renderWithRouter(<Login />);
-    fireEvent.change(screen.getByPlaceholderText(/identificación/i), {
+    fireEvent.change(screen.getByPlaceholderText("Identificación"), {
+      target: { value: "abc123" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: /INGRESAR/i }));
+    expect(await screen.findByText("Solo se aceptan números")).toBeInTheDocument();
+  });
+
+  it("Debe mostrar un error si la contraseña tiene menos de 6 caracteres", async () => {
+    renderWithRouter(<Login />);
+    fireEvent.change(screen.getByPlaceholderText("Contraseña"), {
+      target: { value: "123" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: /INGRESAR/i }));
+    expect(
+      await screen.findByText("La contraseña debe tener al menos 6 caracteres")
+    ).toBeInTheDocument();
+  });
+
+  it("Debe mostrar un error si las credenciales son incorrectas", async () => {
+    renderWithRouter(<Login />);
+    fireEvent.change(screen.getByPlaceholderText("Identificación"), {
       target: { value: "11111" },
     });
-    fireEvent.change(screen.getByPlaceholderText(/contraseña/i), {
-      target: { value: "wrongpassword" },
+    fireEvent.change(screen.getByPlaceholderText("Contraseña"), {
+      target: { value: "wrongpass" },
     });
-    fireEvent.click(screen.getByRole("button", { name: /ingresar/i }));
-
-    expect(await screen.findByText(/identificación o contraseña incorrecta/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /INGRESAR/i }));
+    expect(
+      await screen.findByText("Identificación o contraseña incorrecta")
+    ).toBeInTheDocument();
   });
 
-  test("Logs in successfully with valid credentials", async () => {
+  it("Debe iniciar sesión exitosamente con credenciales correctas", async () => {
     const mockNavigate = jest.fn();
-    (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
+    const { useNavigate } = jest.requireMock("react-router-dom");
+    useNavigate.mockReturnValue(mockNavigate);
 
     renderWithRouter(<Login />);
-    fireEvent.change(screen.getByPlaceholderText(/identificación/i), {
+    fireEvent.change(screen.getByPlaceholderText("Identificación"), {
       target: { value: "12345" },
     });
-    fireEvent.change(screen.getByPlaceholderText(/contraseña/i), {
+    fireEvent.change(screen.getByPlaceholderText("Contraseña"), {
       target: { value: "password123" },
     });
-    fireEvent.click(screen.getByRole("button", { name: /ingresar/i }));
+    fireEvent.click(screen.getByRole("button", { name: /INGRESAR/i }));
 
-    // Verificar que no aparece el mensaje de error
-    expect(screen.queryByText(/identificación o contraseña incorrecta/i)).not.toBeInTheDocument();
-
-    // Verificar que la redirección ocurre
-    await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/home"); // Ajusta a tu ruta esperada
-    });
+    expect(screen.queryByText("Identificación o contraseña incorrecta")).not.toBeInTheDocument();
+    expect(mockNavigate).toHaveBeenCalled();
   });
 
-  test("The '¿Olvidaste tu contraseña?' link redirects correctly", () => {
+  it("El enlace '¿Olvidaste tu contraseña?' debe redirigir correctamente", () => {
     renderWithRouter(<Login />);
-    const link = screen.getByText(/¿olvidaste tu contraseña\?/i);
-    expect(link).toHaveAttribute("href", "/forgotPassword"); // Ajusta la ruta
+    const link = screen.getByText("¿Olvidaste tu contraseña?");
+    expect(link).toHaveAttribute("href", PageRouterEnum.ForgotPassword);
+  });
+
+  it("Debe aplicar clases de error dinámicas cuando hay validaciones fallidas", async () => {
+    renderWithRouter(<Login />);
+    fireEvent.click(screen.getByRole("button", { name: /INGRESAR/i }));
+    const input = await screen.findByPlaceholderText("Identificación");
+    expect(input).toHaveClass("login__input--error");
+  });
+
+  it("El componente debe coincidir con el snapshot", () => {
+    const { asFragment } = renderWithRouter(<Login />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

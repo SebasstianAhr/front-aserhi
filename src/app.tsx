@@ -1,11 +1,10 @@
 import { BrowserRouter } from "react-router-dom"
-import LayoutGeneral from "./layouts/layout-general/layout-general"
+import AllRoutes from "./routes/all-routes"
 
 const App = (): JSX.Element => {
   return (
     <BrowserRouter>
-    <LayoutGeneral>
-    </LayoutGeneral>
+      <AllRoutes/>
     </BrowserRouter>
   )
 }

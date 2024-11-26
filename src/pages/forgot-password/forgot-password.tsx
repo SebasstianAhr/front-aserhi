@@ -17,6 +17,7 @@ const ForgotPassword = (): JSX.Element => {
   };
 
   return (
+    <div className="forgot__main">
     <div className="forgot__container">
       <div className="forgot__header">
         <h3>Recupera tu cuenta</h3>
@@ -55,6 +56,7 @@ const ForgotPassword = (): JSX.Element => {
           </Link>
         </div>
       </form>
+    </div>
     </div>
   );
 };

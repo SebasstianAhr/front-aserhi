@@ -1,10 +1,13 @@
 import Sidebar from "../../components/sidebar/sidebar"
 import Navbar from "../../components/navbar/navbar"
 import './layout-general.css'
-import AllRoutes from "../../components/routes/all-routes"
 
 
-const LayoutGeneral = (): JSX.Element => {
+interface ChildrenProps {
+    children: JSX.Element
+}
+
+const LayoutGeneral = ({children}: ChildrenProps): JSX.Element => {
     return (
         <div className="layout__general">
             <div className="layout__sidebar-part">
@@ -12,7 +15,7 @@ const LayoutGeneral = (): JSX.Element => {
             </div>
             <div className="layout__next-content">
                 <Navbar />
-                <div className="layout__principal-content"><AllRoutes /></div>
+                <div className="layout__principal-content">{children}</div>
             </div>
         </div>
     )
