@@ -1,9 +1,9 @@
 import { PageRouterEnum } from "../../core/enum/page-router.enum";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { users } from "../../core/mocks/mock-data";
 import logo from "../../assets/Logo.jpeg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { users } from "../../core/mocks/mock-data";
 import "./login.css";
 
 interface LoginFormInputs {
@@ -48,7 +48,7 @@ const Login = (): JSX.Element => {
         <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
           <input
             className={`login__input ${
-              errors.identification ? "input__error" : ""
+              errors.identification ? "login__input--error" : ""
             }`}
             placeholder="Identificación"
             type="text"
@@ -61,12 +61,12 @@ const Login = (): JSX.Element => {
             })}
           />
           {errors.identification && (
-            <p className="error__message">{errors.identification.message}</p>
+            <p className="login__error-message">{errors.identification.message}</p>
           )}
 
           <input
-            className={`login__input login--input-bottom ${
-              errors.password ? "input__error" : ""
+            className={`login__input login__input--bottom ${
+              errors.password ? "login__input--error" : ""
             }`}
             placeholder="Contraseña"
             type="password"
@@ -79,12 +79,12 @@ const Login = (): JSX.Element => {
             })}
           />
           {errors.password && (
-            <p className="error__message">{errors.password.message}</p>
+            <p className="login__error-message">{errors.password.message}</p>
           )}
 
-          {loginError && <p className="error__message">{loginError}</p>}
+          {loginError && <p className="login__error-message">{loginError}</p>}
 
-          <div className="login__button">
+          <div className="login__form-button">
             <button type="submit">INGRESAR</button>
           </div>
         </form>

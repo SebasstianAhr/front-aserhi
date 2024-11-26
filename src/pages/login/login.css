@@ -40,11 +40,11 @@
     outline: none;
 }
 
-.login--input-bottom {
+.login__input--bottom {
     margin-top: 1rem;
 }
 
-.login__button {
+.login__form-button {
     display: flex;
     justify-content: center;
     margin-top: 2rem;
@@ -83,7 +83,7 @@
     border: 1px solid #ff0000;
 }
 
-.error__message {
+.login__error-message {
     color: #ff0000;
     font-size: 0.875rem;
     margin-top: 4px;

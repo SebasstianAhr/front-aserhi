@@ -1,7 +1,7 @@
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForgotPassword } from "../../hooks/use-forgot-password";
 import { PageRouterEnum } from "../../core/enum/page-router.enum";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { users } from "../../core/mocks/mock-data";
 import "./forgot-password.css";
 
 interface ForgotPasswordFormInputs {
@@ -9,30 +9,23 @@ interface ForgotPasswordFormInputs {
 }
 
 const ForgotPassword = (): JSX.Element => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ForgotPasswordFormInputs>();
+  const { register, handleSubmit, formState: { errors } } = useForm<ForgotPasswordFormInputs>();
+  const { status, userEmail, findUserByEmail } = useForgotPassword();
 
-  const onSubmit: SubmitHandler<ForgotPasswordFormInputs> = (data) => {
-    const user = users.find((u) => u.email === data.email);
-
-    if (user) {
-      console.log("Correo encontrado, enviando información:", user.email);
-    } else {
-      console.log("Correo no encontrado");
-    }
+  const onSubmit: SubmitHandler<ForgotPasswordFormInputs> = async (data) => {
+    await findUserByEmail(data.email);
   };
 
   return (
     <div className="forgot__container">
-      <h3>Recupera tu cuenta</h3>
-      <p>Introduce tu correo para enviarte la información.</p>
+      <div className="forgot__header">
+        <h3>Recupera tu cuenta</h3>
+        <p>Introduce tu correo para enviarte la información.</p>
+      </div>
       <form className="forgot__form" onSubmit={handleSubmit(onSubmit)}>
-        <label>Correo Electrónico</label>
+        <label className="forgot__label">Correo Electrónico</label>
         <input
-          className={`forgot__input ${errors.email ? "input__error" : ""}`}
+          className={`forgot__input ${errors.email ? "forgot__input--error" : ""}`}
           type="email"
           placeholder="Introduce tu correo"
           {...register("email", {
@@ -44,9 +37,18 @@ const ForgotPassword = (): JSX.Element => {
           })}
         />
         {errors.email && (
-          <p className="error__message">{errors.email.message}</p>
+          <p className="forgot__error-message">{errors.email.message}</p>
         )}
-        <div className="forgot__button">
+
+        {status === "loading" && <p className="forgot__status">Buscando...</p>}
+        {status === "success" && userEmail && (
+          <p className="forgot__status">Ingrese a su correo para continuar con la recuperacion de su cuenta</p>
+        )}
+        {status === "error" && (
+          <p className="forgot__error-message">Correo no encontrado</p>
+        )}
+
+        <div className="forgot__actions">
           <button type="submit">Buscar</button>
           <Link className="forgot__link" to={PageRouterEnum.Login}>
             <span>Volver al inicio de sesión</span>
