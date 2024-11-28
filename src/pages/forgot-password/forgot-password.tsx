@@ -18,45 +18,47 @@ const ForgotPassword = (): JSX.Element => {
 
   return (
     <div className="forgot__main">
-    <div className="forgot__container">
-      <div className="forgot__header">
-        <h3>Recupera tu cuenta</h3>
-        <p>Introduce tu correo para enviarte la información.</p>
-      </div>
-      <form className="forgot__form" onSubmit={handleSubmit(onSubmit)}>
-        <label className="forgot__label">Correo Electrónico</label>
-        <input
-          className={`forgot__input ${errors.email ? "forgot__input--error" : ""}`}
-          type="email"
-          placeholder="Introduce tu correo"
-          {...register("email", {
-            required: "El correo es requerido",
-            pattern: {
-              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: "Introduce un correo válido",
-            },
-          })}
-        />
-        {errors.email && (
-          <p className="forgot__error-message">{errors.email.message}</p>
-        )}
+      <div className="forgot__container">
+        <div className="forgot__header">
+          <h3 className="forgot__header-title">Recupera tu cuenta</h3>
+          <p>Introduce tu correo para enviarte la información.</p>
+        </div>
+        <form className="forgot__form" onSubmit={handleSubmit(onSubmit)}>
+          <label className="forgot__label">Correo Electrónico</label>
+          <input
+            className={`forgot__input ${errors.email ? "forgot__input--error" : ""}`}
+            type="email"
+            placeholder="Introduce tu correo"
+            {...register("email", {
+              required: "El correo es requerido",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Introduce un correo válido",
+              },
+            })}
+          />
+          {errors.email && (
+            <p className="forgot__error-message">{errors.email.message}</p>
+          )}
 
-        {status === "loading" && <p className="forgot__status">Buscando...</p>}
-        {status === "success" && userEmail && (
-          <p className="forgot__status">Ingrese a su correo para continuar con la recuperacion de su cuenta</p>
-        )}
-        {status === "error" && (
-          <p className="forgot__error-message">Correo no encontrado</p>
-        )}
+          {status === "loading" && <p className="forgot__status">Buscando...</p>}
+          {status === "success" && userEmail && (
+            <p className="forgot__status">Ingrese a su correo para continuar con la recuperacion de su cuenta</p>
+          )}
+          {status === "error" && (
+            <p className="forgot__error-message">Correo no encontrado</p>
+          )}
 
-        <div className="forgot__actions">
-          <button type="submit">Buscar</button>
-          <Link className="forgot__link" to={PageRouterEnum.Login}>
+          <div className="forgot__actions">
+            <button type="submit">Buscar</button>
+          </div>
+        </form>
+        <div className="forgot__back">
+          <Link className="forgot__back-link" to={PageRouterEnum.Login}>
             <span>Volver al inicio de sesión</span>
           </Link>
         </div>
-      </form>
-    </div>
+      </div>
     </div>
   );
 };

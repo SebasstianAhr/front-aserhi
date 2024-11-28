@@ -8,20 +8,20 @@ import Employees from "../pages/human-talent-management/employees/employees"
 import Customers from "../pages/commercial-management/customers/customers"
 import Charges from "../pages/human-talent-management/charges/charges"
 import ForgotPassword from "../pages/forgot-password/forgot-password"
+import LayoutGeneral from "../layouts/layout-general/layout-general"
+import ResetPassword from "../pages/reset-password/reset-password"
 import { PageRouterEnum } from "../core/enum/page-router.enum"
 import Profiles from "../pages/admin/profiles/profiles"
 import { Routes, Route } from "react-router-dom"
 import Login from "../pages/login/login"
 import Home from "../pages/home/home"
-import LayoutGeneral from "../layouts/layout-general/layout-general"
 
 const AllRoutes = () => {
   return (
     <Routes>
-
-
       <Route path={PageRouterEnum.Login} element={<Login />} />
       <Route path={PageRouterEnum.ForgotPassword} element={<ForgotPassword />} />
+      <Route path={PageRouterEnum.ResetPassword} element={<ResetPassword />} />
       <Route path="/*" element={
         <LayoutGeneral>
           <Routes>

@@ -7,7 +7,7 @@ const Home = (): JSX.Element => {
   return (
       <main className='home__page'>
         <section className='home__section-top'>
-          <div className='home__page-content home--page-content-left'>
+          <div className='home__page-content home__page-content--left'>
             <h3>Estadísticas de empleados</h3>
             <div className='home__section-cards'>
               <EmployeeCardInfo />
@@ -15,9 +15,9 @@ const Home = (): JSX.Element => {
               <EmployeeCardInfo />
             </div>
           </div>
-          <div className='home__page-content home--page-content-right'>
+          <div className='home__page-content home__page-content--right'>
             <h3>Cargos en uso</h3>
-            <img src={imgStatistics} alt="image statistics" />
+            <img className='home__page-content--right-image' src={imgStatistics} alt="image statistics" />
           </div>
         </section>
         <section className='home__section-bottom'>

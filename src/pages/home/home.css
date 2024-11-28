@@ -3,7 +3,7 @@
     gap: 1.5rem;
 }
 
-.home--page-content-left {
+.home__page-content--left {
     width: 100%;
     max-width: 67%;
 }
@@ -12,9 +12,14 @@
     gap: 1.3rem;
 }
 
-.home--page-content-right {
+.home__page-content--right {
     width: 100%;
     max-width: 33%;
+}
+
+.home__page-content--right-image{
+    width: 100%;
+    object-fit: cover;
 }
 
 .home__page-content {
