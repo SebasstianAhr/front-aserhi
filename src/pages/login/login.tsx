@@ -1,11 +1,11 @@
-import { PageRouterEnum } from "../../core/enum/page-router.enum";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { AuthContext } from "../../context/auth-context"; 
-import { Link, useNavigate } from "react-router-dom";
-import { users } from "../../core/mocks/mock-data";
 import { useContext, useState } from "react";
-import logo from "../../assets/Logo.jpeg";
+import { PageRouterEnum } from "../../core/enum/page-router.enum";
+import { useForm } from "react-hook-form";
+import logo from '../../assets/Logo.jpeg';
+import { Link, useNavigate } from "react-router-dom";
 import "./login.css";
+import { AuthContext } from "../../context/auth-context";
+import { loginService } from "../../services/auth.services";
 
 interface LoginFormInputs {
   identification: string;
@@ -13,9 +13,9 @@ interface LoginFormInputs {
 }
 
 const Login = (): JSX.Element => {
-  const [loginError, setLoginError] = useState<string | null>(null);
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const {
     register,
@@ -23,28 +23,14 @@ const Login = (): JSX.Element => {
     formState: { errors },
   } = useForm<LoginFormInputs>();
 
-  const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
-    const user = users.find(
-      (u) =>
-        u.identification === data.identification &&
-        u.password === data.password
-    );
-
-    if (user) {
-      console.log("Inicio de sesión exitoso", user);
-      setLoginError(null);
-
-      if (authContext) {
-        authContext.login({
-          identification: user.identification,
-          email: user.email,
-        });
-      }
-
-      navigate(PageRouterEnum.Home);
-    } else {
-      console.log("Credenciales incorrectas");
-      setLoginError("Identificación o contraseña incorrecta");
+  const onSubmit = async (data: LoginFormInputs) => {
+    try {
+      setErrorMessage(null); // Resetea el mensaje de error
+      const user = await loginService(data); // Simula el login
+      authContext?.login(user); // Establece el estado de sesión
+      navigate(PageRouterEnum.Home); // Redirige al dashboard
+    } catch (error) {
+      setErrorMessage("Identificación o contraseña incorrectas.");
     }
   };
 
@@ -60,9 +46,7 @@ const Login = (): JSX.Element => {
         <div className="login__form-container">
           <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
             <input
-              className={`login__input ${
-                errors.identification ? "login__input--error" : ""
-              }`}
+              className={`login__input ${errors.identification ? "login__input--error" : ""}`}
               placeholder="Identificación"
               type="text"
               {...register("identification", {
@@ -80,9 +64,7 @@ const Login = (): JSX.Element => {
             )}
 
             <input
-              className={`login__input login__input--bottom ${
-                errors.password ? "login__input--error" : ""
-              }`}
+              className={`login__input login__input--bottom ${errors.password ? "login__input--error" : ""}`}
               placeholder="Contraseña"
               type="password"
               {...register("password", {
@@ -97,7 +79,10 @@ const Login = (): JSX.Element => {
               <p className="login__error-message">{errors.password.message}</p>
             )}
 
-            {loginError && <p className="login__error-message">{loginError}</p>}
+            {/* Mostrar el mensaje de error debajo del campo de contraseña */}
+            {errorMessage && (
+              <p className="login__error-message">{errorMessage}</p>
+            )}
 
             <div className="login__form-button">
               <button type="submit">INGRESAR</button>

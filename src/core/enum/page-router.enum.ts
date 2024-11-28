@@ -1,7 +1,7 @@
 export enum PageRouterEnum {
     Login= "/login",
     ForgotPassword= "/forgotPassword",
-    ResetPassword= "/resetPassword",
+    ResetPassword= "/resetPassword/:id",
     Home= "/",
     Employees= "/employees",
     Charges= "/charges",

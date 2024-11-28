@@ -39,8 +39,6 @@ const AllRoutes = () => {
           </Routes>
         </LayoutGeneral>
       }></Route>
-
-
     </Routes>
   )
 }

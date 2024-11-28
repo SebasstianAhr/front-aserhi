@@ -1,8 +1,9 @@
-import { useForgotPassword } from "../../hooks/use-forgot-password";
-import { PageRouterEnum } from "../../core/enum/page-router.enum";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { requestPasswordReset } from "../../services/auth.services";
+import { useState } from "react";
+import './forgot-password.css';
 import { Link } from "react-router-dom";
-import "./forgot-password.css";
+import { PageRouterEnum } from "../../core/enum/page-router.enum";
 
 interface ForgotPasswordFormInputs {
   email: string;
@@ -10,10 +11,19 @@ interface ForgotPasswordFormInputs {
 
 const ForgotPassword = (): JSX.Element => {
   const { register, handleSubmit, formState: { errors } } = useForm<ForgotPasswordFormInputs>();
-  const { status, userEmail, findUserByEmail } = useForgotPassword();
+  const [message, setMessage] = useState<string | null>(null);
+  const [messageType, setMessageType] = useState<'success' | 'error' | null>(null);
 
-  const onSubmit: SubmitHandler<ForgotPasswordFormInputs> = async (data) => {
-    await findUserByEmail(data.email);
+  const onSubmit = async (data: ForgotPasswordFormInputs) => {
+    try {
+      const resetLink = await requestPasswordReset(data.email);
+      setMessage(`Verifica tu correo electrónico para continuar con la recuperación de tu cuenta`);
+      setMessageType('success');
+      console.log(`Recovery link: ${resetLink}`);
+    } catch (error: any) {
+      setMessage(error.message);
+      setMessageType('error');
+    }
   };
 
   return (
@@ -41,12 +51,10 @@ const ForgotPassword = (): JSX.Element => {
             <p className="forgot__error-message">{errors.email.message}</p>
           )}
 
-          {status === "loading" && <p className="forgot__status">Buscando...</p>}
-          {status === "success" && userEmail && (
-            <p className="forgot__status">Ingrese a su correo para continuar con la recuperacion de su cuenta</p>
-          )}
-          {status === "error" && (
-            <p className="forgot__error-message">Correo no encontrado</p>
+          {message && (
+            <p className={`forgot__status-message ${messageType}`}>
+              {message}
+            </p>
           )}
 
           <div className="forgot__actions">
