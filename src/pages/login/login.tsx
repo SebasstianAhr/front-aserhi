@@ -1,9 +1,10 @@
 import { PageRouterEnum } from "../../core/enum/page-router.enum";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { AuthContext } from "../../context/auth-context"; 
+import { Link, useNavigate } from "react-router-dom";
 import { users } from "../../core/mocks/mock-data";
+import { useContext, useState } from "react";
 import logo from "../../assets/Logo.jpeg";
-import { Link, useNavigate } from "react-router-dom"; 
-import { useState } from "react";
 import "./login.css";
 
 interface LoginFormInputs {
@@ -13,7 +14,8 @@ interface LoginFormInputs {
 
 const Login = (): JSX.Element => {
   const [loginError, setLoginError] = useState<string | null>(null);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
 
   const {
     register,
@@ -31,7 +33,15 @@ const Login = (): JSX.Element => {
     if (user) {
       console.log("Inicio de sesión exitoso", user);
       setLoginError(null);
-      navigate("/");
+
+      if (authContext) {
+        authContext.login({
+          identification: user.identification,
+          email: user.email,
+        });
+      }
+
+      navigate(PageRouterEnum.Home);
     } else {
       console.log("Credenciales incorrectas");
       setLoginError("Identificación o contraseña incorrecta");
@@ -64,7 +74,9 @@ const Login = (): JSX.Element => {
               })}
             />
             {errors.identification && (
-              <p className="login__error-message">{errors.identification.message}</p>
+              <p className="login__error-message">
+                {errors.identification.message}
+              </p>
             )}
 
             <input
