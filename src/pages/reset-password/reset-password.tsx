@@ -20,6 +20,7 @@ const ResetPassword = () => {
   const onSubmit = async (data: ResetPasswordFormInputs) => {
     if (data.newPassword !== data.confirmPassword) {
       setMessage("Las contraseñas no coinciden.");
+      setMessageType("error");
       return;
     }
 

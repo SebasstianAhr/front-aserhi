@@ -25,10 +25,10 @@ const Login = (): JSX.Element => {
 
   const onSubmit = async (data: LoginFormInputs) => {
     try {
-      setErrorMessage(null); // Resetea el mensaje de error
-      const user = await loginService(data); // Simula el login
-      authContext?.login(user); // Establece el estado de sesión
-      navigate(PageRouterEnum.Home); // Redirige al dashboard
+      setErrorMessage(null);
+      const user = await loginService(data); 
+      authContext?.login(user); 
+      navigate(PageRouterEnum.Home);
     } catch (error) {
       setErrorMessage("Identificación o contraseña incorrectas.");
     }
@@ -79,7 +79,6 @@ const Login = (): JSX.Element => {
               <p className="login__error-message">{errors.password.message}</p>
             )}
 
-            {/* Mostrar el mensaje de error debajo del campo de contraseña */}
             {errorMessage && (
               <p className="login__error-message">{errorMessage}</p>
             )}

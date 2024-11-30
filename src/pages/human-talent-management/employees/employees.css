@@ -1,0 +1,31 @@
+.employees__title{
+    margin-bottom: 0.5rem;
+}
+
+.employees__add-icon{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.employees__icon-add{
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.employees__icon-add:hover{
+    color: #8cbe42;
+}
+
+.employees__content{
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 9px;
+    border: 1px solid #e5e7eb;
+}
+
+.employees__content--table{
+    margin-top: 2rem;
+}

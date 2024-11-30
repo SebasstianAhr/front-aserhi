@@ -39,7 +39,7 @@ export const requestPasswordReset = async (email: string): Promise<string> => {
         throw new Error("El correo no está registrado.");
     }
 
-    const resetLink = `http://localhost:5173/resetPassword/${user.identification}`;
+    const resetLink = `${window.location.origin}/resetPassword/${user.identification}`;
     return resetLink;
 };
 
