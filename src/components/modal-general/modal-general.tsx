@@ -30,9 +30,7 @@ const ModalGeneral = ({
                             </div>
                         }
                         <button onClick={() => closeModal(false)} className='modal__close'>X</button>
-                        <div className='modal__children'>
-                            {children}
-                        </div>
+                        {children}
                     </div>
                 </div>
             }

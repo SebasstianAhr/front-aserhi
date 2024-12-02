@@ -32,35 +32,37 @@ const GeneralForm = ({ fields, onSubmit, principalButton = "Alert no title in th
   };
 
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)} className="general-form">
-      {fields.map((field) => (
-        <div key={field.name} className="form-group">
-          <label htmlFor={field.name}>{field.label}</label>
-          {field.type === "select" ? (
-            <select
-              id={field.name}
-              {...register(field.name, { required: field.required })}
-            >
-              <option value="">Seleccione una opción</option>
-              {field.options?.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <input
-              id={field.name}
-              type={field.type}
-              placeholder={field.placeholder}
-              {...register(field.name, { required: field.required })}
-            />
-          )}
-          {errors[field.name] && <span className="error">Este campo es obligatorio</span>}
-        </div>
-      ))}
-      <div>
-        <button type="submit">{principalButton}</button>
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="form">
+      <div className="form__content">
+        {fields.map((field) => (
+          <div key={field.name} className="form__group">
+            <label htmlFor={field.name}>{field.label}</label>
+            {field.type === "select" ? (
+              <select
+                id={field.name}
+                {...register(field.name, { required: field.required })}
+              >
+                <option value="">Seleccione una opción</option>
+                {field.options?.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                id={field.name}
+                type={field.type}
+                placeholder={field.placeholder}
+                {...register(field.name, { required: field.required })}
+              />
+            )}
+            {errors[field.name] && <span className="error">Este campo es obligatorio</span>}
+          </div>
+        ))}
+      </div>
+      <div className="form__actions">
+        <button className="form__button" type="submit">{principalButton}</button>
       </div>
     </form>
   );

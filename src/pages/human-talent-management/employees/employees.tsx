@@ -156,7 +156,6 @@ const Employees = (): JSX.Element => {
     <div className='employees'>
       <h1 className='employees__title'>Gestión de Empleados</h1>
       <div className='employees__add-icon'>
-        <h3>Agregar</h3>
         <svg
           onClick={() => setModalState(!modalState)}
           width={50}
