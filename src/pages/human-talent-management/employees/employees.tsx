@@ -3,7 +3,6 @@ import ModalGeneral from '../../../components/modal-general/modal-general';
 import SearchFilter from '../../../components/search-filter/search-filter';
 import { EmployeesData } from '../../../core/mocks/mock-data-employees';
 import GeneralForm from '../../../components/form-general/form-general';
-import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import './employees.css';
 
@@ -137,21 +136,18 @@ const Employees = (): JSX.Element => {
   const handleFormSubmit = (data: any) => {
     console.log('Datos del formulario:', data);
 
-    // Crear el nuevo empleado con los datos del formulario
     const newEmployee: Employee = {
-      id: (employees.length + 1).toString(),  // Generar un nuevo ID, en una app real lo generarías en el backend
+      id: (employees.length + 1).toString(),  
       nombre: data.nombres,
       apellido: data.apellidos,
       telefono: data.telefono,
       identificacion: data.identificacion,
       cargo: data.cargo,
-      estado: data.estado === 'Activo'  // Convertir el valor de 'Activo' a un booleano
+      estado: data.estado === 'Activo' 
     };
 
-    // Agregar el nuevo empleado al estado
     setEmployees([...employees, newEmployee]);
 
-    // Cerrar el modal
     setModalState(false);
   };
 
