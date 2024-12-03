@@ -1,6 +1,6 @@
 import TableDataContent from '../../../components/table-data-content/table-data-content';
-import ModalGeneral from '../../../components/modal-general/modal-general';
 import SearchFilter from '../../../components/search-filter/search-filter';
+import ModalGeneral from '../../../components/modal-general/modal-general';
 import { EmployeesData } from '../../../core/mocks/mock-data-employees';
 import GeneralForm from '../../../components/form-general/form-general';
 import { useState } from 'react';
@@ -176,7 +176,7 @@ const Employees = (): JSX.Element => {
         </svg>
       </div>
       <div className='employees__content employees__content--search-filter'>
-        <SearchFilter />
+        <h3>search-filter</h3>
       </div>
       <div className='employees__content employees__content--table'>
         <TableDataContent<Employee> data={employees} columns={columns} />
