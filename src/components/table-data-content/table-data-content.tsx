@@ -1,5 +1,5 @@
 import './table-data-content.css';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 interface DataTableProps<T> {
   data: T[];

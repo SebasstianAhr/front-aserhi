@@ -44,10 +44,9 @@ const Employees = (): JSX.Element => {
   const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>(employees);
   const [modalState, setModalState] = useState<boolean>(false);
 
-  const [currentPage, setCurrentPage] = useState(1); // Página actual
-  const itemsPerPage = 10; // Elementos por página
+  const [currentPage, setCurrentPage] = useState(1); 
+  const itemsPerPage = 10; 
 
-  const totalPages = Math.ceil(filteredEmployees.length / itemsPerPage);
 
   const formFields = [
     { name: 'nombres', label: 'Nombre(s)', type: 'text' as 'text', placeholder: 'Ingrese los nombre(s)', required: true },
@@ -187,7 +186,7 @@ const Employees = (): JSX.Element => {
     }
 
     setFilteredEmployees(filteredData);
-    setCurrentPage(1); // Reiniciar a la primera página después del filtrado
+    setCurrentPage(1);
   };
 
   const handleFormSubmit = (data: any) => {
