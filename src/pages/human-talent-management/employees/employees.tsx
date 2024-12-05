@@ -1,10 +1,10 @@
 import TableDataContent from '../../../components/table-data-content/table-data-content';
-import SearchFilter from '../../../components/search-filter/search-filter';
 import ModalGeneral from '../../../components/modal-general/modal-general';
 import { EmployeesData } from '../../../core/mocks/mock-data-employees';
 import GeneralForm from '../../../components/form-general/form-general';
 import { useState } from 'react';
 import './employees.css';
+import SearchFilter from '../../../components/search-filter/search-filter';
 
 type Employee = {
   id: string;
@@ -41,8 +41,13 @@ const columns = [
 const Employees = (): JSX.Element => {
 
   const [employees, setEmployees] = useState<Employee[]>(mapEmployeesData(EmployeesData));
-
+  const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>(employees);
   const [modalState, setModalState] = useState<boolean>(false);
+
+  const [currentPage, setCurrentPage] = useState(1); // Página actual
+  const itemsPerPage = 10; // Elementos por página
+
+  const totalPages = Math.ceil(filteredEmployees.length / itemsPerPage);
 
   const formFields = [
     { name: 'nombres', label: 'Nombre(s)', type: 'text' as 'text', placeholder: 'Ingrese los nombre(s)', required: true },
@@ -131,26 +136,77 @@ const Employees = (): JSX.Element => {
     { name: 'password', label: 'Contraseña', type: 'password' as 'password', placeholder: 'Ingrese la contraseña', required: true }
   ];
 
+  const fieldFilter = [
+    {
+      name: "search",
+      label: "Buscar",
+      type: "text",
+      placeholder: "Buscar por nombre, apellido o identificación",
+    },
+    {
+      name: "cargo",
+      label: "Cargo",
+      type: "select",
+      options: [
+        { label: "Super Administrador", value: "Super Administrador" },
+        { label: "Conductor", value: "Conductor" },
+        { label: "Ayudante de obra", value: "Ayudante de obra" },
+      ],
+    },
+    {
+      name: "estado",
+      label: "Estado",
+      type: "select",
+      options: [
+        { label: "Activo", value: "Activo" },
+        { label: "Inactivo", value: "Inactivo" },
+      ],
+    },
+  ];
 
+  const handleFilterChange = (filters: Record<string, any>) => {
+    let filteredData = [...employees];
+
+    if (filters.search) {
+      filteredData = filteredData.filter(
+        (employee) =>
+          employee.nombre.toLowerCase().includes(filters.search.toLowerCase()) ||
+          employee.apellido.toLowerCase().includes(filters.search.toLowerCase()) ||
+          employee.identificacion.includes(filters.search)
+      );
+    }
+
+    if (filters.cargo && filters.cargo !== 'all') {
+      filteredData = filteredData.filter((employee) => employee.cargo === filters.cargo);
+    }
+
+    if (filters.estado && filters.estado !== 'all') {
+      filteredData = filteredData.filter(
+        (employee) => (employee.estado ? 'Activo' : 'Inactivo') === filters.estado
+      );
+    }
+
+    setFilteredEmployees(filteredData);
+    setCurrentPage(1); // Reiniciar a la primera página después del filtrado
+  };
 
   const handleFormSubmit = (data: any) => {
     console.log('Datos del formulario:', data);
 
     const newEmployee: Employee = {
-      id: (employees.length + 1).toString(),  
+      id: (employees.length + 1).toString(),
       nombre: data.nombres,
       apellido: data.apellidos,
       telefono: data.telefono,
       identificacion: data.identificacion,
       cargo: data.cargo,
-      estado: data.estado === 'Activo' 
+      estado: data.estado === 'Activo'
     };
 
     setEmployees([...employees, newEmployee]);
-
+    setFilteredEmployees([...filteredEmployees, newEmployee]);
     setModalState(false);
   };
-
 
   return (
     <div className='employees'>
@@ -176,10 +232,16 @@ const Employees = (): JSX.Element => {
         </svg>
       </div>
       <div className='employees__content employees__content--search-filter'>
-        <h3>search-filter</h3>
+        <SearchFilter fieldsFilter={fieldFilter} onFilterChange={handleFilterChange} />
       </div>
       <div className='employees__content employees__content--table'>
-        <TableDataContent<Employee> data={employees} columns={columns} />
+        <TableDataContent<Employee>
+          data={filteredEmployees}
+          columns={columns}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
       </div>
       <ModalGeneral
         openModal={modalState}
@@ -188,7 +250,7 @@ const Employees = (): JSX.Element => {
         showHeader={true}
         showOverlay={true}
       >
-        <GeneralForm fields={formFields} onSubmit={handleFormSubmit} principalButton='Agregar Empleado' />
+        <GeneralForm fieldsForm={formFields} onSubmit={handleFormSubmit} principalButtonForm='Agregar Empleado' />
       </ModalGeneral>
     </div>
   );

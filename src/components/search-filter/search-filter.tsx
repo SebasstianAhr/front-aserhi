@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./search-filter.css";
 
-type InputType = "text" | "date" | "select";
+type InputType = "text" | "select";
 
 interface Option {
   label: string;
@@ -17,11 +17,11 @@ interface FilterField {
 }
 
 interface SearchFilterProps {
-  fields: FilterField[];
+  fieldsFilter: FilterField[];
   onFilterChange: (filters: Record<string, any>) => void;
 }
 
-const SearchFilter = ({ fields, onFilterChange }: SearchFilterProps): JSX.Element => {
+const SearchFilter = ({ fieldsFilter, onFilterChange }: SearchFilterProps): JSX.Element => {
   const [filters, setFilters] = useState<Record<string, any>>({});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -32,20 +32,20 @@ const SearchFilter = ({ fields, onFilterChange }: SearchFilterProps): JSX.Elemen
   };
 
   return (
-    <form className="search-filter">
-      <div className="search-filter__content">
-        {fields.map((field) => (
-          <div key={field.name} className="search-filter__group">
-            <label htmlFor={field.name}>{field.label}</label>
-            {field.type === "select" ? (
+    <form className="filter">
+      <div className="filter__content">
+        {fieldsFilter.map((fieldFilter) => (
+          <div key={fieldFilter.name} className="filter__group">
+            <label htmlFor={fieldFilter.name}>{fieldFilter.label}</label>
+            {fieldFilter.type === "select" ? (
               <select
-                id={field.name}
-                name={field.name}
+                id={fieldFilter.name}
+                name={fieldFilter.name}
                 onChange={handleInputChange}
                 defaultValue=""
               >
-                <option value="">Seleccione una opción</option>
-                {field.options?.map((option) => (
+                <option value="all">All</option>
+                {fieldFilter.options?.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
@@ -53,10 +53,10 @@ const SearchFilter = ({ fields, onFilterChange }: SearchFilterProps): JSX.Elemen
               </select>
             ) : (
               <input
-                id={field.name}
-                name={field.name}
-                type={field.type}
-                placeholder={field.placeholder}
+                id={fieldFilter.name}
+                name={fieldFilter.name}
+                type={fieldFilter.type}
+                placeholder={fieldFilter.placeholder}
                 onChange={handleInputChange}
               />
             )}

@@ -18,12 +18,12 @@ interface FormField {
 }
 
 interface GeneralFormProps {
-  fields: FormField[];
+  fieldsForm: FormField[];
   onSubmit: (data: any) => void;
-  principalButton: string
+  principalButtonForm: string
 }
 
-const GeneralForm = ({ fields, onSubmit, principalButton = "Alert no title in the button" }: GeneralFormProps): JSX.Element => {
+const GeneralForm = ({ fieldsForm, onSubmit, principalButtonForm = "Alert no title in the button" }: GeneralFormProps): JSX.Element => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const handleFormSubmit: SubmitHandler<any> = (data) => {
@@ -34,16 +34,16 @@ const GeneralForm = ({ fields, onSubmit, principalButton = "Alert no title in th
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="form">
       <div className="form__content">
-        {fields.map((field) => (
-          <div key={field.name} className="form__group">
-            <label htmlFor={field.name}>{field.label}</label>
-            {field.type === "select" ? (
+        {fieldsForm.map((fieldForm) => (
+          <div key={fieldForm.name} className="form__group">
+            <label htmlFor={fieldForm.name}>{fieldForm.label}</label>
+            {fieldForm.type === "select" ? (
               <select
-                id={field.name}
-                {...register(field.name, { required: field.required })}
+                id={fieldForm.name}
+                {...register(fieldForm.name, { required: fieldForm.required })}
               >
                 <option value="">Seleccione una opción</option>
-                {field.options?.map((option) => (
+                {fieldForm.options?.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
@@ -51,18 +51,18 @@ const GeneralForm = ({ fields, onSubmit, principalButton = "Alert no title in th
               </select>
             ) : (
               <input
-                id={field.name}
-                type={field.type}
-                placeholder={field.placeholder}
-                {...register(field.name, { required: field.required })}
+                id={fieldForm.name}
+                type={fieldForm.type}
+                placeholder={fieldForm.placeholder}
+                {...register(fieldForm.name, { required: fieldForm.required })}
               />
             )}
-            {errors[field.name] && <span className="error">Este campo es obligatorio</span>}
+            {errors[fieldForm.name] && <span className="error">Este campo es obligatorio</span>}
           </div>
         ))}
       </div>
       <div className="form__actions">
-        <button className="form__button" type="submit">{principalButton}</button>
+        <button className="form__button" type="submit">{principalButtonForm}</button>
       </div>
     </form>
   );
