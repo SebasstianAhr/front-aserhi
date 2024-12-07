@@ -21,7 +21,9 @@ const Employees = (): JSX.Element => {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [modalState, setModalState] = useState<boolean>(false);
+  const [modalAddForm, setModalAddForm] = useState<boolean>(false);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [modalVewItem, setModalVewItem] = useState<boolean>(false);
 
   const fieldFilter = [
     {
@@ -56,7 +58,7 @@ const Employees = (): JSX.Element => {
       try {
         const data = await getEmployees();
         setEmployees(data);
-        setFilteredEmployees(data);  // Inicialmente mostramos todos los empleados
+        setFilteredEmployees(data);
       } catch (error) {
         console.error("Failed to fetch employees:", error);
       }
@@ -73,13 +75,15 @@ const Employees = (): JSX.Element => {
     { label: 'Identificación', item: 'identificacion' as keyof Employee },
     { label: 'Cargo', item: 'cargo' as keyof Employee },
     { label: 'Estado', item: 'estado' as keyof Employee },
+    { label: 'Acciones', item: 'acciones' as keyof Employee },
   ];
+
 
   const handleFormSubmit = useCallback(async (data: Record<string, any>) => {
     console.log("Formulario enviado:", data);
-  
+
     const newEmployee = await addEmployee(data);
-  
+
     if (newEmployee) {
       setEmployees((prevEmployees) => {
         const isDuplicate = prevEmployees.some(emp => emp.identificacion === newEmployee.identificacion);
@@ -91,14 +95,13 @@ const Employees = (): JSX.Element => {
     } else {
       console.log("Este empleado ya existe.");
     }
-  
-    setModalState(false);
+
+    setModalAddForm(false);
   }, []);
 
   const handleFilterChange = (filters: Record<string, any>) => {
     let filteredData = [...employees];
 
-    // Filtrar por búsqueda
     if (filters.search) {
       filteredData = filteredData.filter(employee =>
         employee.nombres.toLowerCase().includes(filters.search.toLowerCase()) ||
@@ -107,14 +110,12 @@ const Employees = (): JSX.Element => {
       );
     }
 
-    // Filtrar por cargo
     if (filters.cargo && filters.cargo !== "all") {
       filteredData = filteredData.filter(employee =>
         employee.cargo === filters.cargo
       );
     }
 
-    // Filtrar por estado
     if (filters.estado && filters.estado !== "all") {
       filteredData = filteredData.filter(employee =>
         (filters.estado === "Activo" && employee.estado) ||
@@ -125,12 +126,16 @@ const Employees = (): JSX.Element => {
     setFilteredEmployees(filteredData);
   };
 
+  const handleItemsPerPageChange = (newItemsPerPage: number) => {
+    setItemsPerPage(newItemsPerPage);
+  };
+
   return (
     <div className='employees'>
       <h1 className='employees__title'>Gestión de Empleados</h1>
       <div className='employees__add-icon'>
         <svg
-          onClick={() => setModalState(!modalState)}
+          onClick={() => setModalAddForm(!modalAddForm)}
           width={50}
           height={50}
           aria-hidden="true"
@@ -155,14 +160,17 @@ const Employees = (): JSX.Element => {
         <TableDataContent<Employee>
           data={filteredEmployees}
           columns={columns}
-          itemsPerPage={10}
+          itemsPerPage={itemsPerPage}
           currentPage={currentPage}
           onPageChange={setCurrentPage}
+          onItemsPerPageChange={handleItemsPerPageChange}
+          modalVewItem={modalVewItem} // Agregar esta línea
+          setModalVewItem={setModalVewItem} // Agregar esta línea
         />
       </div>
       <ModalGeneral
-        openModal={modalState}
-        closeModal={setModalState}
+        openModal={modalAddForm}
+        closeModal={setModalAddForm}
         title="Registro de empleados"
         showHeader={true}
         showOverlay={true}
@@ -172,6 +180,15 @@ const Employees = (): JSX.Element => {
           onSubmit={handleFormSubmit}
           principalButtonForm="Registrar"
         />
+      </ModalGeneral>
+      <ModalGeneral
+        openModal={modalVewItem}
+        closeModal={setModalVewItem}
+        title="Detalle del empleado"
+        showHeader={true}
+        showOverlay={true}
+      >
+        <h3>detalle</h3>
       </ModalGeneral>
     </div>
   );

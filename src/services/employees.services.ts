@@ -5,15 +5,14 @@ export const getEmployees = () => {
 };
 
 export const addEmployee = (newEmployee: Record<string, any>) => {
-  // Verifica si el empleado ya existe (por ejemplo, por identificador)
   const isDuplicate = EmployeesData.some(emp => emp.identificacion === newEmployee.identificacion);
 
   if (isDuplicate) {
-    return null;  // Si es un duplicado, no se agrega
+    return null; 
   }
 
-  const newId = (EmployeesData.length + 1).toString();  // Genera un nuevo ID único
+  const newId = (EmployeesData.length + 1).toString();  
   const employeeWithId = { ...newEmployee, id: newId };
-  EmployeesData.push(employeeWithId);  // Simula la adición de un empleado
-  return employeeWithId;  // Devuelve el empleado agregado
+  EmployeesData.push(employeeWithId); 
+  return employeeWithId; 
 };

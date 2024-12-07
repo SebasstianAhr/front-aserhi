@@ -4,17 +4,28 @@ import { useEffect } from 'react';
 interface DataTableProps<T> {
   data: T[];
   columns: { label: string; item: keyof T }[];
-  itemsPerPage?: number;
+  itemsPerPage: number;
   currentPage: number;
   onPageChange: (page: number) => void;
+  onItemsPerPageChange: (itemsPerPage: number) => void;
+  maxItemsPerPage?: number;
+  minItemsPerPage?: number;
+  setModalVewItem: React.Dispatch<React.SetStateAction<boolean>>;
+  modalVewItem: boolean;
+
 }
 
 const TableDataContent = <T,>({
   data,
   columns,
-  itemsPerPage = 10,
+  itemsPerPage,
   currentPage,
+  setModalVewItem,
+  modalVewItem,
   onPageChange,
+  onItemsPerPageChange,
+  maxItemsPerPage = 30,
+  minItemsPerPage = 5,
 }: DataTableProps<T>): JSX.Element => {
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
@@ -41,8 +52,43 @@ const TableDataContent = <T,>({
     }
   };
 
+  const handleFirst = () => {
+    onPageChange(1);
+  };
+
+  const handleLast = () => {
+    onPageChange(totalPages);
+  };
+
+  const handleItemsPerPageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = Number(e.target.value);
+    onItemsPerPageChange(value);
+    onPageChange(1); // Reset to the first page after changing items per page
+  };
+
   return (
     <div>
+      <div className="table__controls">
+        <label htmlFor="itemsPerPage">
+          Mostrar:
+          <select
+            id="itemsPerPage"
+            value={itemsPerPage}
+            onChange={handleItemsPerPageChange}
+          >
+            {Array.from(
+              { length: (maxItemsPerPage - minItemsPerPage) / 5 + 1 },
+              (_, i) => minItemsPerPage + i * 5
+            ).map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
+          por página
+        </label>
+      </div>
+
       <table className="table">
         <thead>
           <tr>
@@ -62,7 +108,16 @@ const TableDataContent = <T,>({
                     ? row[col.item]
                       ? 'Activo'
                       : 'Inactivo'
-                    : (row[col.item] as React.ReactNode)}
+                    : col.item === 'acciones' ? (
+                      <button
+                        className="action__button"
+                        onClick={() => setModalVewItem(!modalVewItem)}
+                      >
+                        Ver
+                      </button>
+                    ) : (
+                      (row[col.item] as React.ReactNode)
+                    )}
                 </td>
               ))}
             </tr>
@@ -73,21 +128,51 @@ const TableDataContent = <T,>({
       <div className="pagination">
         <button
           className="pagination__button"
+          onClick={handleFirst}
+          disabled={currentPage === 1}
+        >
+          &lt;&lt;
+        </button>
+        <button
+          className="pagination__button"
           onClick={handlePrevious}
           disabled={currentPage === 1}
         >
-          Anterior
+          &lt;
         </button>
-        <span className="pagination__info">
-          Página {currentPage} de {totalPages}
-        </span>
+
+        {Array.from({ length: totalPages }, (_, i) => i + 1)
+          .slice(Math.max(0, currentPage - 3), currentPage + 2)
+          .map((page) => (
+            <button
+              key={page}
+              className={`pagination__button ${currentPage === page ? 'active' : ''
+                }`}
+              onClick={() => onPageChange(page)}
+            >
+              {page}
+            </button>
+          ))}
+
+        {currentPage + 2 < totalPages && <span>...</span>}
+
         <button
           className="pagination__button"
           onClick={handleNext}
           disabled={currentPage === totalPages}
         >
-          Siguiente
+          &gt;
         </button>
+        <button
+          className="pagination__button"
+          onClick={handleLast}
+          disabled={currentPage === totalPages}
+        >
+          &gt;&gt;
+        </button>
+      </div>
+      <div className="table__info">
+        Mostrando {currentData.length} de {data.length} registros
       </div>
     </div>
   );
