@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { getEmployees, addEmployee } from '../../../services/employees.services';
+import { getEmployees, addEmployee, getEmployeeById } from '../../../services/employees.services';
 import SearchFilter from '../../../components/search-filter/search-filter';
 import TableDataContent from '../../../components/table-data-content/table-data-content';
 import ModalGeneral from '../../../components/modal-general/modal-general';
@@ -24,18 +24,19 @@ const Employees = (): JSX.Element => {
   const [modalAddForm, setModalAddForm] = useState<boolean>(false);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [modalVewItem, setModalVewItem] = useState<boolean>(false);
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
 
   const fieldFilter = [
     {
       name: "search",
       label: "Buscar",
-      type: "text",
+      type: "text" as "text",
       placeholder: "Buscar por nombre, apellido o identificación",
     },
     {
       name: "cargo",
       label: "Cargo",
-      type: "select",
+      type: "select" as "select",
       options: [
         { label: "Super Administrador", value: "Super Administrador" },
         { label: "Conductor", value: "Conductor" },
@@ -45,7 +46,7 @@ const Employees = (): JSX.Element => {
     {
       name: "estado",
       label: "Estado",
-      type: "select",
+      type: "select" as "select",
       options: [
         { label: "Activo", value: "Activo" },
         { label: "Inactivo", value: "Inactivo" },
@@ -130,6 +131,14 @@ const Employees = (): JSX.Element => {
     setItemsPerPage(newItemsPerPage);
   };
 
+  const handleViewEmployee = async (id: string) => {
+    const employee = await getEmployeeById(id);
+    if (employee) {
+      setSelectedEmployee(employee);
+      setModalVewItem(true);
+    }
+  };
+
   return (
     <div className='employees'>
       <h1 className='employees__title'>Gestión de Empleados</h1>
@@ -164,8 +173,7 @@ const Employees = (): JSX.Element => {
           currentPage={currentPage}
           onPageChange={setCurrentPage}
           onItemsPerPageChange={handleItemsPerPageChange}
-          modalVewItem={modalVewItem} // Agregar esta línea
-          setModalVewItem={setModalVewItem} // Agregar esta línea
+          onVewEmployee={handleViewEmployee}
         />
       </div>
       <ModalGeneral
@@ -179,6 +187,7 @@ const Employees = (): JSX.Element => {
           fieldsForm={formFields}
           onSubmit={handleFormSubmit}
           principalButtonForm="Registrar"
+          showButtonSubmit={true}
         />
       </ModalGeneral>
       <ModalGeneral
@@ -188,7 +197,12 @@ const Employees = (): JSX.Element => {
         showHeader={true}
         showOverlay={true}
       >
-        <h3>detalle</h3>
+         <GeneralForm
+          fieldsForm={formFields}
+          onSubmit={handleFormSubmit}
+          showButtonSubmit={false}
+          valueEmployees= {selectedEmployee}
+        />
       </ModalGeneral>
     </div>
   );

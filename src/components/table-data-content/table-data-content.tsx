@@ -10,9 +10,7 @@ interface DataTableProps<T> {
   onItemsPerPageChange: (itemsPerPage: number) => void;
   maxItemsPerPage?: number;
   minItemsPerPage?: number;
-  setModalVewItem: React.Dispatch<React.SetStateAction<boolean>>;
-  modalVewItem: boolean;
-
+  onVewEmployee: (id: string) => void;
 }
 
 const TableDataContent = <T,>({
@@ -20,10 +18,9 @@ const TableDataContent = <T,>({
   columns,
   itemsPerPage,
   currentPage,
-  setModalVewItem,
-  modalVewItem,
   onPageChange,
   onItemsPerPageChange,
+  onVewEmployee,
   maxItemsPerPage = 30,
   minItemsPerPage = 5,
 }: DataTableProps<T>): JSX.Element => {
@@ -63,7 +60,7 @@ const TableDataContent = <T,>({
   const handleItemsPerPageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = Number(e.target.value);
     onItemsPerPageChange(value);
-    onPageChange(1); // Reset to the first page after changing items per page
+    onPageChange(1); 
   };
 
   return (
@@ -111,7 +108,7 @@ const TableDataContent = <T,>({
                     : col.item === 'acciones' ? (
                       <button
                         className="action__button"
-                        onClick={() => setModalVewItem(!modalVewItem)}
+                        onClick={() => onVewEmployee((row as { id: string }).id)}
                       >
                         Ver
                       </button>
@@ -172,7 +169,7 @@ const TableDataContent = <T,>({
         </button>
       </div>
       <div className="table__info">
-        Mostrando {currentData.length} de {data.length} registros
+        <p>Mostrando {currentData.length} de {data.length} registros</p>
       </div>
     </div>
   );

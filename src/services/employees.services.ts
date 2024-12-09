@@ -16,3 +16,8 @@ export const addEmployee = (newEmployee: Record<string, any>) => {
   EmployeesData.push(employeeWithId); 
   return employeeWithId; 
 };
+
+export const getEmployeeById = (id: string) => {
+  const employee = EmployeesData.find(emp => emp.id === id);
+  return employee || null;
+};

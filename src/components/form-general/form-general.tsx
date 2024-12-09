@@ -1,5 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import "./form-general.css";
+import { useEffect } from "react";
 
 type InputType = "text" | "email" | "number" | "select" | "password" | "tel" | "date";
 
@@ -20,16 +21,28 @@ interface FormField {
 interface GeneralFormProps {
   fieldsForm: FormField[];
   onSubmit: (data: any) => void;
-  principalButtonForm: string
+  principalButtonForm?: string;
+  showButtonSubmit: boolean,
+  valueEmployees?: any
 }
 
-const GeneralForm = ({ fieldsForm, onSubmit, principalButtonForm = "Alert no title in the button" }: GeneralFormProps): JSX.Element => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+const GeneralForm = ({
+  fieldsForm, 
+  onSubmit, 
+  principalButtonForm = "Alert no title in the button", 
+  showButtonSubmit,
+  valueEmployees
+}: GeneralFormProps): JSX.Element => {
+  const { register, handleSubmit, reset, formState: { errors } } = useForm(valueEmployees);
 
   const handleFormSubmit: SubmitHandler<any> = (data) => {
     onSubmit(data);
 
   };
+
+  useEffect(() => {
+    reset(valueEmployees);
+  }, [valueEmployees, reset]);
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="form">
@@ -61,9 +74,11 @@ const GeneralForm = ({ fieldsForm, onSubmit, principalButtonForm = "Alert no tit
           </div>
         ))}
       </div>
-      <div className="form__actions">
-        <button className="form__button" type="submit">{principalButtonForm}</button>
-      </div>
+      {showButtonSubmit &&
+        <div className="form__actions">
+          <button className="form__button" type="submit">{principalButtonForm}</button>
+        </div>
+      }
     </form>
   );
 };
