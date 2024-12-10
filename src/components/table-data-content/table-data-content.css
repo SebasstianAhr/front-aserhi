@@ -2,6 +2,7 @@
     border-collapse: collapse;
     border: 1px solid #e5e7eb;
     width: 100%;
+    color: #494949;
 }
 
 .table__controls {
@@ -34,9 +35,43 @@
     padding: 0.5rem;
 }
 
+.table tr:nth-child(even) {
+    background-color: #edf9ff;
+}
+
+.table tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.table__estado--active {
+    color: #8cbe42;
+}
+
+.table__estado--inactive {
+    color: #ff6363;
+}
+
+.table__center {
+    text-align: center;
+}
+
 .table__actions{
     display: flex;
-    gap: 1rem;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.icon__action{
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+
+.icon__action--view:hover{
+    color: #02A4E6;
+}
+
+.icon__action--edit:hover{
+    color: rgb(255, 203, 58);
 }
 
 
@@ -71,14 +106,14 @@
 }
 
 .pagination__button.active {
-    background-color: #3b82f6;
+    background-color: #02A4E6;
     color: #ffffff;
     font-weight: bold;
     cursor: default;
 }
 
 .pagination__button.active:hover {
-    background-color: #2563eb;
+    background-color: #00b7ff;
 }
 
 .pagination__button:first-child,
