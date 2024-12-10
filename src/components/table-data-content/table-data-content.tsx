@@ -10,7 +10,8 @@ interface DataTableProps<T> {
   onItemsPerPageChange: (itemsPerPage: number) => void;
   maxItemsPerPage?: number;
   minItemsPerPage?: number;
-  onVewEmployee: (id: string) => void;
+  onViewEmployee: (id: string) => void;
+  onEditEmployee: (id: string) => void;
 }
 
 const TableDataContent = <T,>({
@@ -20,7 +21,8 @@ const TableDataContent = <T,>({
   currentPage,
   onPageChange,
   onItemsPerPageChange,
-  onVewEmployee,
+  onViewEmployee,
+  onEditEmployee,
   maxItemsPerPage = 30,
   minItemsPerPage = 5,
 }: DataTableProps<T>): JSX.Element => {
@@ -60,7 +62,7 @@ const TableDataContent = <T,>({
   const handleItemsPerPageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = Number(e.target.value);
     onItemsPerPageChange(value);
-    onPageChange(1); 
+    onPageChange(1);
   };
 
   return (
@@ -100,18 +102,27 @@ const TableDataContent = <T,>({
           {currentData.map((row, index) => (
             <tr key={index}>
               {columns.map((col) => (
-                <td key={col.item.toString()} className="table__row table-td">
+                <td key={col.item.toString()} className="table__row">
                   {col.item === 'estado'
                     ? row[col.item]
                       ? 'Activo'
                       : 'Inactivo'
                     : col.item === 'acciones' ? (
-                      <button
-                        className="action__button"
-                        onClick={() => onVewEmployee((row as { id: string }).id)}
-                      >
-                        Ver
-                      </button>
+                      <div className='table__actions'>
+                        <button
+                          className="action__button"
+                          onClick={() => onViewEmployee((row as { id: string }).id)}
+                        >
+                          Ver
+                        </button>
+
+                        <button
+                          className="action__button"
+                          onClick={() => onEditEmployee((row as { id: string }).id)}
+                        >
+                          Editar
+                        </button>
+                      </div>
                     ) : (
                       (row[col.item] as React.ReactNode)
                     )}

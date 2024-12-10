@@ -21,3 +21,12 @@ export const getEmployeeById = (id: string) => {
   const employee = EmployeesData.find(emp => emp.id === id);
   return employee || null;
 };
+
+export const updateEmployee = (updatedEmployee: Record<string, any>) => {
+  const index = EmployeesData.findIndex(emp => emp.id === updatedEmployee.id);
+  if (index !== -1) {
+    EmployeesData[index] = { ...EmployeesData[index], ...updatedEmployee };
+    return EmployeesData[index];
+  }
+  return null;
+};

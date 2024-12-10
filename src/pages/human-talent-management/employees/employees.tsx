@@ -1,10 +1,10 @@
-import { useEffect, useState, useCallback } from 'react';
-import { getEmployees, addEmployee, getEmployeeById } from '../../../services/employees.services';
-import SearchFilter from '../../../components/search-filter/search-filter';
+import { getEmployees, addEmployee, getEmployeeById, updateEmployee } from '../../../services/employees.services';
 import TableDataContent from '../../../components/table-data-content/table-data-content';
+import SearchFilter from '../../../components/search-filter/search-filter';
 import ModalGeneral from '../../../components/modal-general/modal-general';
 import GeneralForm from '../../../components/form-general/form-general';
 import { formFields } from '../../../core/utils/field-form.util';
+import { useEffect, useState, useCallback } from 'react';
 import './employees.css';
 
 interface Employee {
@@ -23,7 +23,8 @@ const Employees = (): JSX.Element => {
   const [currentPage, setCurrentPage] = useState(1);
   const [modalAddForm, setModalAddForm] = useState<boolean>(false);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [modalVewItem, setModalVewItem] = useState<boolean>(false);
+  const [modalViewItem, setModalViewItem] = useState<boolean>(false);
+  const [modalEditItem, setModalEditItem] = useState<boolean>(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
 
   const fieldFilter = [
@@ -135,9 +136,35 @@ const Employees = (): JSX.Element => {
     const employee = await getEmployeeById(id);
     if (employee) {
       setSelectedEmployee(employee);
-      setModalVewItem(true);
+      setModalViewItem(true);
     }
   };
+
+  const handleEditEmployee = async (id: string) => {
+    const employee = await getEmployeeById(id);
+    if (employee) {
+      setSelectedEmployee(employee); 
+      setModalEditItem(true);
+    }
+  };
+
+  const handleEditFormSubmit = async (data: Record<string, any>) => {
+    console.log("Datos recibidos en la edición:", data);
+    const updatedEmployee = await updateEmployee(data); 
+    console.log("Empleado actualizado:", updatedEmployee);
+    if (updatedEmployee) {
+      setEmployees((prevEmployees) =>
+        prevEmployees.map(emp =>
+          emp.id === updatedEmployee.id ? updatedEmployee : emp
+        )
+      );
+      setModalEditItem(false); // Cerrar el modal
+    } else {
+      console.log("Error actualizando al empleado.");
+    }
+  };
+  
+  
 
   return (
     <div className='employees'>
@@ -173,7 +200,8 @@ const Employees = (): JSX.Element => {
           currentPage={currentPage}
           onPageChange={setCurrentPage}
           onItemsPerPageChange={handleItemsPerPageChange}
-          onVewEmployee={handleViewEmployee}
+          onViewEmployee={handleViewEmployee}
+          onEditEmployee={handleEditEmployee}
         />
       </div>
       <ModalGeneral
@@ -191,8 +219,8 @@ const Employees = (): JSX.Element => {
         />
       </ModalGeneral>
       <ModalGeneral
-        openModal={modalVewItem}
-        closeModal={setModalVewItem}
+        openModal={modalViewItem}
+        closeModal={setModalViewItem}
         title="Detalle del empleado"
         showHeader={true}
         showOverlay={true}
@@ -202,6 +230,22 @@ const Employees = (): JSX.Element => {
           onSubmit={handleFormSubmit}
           showButtonSubmit={false}
           valueEmployees= {selectedEmployee}
+        />
+      </ModalGeneral>
+      <ModalGeneral
+        openModal={modalEditItem}
+        closeModal={setModalEditItem}
+        title="Editar empleado"
+        showHeader={true}
+        showOverlay={true}
+      >
+         <GeneralForm
+          fieldsForm={formFields}
+          onSubmit={handleEditFormSubmit}
+          showButtonSubmit={true}
+          principalButtonForm="Guardar Cambios"
+          valueEmployees= {selectedEmployee}
+
         />
       </ModalGeneral>
     </div>

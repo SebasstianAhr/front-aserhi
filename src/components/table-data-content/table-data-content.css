@@ -4,11 +4,6 @@
     width: 100%;
 }
 
-.table__row {
-    border: 1px solid #e5e7eb;
-    padding: 0.5rem;
-}
-
 .table__controls {
     display: flex;
     align-items: center;
@@ -34,8 +29,15 @@
 
 }
 
+.table__row {
+    border: 1px solid #e5e7eb;
+    padding: 0.5rem;
+}
 
-
+.table__actions{
+    display: flex;
+    gap: 1rem;
+}
 
 
 .pagination {
