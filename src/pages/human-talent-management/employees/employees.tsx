@@ -143,14 +143,14 @@ const Employees = (): JSX.Element => {
   const handleEditEmployee = async (id: string) => {
     const employee = await getEmployeeById(id);
     if (employee) {
-      setSelectedEmployee(employee); 
+      setSelectedEmployee(employee);
       setModalEditItem(true);
     }
   };
 
   const handleEditFormSubmit = async (data: Record<string, any>) => {
     console.log("Datos recibidos en la edición:", data);
-    const updatedEmployee = await updateEmployee(data); 
+    const updatedEmployee = await updateEmployee(data);
     console.log("Empleado actualizado:", updatedEmployee);
     if (updatedEmployee) {
       setEmployees((prevEmployees) =>
@@ -163,8 +163,8 @@ const Employees = (): JSX.Element => {
       console.log("Error actualizando al empleado.");
     }
   };
-  
-  
+
+
 
   return (
     <div className='employees'>
@@ -216,6 +216,7 @@ const Employees = (): JSX.Element => {
           onSubmit={handleFormSubmit}
           principalButtonForm="Registrar"
           showButtonSubmit={true}
+          isRegisterMode={true}
         />
       </ModalGeneral>
       <ModalGeneral
@@ -225,11 +226,12 @@ const Employees = (): JSX.Element => {
         showHeader={true}
         showOverlay={true}
       >
-         <GeneralForm
+        <GeneralForm
           fieldsForm={formFields}
           onSubmit={handleFormSubmit}
           showButtonSubmit={false}
-          valueEmployees= {selectedEmployee}
+          valueEmployees={selectedEmployee}
+          isViewMode={true}
         />
       </ModalGeneral>
       <ModalGeneral
@@ -239,13 +241,12 @@ const Employees = (): JSX.Element => {
         showHeader={true}
         showOverlay={true}
       >
-         <GeneralForm
+        <GeneralForm
           fieldsForm={formFields}
           onSubmit={handleEditFormSubmit}
           showButtonSubmit={true}
           principalButtonForm="Guardar Cambios"
-          valueEmployees= {selectedEmployee}
-
+          valueEmployees={selectedEmployee}
         />
       </ModalGeneral>
     </div>
