@@ -1,0 +1,23 @@
+export const Charges = [
+    { id: '1', cargo: 'Super Administrador', descripcion: 'Responsable de la gestión estratégica de la organización.' },
+    { id: '2', cargo: 'Contador', descripcion: 'Encargado de la contabilidad y gestión financiera.' },
+    { id: '3', cargo: 'Ayudante de obra', descripcion: 'Asiste en tareas operativas en los proyectos de construcción.' },
+    { id: '4', cargo: 'Contratista operario soldador armador', descripcion: 'Especialista en soldadura y ensamblaje de estructuras.' },
+    { id: '5', cargo: 'Directora administrativa y financiera', descripcion: 'Lidera la gestión administrativa y financiera de la empresa.' },
+    { id: '6', cargo: 'Profesional de gestión ambiental y capacitación', descripcion: 'Promueve prácticas ambientales sostenibles y capacita al personal.' },
+    { id: '7', cargo: 'Coordinador de gestión del talento humano', descripcion: 'Gestión y desarrollo del capital humano en la organización.' },
+    { id: '8', cargo: 'Coordinador operativo', descripcion: 'Supervisa y coordina las operaciones diarias.' },
+    { id: '9', cargo: 'Coordinador SGSST', descripcion: 'Lidera el sistema de gestión de seguridad y salud en el trabajo.' },
+    { id: '10', cargo: 'Aprendiz SENA', descripcion: 'Apoya diversas tareas mientras realiza su formación profesional.' },
+    { id: '11', cargo: 'Coordinador de producción', descripcion: 'Gestiona y optimiza procesos de producción.' },
+    { id: '12', cargo: 'Auxiliar de mantenimiento', descripcion: 'Apoya en las tareas de mantenimiento preventivo y correctivo.' },
+    { id: '13', cargo: 'Contratista profesional SGSST', descripcion: 'Implementa estrategias de seguridad y salud en el trabajo.' },
+    { id: '14', cargo: 'Operario de aprovechamiento', descripcion: 'Realiza labores relacionadas con el aprovechamiento de recursos.' },
+    { id: '15', cargo: 'Coordinador del sistema de gestión integrado', descripcion: 'Garantiza la integración de sistemas de gestión de calidad, medioambiente y seguridad.' },
+    { id: '16', cargo: 'Operario de planta', descripcion: 'Opera y supervisa maquinaria en planta.' },
+    { id: '17', cargo: 'Asistente de facturación y cartera', descripcion: 'Maneja facturación y seguimiento a la cartera de clientes.' },
+    { id: '18', cargo: 'Conductor', descripcion: 'Responsable del transporte de mercancías y personas.' },
+    { id: '19', cargo: 'Asistente comercial', descripcion: 'Apoya las actividades de ventas y atención al cliente.' },
+    { id: '20', cargo: 'Auxiliar de ruta', descripcion: 'Asiste en la logística y operaciones en rutas asignadas.' },
+    { id: '21', cargo: 'Consultor Ambiental', descripcion: 'Brinda asesoramiento en proyectos relacionados con medioambiente.' }
+];

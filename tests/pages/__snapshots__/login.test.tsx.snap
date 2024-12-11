@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Component El componente debe coincidir con el snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="login__main"
+  >
+    <div
+      class="login__container"
+    >
+      <div>
+        <img
+          alt="Logo"
+          src="test-file-stub"
+        />
+      </div>
+      <h3>
+        INICIAR 
+        <span>
+          SESIÓN
+        </span>
+      </h3>
+      <div
+        class="login__form-container"
+      >
+        <form
+          class="login__form"
+        >
+          <input
+            class="login__input "
+            name="identification"
+            placeholder="Identificación"
+            type="text"
+          />
+          <input
+            class="login__input login__input--bottom "
+            name="password"
+            placeholder="Contraseña"
+            type="password"
+          />
+          <div
+            class="login__form-button"
+          >
+            <button
+              type="submit"
+            >
+              INGRESAR
+            </button>
+          </div>
+        </form>
+        <a
+          class="login__link"
+          href="/forgot-password"
+        >
+          <span>
+            ¿Olvidaste tu contraseña?
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
