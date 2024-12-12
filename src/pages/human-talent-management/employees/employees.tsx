@@ -3,7 +3,7 @@ import TableDataContent from '../../../components/table-data-content/table-data-
 import SearchFilter from '../../../components/search-filter/search-filter';
 import ModalGeneral from '../../../components/modal-general/modal-general';
 import GeneralForm from '../../../components/form-general/form-general';
-import { formFields } from '../../../core/utils/field-form.util';
+import { formFields } from '../../../core/utils/user-template.util';
 import { useEffect, useState, useCallback } from 'react';
 import './employees.css';
 

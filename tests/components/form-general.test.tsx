@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import GeneralFom from "../../src/components/form-general"
+import GeneralFom from "../../src/components/form-general/form-general"
 import "@testing-library/jest-dom";
 
 
