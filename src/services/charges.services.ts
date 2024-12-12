@@ -1,44 +1,30 @@
-import { Charges } from "../core/mocks/mock-data-charges";
+import { ChargesData } from "../core/mocks/mock-data-charges";
 
 export const getCharges = () => {
-  return Charges;
+  return Promise.resolve(ChargesData);
 };
 
-
-/*
-export const addCharge = (newCharge: Record<string, any>) => {
-  const isDuplicate = Charges.some(charge => charge.cargo === newCharge.cargo);
-
-  if (isDuplicate) {
-    return null;
-  }
-
-  const newId = (Charges.length + 1).toString(); // Genera un nuevo ID.
-  const chargeWithId = { ...newCharge, id: newId };
-  Charges.push(chargeWithId); 
-  return chargeWithId; 
+export const addCharge = (charge: Omit<Charge, 'id'>): Promise<Charge> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const newId = (ChargesData.length + 1).toString();
+      const newCharge = { ...charge, id: newId }; 
+      ChargesData.push(newCharge);
+      resolve(newCharge);
+    }, 500);
+  });
 };
 
 export const getChargeById = (id: string) => {
-  const charge = Charges.find(charge => charge.id === id);
-  return charge || null; 
-};
+  const  charge = ChargesData.find(item => item.id === id)
+  return charge || null
+}
 
 export const updateCharge = (updatedCharge: Record<string, any>) => {
-  const index = Charges.findIndex(charge => charge.id === updatedCharge.id);
+  const index = ChargesData.findIndex(item => item.id === updatedCharge.id);
   if (index !== -1) {
-    Charges[index] = { ...Charges[index], ...updatedCharge };
-    return Charges[index];
+    ChargesData[index] = { ...ChargesData[index], ...updatedCharge };
+    return ChargesData[index];
   }
   return null;
 };
-
-export const deleteCharge = (id: string) => {
-  const index = Charges.findIndex(charge => charge.id === id);
-  if (index !== -1) {
-    const [deletedCharge] = Charges.splice(index, 1);
-    return deletedCharge; 
-  }
-  return null;
-};
-*/

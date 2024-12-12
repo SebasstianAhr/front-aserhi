@@ -149,18 +149,16 @@ const Employees = (): JSX.Element => {
   };
 
   const handleEditFormSubmit = async (data: Record<string, any>) => {
-    console.log("Datos recibidos en la edición:", data);
     const updatedEmployee = await updateEmployee(data);
-    console.log("Empleado actualizado:", updatedEmployee);
     if (updatedEmployee) {
       setEmployees((prevEmployees) =>
         prevEmployees.map(emp =>
           emp.id === updatedEmployee.id ? updatedEmployee : emp
         )
       );
-      setModalEditItem(false); // Cerrar el modal
+      setModalEditItem(false);
     } else {
-      console.log("Error actualizando al empleado.");
+      console.log("Error updating employee.");
     }
   };
 

@@ -1,4 +1,4 @@
-export const Charges = [
+export const ChargesData = [
     { id: '1', cargo: 'Super Administrador', descripcion: 'Responsable de la gestión estratégica de la organización.' },
     { id: '2', cargo: 'Contador', descripcion: 'Encargado de la contabilidad y gestión financiera.' },
     { id: '3', cargo: 'Ayudante de obra', descripcion: 'Asiste en tareas operativas en los proyectos de construcción.' },
