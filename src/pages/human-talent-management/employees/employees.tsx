@@ -6,6 +6,7 @@ import GeneralForm from '../../../components/form-general/form-general';
 import { formFields } from '../../../core/utils/user-template.util';
 import { useEffect, useState, useCallback } from 'react';
 import './employees.css';
+import Alert from '../../../components/alert/alert';
 
 interface Employee {
   id: string;
@@ -26,6 +27,9 @@ const Employees = (): JSX.Element => {
   const [modalViewItem, setModalViewItem] = useState<boolean>(false);
   const [modalEditItem, setModalEditItem] = useState<boolean>(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [employeeToAdd, setEmployeeToAdd] = useState<Record<string, any> | null>(null);
+
 
   const fieldFilter = [
     {
@@ -98,6 +102,8 @@ const Employees = (): JSX.Element => {
       console.log("Este empleado ya existe.");
     }
 
+    setEmployeeToAdd(data);
+    setShowAlert(true);
     setModalAddForm(false);
   }, []);
 
@@ -160,6 +166,33 @@ const Employees = (): JSX.Element => {
     } else {
       console.log("Error updating employee.");
     }
+  };
+
+  const handleAlertCancel = () => {
+    setShowAlert(false);
+    setEmployeeToAdd(null);
+  };
+
+  const handleAlertContinue = async () => {
+    if (employeeToAdd) {
+      const newEmployee = await addEmployee(employeeToAdd);
+
+      if (newEmployee) {
+        setEmployees((prevEmployees) => {
+          const isDuplicate = prevEmployees.some(emp => emp.identificacion === newEmployee.identificacion);
+          if (isDuplicate) {
+            console.log("Este empleado ya existe.");
+          }
+          return [...prevEmployees, newEmployee];
+        });
+      } else {
+        console.log("Este empleado ya existe.");
+      }
+    }
+
+    setShowAlert(false);
+    setEmployeeToAdd(null);
+    setModalAddForm(false);
   };
 
 
@@ -247,6 +280,11 @@ const Employees = (): JSX.Element => {
           valueEmployees={selectedEmployee}
         />
       </ModalGeneral>
+      <Alert
+        message="¿Está seguro de que desea agregar este empleado?"
+        onCancel={handleAlertCancel}
+        onContinue={handleAlertContinue}
+      />
     </div>
   );
 };

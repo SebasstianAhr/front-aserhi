@@ -1,3 +1,5 @@
+import "./alert.css"
+
 import React from "react";
 
 interface AlertProps {
