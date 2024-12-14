@@ -195,6 +195,13 @@ const Employees = (): JSX.Element => {
     setModalAddForm(false);
   };
 
+  useEffect(() => {
+    return () => {
+      setShowAlert(false);
+    };
+  }, []);
+
+
 
 
   return (
@@ -280,11 +287,13 @@ const Employees = (): JSX.Element => {
           valueEmployees={selectedEmployee}
         />
       </ModalGeneral>
-      <Alert
-        message="¿Está seguro de que desea agregar este empleado?"
-        onCancel={handleAlertCancel}
-        onContinue={handleAlertContinue}
-      />
+      {showAlert && (
+        <Alert
+          message="¿Está seguro de que desea agregar este empleado?"
+          onCancel={handleAlertCancel}
+          onContinue={handleAlertContinue}
+        />
+      )}
     </div>
   );
 };
