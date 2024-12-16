@@ -27,7 +27,7 @@ const Employees = (): JSX.Element => {
   const [modalViewItem, setModalViewItem] = useState<boolean>(false);
   const [modalEditItem, setModalEditItem] = useState<boolean>(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
-  const [showAlert, setShowAlert] = useState(false);
+  const [showAlertRegister, setShowAlertRegister] = useState(false);
   const [employeeToAdd, setEmployeeToAdd] = useState<Record<string, any> | null>(null);
 
 
@@ -85,27 +85,11 @@ const Employees = (): JSX.Element => {
   ];
 
 
-  const handleFormSubmit = useCallback(async (data: Record<string, any>) => {
-    console.log("Formulario enviado:", data);
-
-    const newEmployee = await addEmployee(data);
-
-    if (newEmployee) {
-      setEmployees((prevEmployees) => {
-        const isDuplicate = prevEmployees.some(emp => emp.identificacion === newEmployee.identificacion);
-        if (isDuplicate) {
-          console.log("Este empleado ya existe.");
-        }
-        return [...prevEmployees, newEmployee];
-      });
-    } else {
-      console.log("Este empleado ya existe.");
-    }
-
-    setEmployeeToAdd(data);
-    setShowAlert(true);
-    setModalAddForm(false);
+  const handleFormSubmit = useCallback((data: Record<string, any>) => {
+    setEmployeeToAdd(data); 
+    setShowAlertRegister(true);
   }, []);
+  
 
   const handleFilterChange = (filters: Record<string, any>) => {
     let filteredData = [...employees];
@@ -168,36 +152,47 @@ const Employees = (): JSX.Element => {
     }
   };
 
-  const handleAlertCancel = () => {
-    setShowAlert(false);
-    setEmployeeToAdd(null);
-  };
+  const handleAlertCancel = useCallback(() => {
+    setShowAlertRegister(false);
+    setEmployeeToAdd(null); 
+    setModalAddForm(false); 
+  }, []);
+  
+  
 
-  const handleAlertContinue = async () => {
+  const handleAlertContinue = useCallback(async () => {
     if (employeeToAdd) {
-      const newEmployee = await addEmployee(employeeToAdd);
-
-      if (newEmployee) {
-        setEmployees((prevEmployees) => {
-          const isDuplicate = prevEmployees.some(emp => emp.identificacion === newEmployee.identificacion);
-          if (isDuplicate) {
-            console.log("Este empleado ya existe.");
-          }
-          return [...prevEmployees, newEmployee];
-        });
-      } else {
-        console.log("Este empleado ya existe.");
+      try {
+        const newEmployee = await addEmployee(employeeToAdd);
+  
+        if (newEmployee) {
+          setEmployees((prevEmployees) => {
+            const isDuplicate = prevEmployees.some(emp => emp.identificacion === newEmployee.identificacion);
+            if (isDuplicate) {
+              console.log("Este empleado ya existe.");
+              return prevEmployees;
+            }
+            return [...prevEmployees, newEmployee];
+          });
+        } else {
+          console.log("Error al agregar empleado.");
+        }
+      } catch (error) {
+        console.error("Error al registrar el empleado:", error);
       }
     }
-
-    setShowAlert(false);
+  
+  
+    setShowAlertRegister(false);
     setEmployeeToAdd(null);
     setModalAddForm(false);
-  };
+  }, [employeeToAdd]);
+  
+  
 
   useEffect(() => {
     return () => {
-      setShowAlert(false);
+      setShowAlertRegister(false);
     };
   }, []);
 
@@ -287,7 +282,7 @@ const Employees = (): JSX.Element => {
           valueEmployees={selectedEmployee}
         />
       </ModalGeneral>
-      {showAlert && (
+      {showAlertRegister && (
         <Alert
           message="¿Está seguro de que desea agregar este empleado?"
           onCancel={handleAlertCancel}
