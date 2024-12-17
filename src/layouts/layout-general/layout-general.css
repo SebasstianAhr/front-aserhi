@@ -24,20 +24,20 @@
     padding: 4rem 1.5rem 1.5rem 1.5rem;
 }
 
-@media (max-width: 768px) {
-    .layout__sidebar-part {
-        display: none;
-    }
-    
-    .burger-menu__button {
-        display: block;
-        position: absolute;
-        top: 16px;
-        left: 16px;
-        z-index: 1000;
-    }
+.laytout__burger-menu{
+    display: none;
 }
 
-.burger-menu__button {
-    display: none; /* Ocultar por defecto */
+@media (max-width: 1244px) {
+    .layout__sidebar-part{
+        display: none;
+    }
+    .layout__next-content{
+        max-width: 100%;
+    }
+
+    .laytout__burger-menu{
+        display: block;
+    }
+    
 }

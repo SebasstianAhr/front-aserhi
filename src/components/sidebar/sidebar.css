@@ -10,6 +10,11 @@
     justify-content: center;
 }
 
+.sidebar__image-logo-aserhi{
+    width: 100%;
+    max-width: 70%;
+}
+
 .navigation__component{
     display: flex;
     flex-direction: column;
