@@ -1,0 +1,10 @@
+.icon__burger__menu{
+    
+    top: 16px;
+    left: 16px;
+    z-index: 1000;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
