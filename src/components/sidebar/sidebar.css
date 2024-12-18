@@ -28,11 +28,12 @@
     padding: 0.7rem 1.5rem;
     text-decoration: none;
     color: #000;
+
+    &:hover{
+        background-color: #d2d2d2;
+    }
 }
 
-.navigation__link:hover{
-    background-color: #d2d2d2;
-}
 
 
 .log__out{

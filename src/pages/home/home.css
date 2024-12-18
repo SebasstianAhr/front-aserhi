@@ -9,7 +9,9 @@
 }
 .home__section-cards{
     display: flex;
-    gap: 1.3rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+
 }
 
 .home__page-content--right {
@@ -37,4 +39,20 @@
 
 .home__section-bottom {
     margin-top: 1.5rem;
+}
+
+
+@media (max-width: 840px) {
+    .home__section-top {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .home__page-content--left{
+        max-width: 100%;
+    }
+
+    .home__page-content--right{
+        max-width: 100%;
+    }
 }

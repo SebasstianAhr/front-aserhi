@@ -1,14 +1,14 @@
 .filter__content{
-    width: 100%;
     display: flex;
-    justify-content: space-between;
+    gap: 1rem;
     flex-wrap: wrap;
 }
 
 .filter__group{
-    width: 30%;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
+    flex-basis: 200;
     margin-bottom: 1rem;
 
     label {

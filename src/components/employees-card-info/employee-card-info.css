@@ -1,5 +1,6 @@
 .card__component{
-    width: 100%;
+    flex-grow: 1;
+    flex-basis: 200;
     border: 1px solid #e5e7eb;
     border-top: 4px solid #84cc16;
     border-radius: 9px;

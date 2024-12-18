@@ -135,3 +135,24 @@
 
     }
 }
+
+@media (max-width: 800px) {
+    .table {
+        overflow-x: auto;
+        display: block;
+    }
+
+    .pagination {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 425px) {
+    
+    .pagination {
+       
+        flex-wrap: wrap; /* Ensure controls stay within the container */
+        justify-content: center; /* Center the controls */
+    }
+}
