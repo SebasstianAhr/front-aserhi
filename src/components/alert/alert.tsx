@@ -10,14 +10,14 @@ interface AlertProps {
 
 const Alert: React.FC<AlertProps> = ({ message, onCancel, onContinue }) => {
   return (
-    <div className="alert-overlay">
-      <div className="alert-box">
-        <p className="alert-message">{message}</p>
-        <div className="alert-buttons">
-          <button className="alert-button cancel" onClick={onCancel}>
+    <div className="alert__overlay">
+      <div className="alert__box">
+        <p className="alert__message">{message}</p>
+        <div className="alert__buttons">
+          <button className="alert__button alert__button--cancel" onClick={onCancel}>
             Cancelar
           </button>
-          <button className="alert-button continue" onClick={onContinue}>
+          <button className="alert__button alert__button--continue" onClick={onContinue}>
             Continuar
           </button>
         </div>

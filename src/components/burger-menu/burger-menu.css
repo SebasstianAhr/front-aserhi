@@ -3,13 +3,14 @@
     z-index: 50;
     top: 16px;
     left: 10px;
-    background-color: #008000;
     padding: 4px;
-    border-radius: 50px;
+    border-radius: 6px;
     cursor: pointer;
+    border: 1px solid #000;
 
     &:hover{
-        background-color: #004d00;
+        background-color: var(--primary-bg-color);
+        opacity: 0.5;
     }
 }
  
@@ -24,24 +25,6 @@
     transition: transform 0.3s ease-in-out;
     z-index: 50;
 }
-
-.burger-menu__close{
-    display: flex;
-    justify-content: flex-end;
-    padding: 1rem;
-}
-
-.burger-menu__icon-close{
-    cursor: pointer;
-    padding: 4px;
-    border-radius: 50px;
-    background-color: #a5a5a5;
-
-    &:hover{
-        background-color: #929292;
-    }
-}
-
 
 
 .menu__open {

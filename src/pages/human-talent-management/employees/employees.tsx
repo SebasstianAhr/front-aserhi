@@ -29,8 +29,7 @@ const Employees = (): JSX.Element => {
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
   const [showAlertRegister, setShowAlertRegister] = useState(false);
   const [employeeToAdd, setEmployeeToAdd] = useState<Record<string, any> | null>(null);
-
-
+  
   const fieldFilter = [
     {
       name: "search",
@@ -83,7 +82,6 @@ const Employees = (): JSX.Element => {
     { label: 'Estado', item: 'estado' as keyof Employee },
     { label: 'Acciones', item: 'acciones' as keyof Employee },
   ];
-
 
   const handleFormSubmit = useCallback((data: Record<string, any>) => {
     setEmployeeToAdd(data); 
@@ -158,8 +156,6 @@ const Employees = (): JSX.Element => {
     setModalAddForm(false); 
   }, []);
   
-  
-
   const handleAlertContinue = useCallback(async () => {
     if (employeeToAdd) {
       try {
@@ -182,22 +178,16 @@ const Employees = (): JSX.Element => {
       }
     }
   
-  
     setShowAlertRegister(false);
     setEmployeeToAdd(null);
     setModalAddForm(false);
   }, [employeeToAdd]);
   
-  
-
   useEffect(() => {
     return () => {
       setShowAlertRegister(false);
     };
   }, []);
-
-
-
 
   return (
     <div className='employees'>

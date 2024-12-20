@@ -1,4 +1,4 @@
-.alert-overlay {
+.alert__overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -11,7 +11,7 @@
     z-index: 1000;
   }
   
-  .alert-box {
+  .alert__box {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
@@ -21,17 +21,17 @@
     max-width: 400px;
   }
   
-  .alert-message {
+  .alert__message {
     font-size: 18px;
     margin-bottom: 20px;
   }
   
-  .alert-buttons {
+  .alert__buttons {
     display: flex;
     justify-content: space-around;
   }
   
-  .alert-button {
+  .alert__button {
     padding: 10px 20px;
     font-size: 16px;
     border: none;
@@ -39,17 +39,17 @@
     cursor: pointer;
   }
   
-  .alert-button.cancel {
+  .alert__button--cancel {
     background-color: #f44336;
     color: white;
   }
   
-  .alert-button.continue {
+  .alert__button--continue {
     background-color: #4caf50;
     color: white;
   }
   
-  .alert-button:hover {
+  .alert__button:hover {
     opacity: 0.9;
   }
   
