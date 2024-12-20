@@ -22,8 +22,9 @@
   }
   
   .alert__message {
+    margin-top: 2rem;
     font-size: 18px;
-    margin-bottom: 20px;
+    margin: 2rem 0;
   }
   
   .alert__buttons {

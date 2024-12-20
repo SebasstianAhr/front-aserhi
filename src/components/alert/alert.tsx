@@ -1,6 +1,5 @@
 import "./alert.css"
-
-import React from "react";
+import { IconAlerts } from "../../core/utils/alert-icons.util";
 
 interface AlertProps {
   message: string;
@@ -12,6 +11,9 @@ const Alert: React.FC<AlertProps> = ({ message, onCancel, onContinue }) => {
   return (
     <div className="alert__overlay">
       <div className="alert__box">
+        <span className="alert__icon">
+          {IconAlerts.find((icon) => icon.nameIcon === "warning")?.icon}
+        </span>
         <p className="alert__message">{message}</p>
         <div className="alert__buttons">
           <button className="alert__button alert__button--cancel" onClick={onCancel}>
