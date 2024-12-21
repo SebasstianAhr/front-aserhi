@@ -4,7 +4,9 @@ import SearchFilter from '../../../components/search-filter/search-filter';
 import TableDataContent from '../../../components/table-data-content/table-data-content';
 import { addCharge, getChargeById, getCharges, updateCharge } from '../../../services/charges.services';
 import './charges.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import Alert from '../../../components/alert/alert';
+import Toast from '../../../components/toast/toast';
 
 interface Charge {
   id: string;
@@ -21,6 +23,13 @@ const Charges = (): JSX.Element => {
   const [modalViewItem, setModalViewItem] = useState<boolean>(false);
   const [modalEditItem, setModalEditItem] = useState<boolean>(false);
   const [selectedCharge, setSelectedCharge] = useState<Charge | null>(null);
+  const [showAlertRegister, setShowAlertRegister] = useState(false);
+  const [chargeToAdd, setChargeToAdd] = useState<Record<string, any> | null>(null);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastVariant, setToastVariant] = useState<'success' | 'danger'>('success');
+  const [showAlertEdit, setShowAlertEdit] = useState(false);
+  const [chargeToEdit, setChargeToEdit] = useState<Record<string, any> | null>(null);
 
   const formFields = [
     { name: 'cargo', label: 'Cargo', type: 'text' as 'text', required: true, placeholder: 'Ingrese el cargo' },
@@ -45,16 +54,31 @@ const Charges = (): JSX.Element => {
     fetchCharges()
   }, []);
 
-  const handleAddCharge = async (newChargeData: Omit<Charge, 'id'>) => {
-    try {
-      console.log("Datos enviados al servicio:", newChargeData);
-      const newCharge = await addCharge(newChargeData);
-      console.log("Nuevo cargo recibido del servicio:", newCharge);
-      setCharges((prevCharges) => [...prevCharges, newCharge]);
-      setFilteredCharges((prevCharges) => [...prevCharges, newCharge]);
-      setModalAddForm(false);
-    } catch (error) {
-      console.error('Error adding charge:', error);
+  const handleFormSubmit = useCallback((data: Record<string, any>) => {
+    setChargeToAdd(data); 
+    setShowAlertRegister(true);
+  }, []);
+
+  const handleAddCharge = async () => {
+    if (chargeToAdd) {
+      try {
+        const newCharge = await addCharge(chargeToAdd);
+        setCharges((prevCharges) => [...prevCharges, newCharge]);
+        setFilteredCharges((prevCharges) => [...prevCharges, newCharge]);
+        setToastMessage('Cargo agregado con éxito');
+        setToastVariant('success');
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 4000);
+        setShowAlertRegister(false);
+        setChargeToAdd(null);
+        setModalAddForm(false);
+      } catch (error) {
+        setToastMessage('Error al agregar cargo.');
+        setToastVariant('danger');
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 4000);
+        setShowAlertRegister(false);
+      }
     }
   };
 
@@ -90,24 +114,53 @@ const Charges = (): JSX.Element => {
     }
   };
 
-  const handleEditChargeSubmit = async (data: Record<string, any>) => {
-    const updatedCharge = await updateCharge(data);
-    if (updatedCharge) {
-      setCharges((prevCharges) =>
-        prevCharges.map(item =>
-          item.id === updatedCharge.id ? updatedCharge : item
-        )
-      );
-      setModalEditItem(false);
-    } else {
-      console.log("Error updating charge.");
+  const handleEditFormSubmit = useCallback((data: Record<string, any>) => {
+    setChargeToEdit(data);
+    setShowAlertEdit(true);
+  }, []);
 
+  const handleEditChargeSubmit = async () => {
+    if (chargeToEdit) {
+      try {
+        const updatedCharge = await updateCharge(chargeToEdit);
+        setCharges((prevCharges) =>
+          prevCharges.map(item =>
+            item.id === updatedCharge.id ? updatedCharge : item
+          )
+        );
+        setToastMessage('Cargo editado con éxito');
+        setToastVariant('success');
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 4000);
+        setShowAlertEdit(false);
+        setChargeToEdit(null);
+        setModalEditItem(false);
+      } catch (error) {
+        setToastMessage('Error al editar cargo.');
+        setToastVariant('danger');
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 4000);
+        setShowAlertEdit(false);
+      }
     }
-  }
+  };
+
+  const handleAlertCancel = useCallback(() => {
+    setShowAlertRegister(false);
+    setChargeToAdd(null); 
+    setModalAddForm(false); 
+  }, []);
+
+  const handleAlertEditCancel = useCallback(() => {
+    setShowAlertEdit(false);
+    setChargeToEdit(null);
+    setModalEditItem(false);
+  }, []);
 
   return (
     <div className="charges">
       <h1 className="charges__title">Gestión de Cargos</h1>
+      {showToast && <Toast variantAlert={toastVariant} message={toastMessage} show={showToast} />}
       <div className="charges__add-icon">
         <svg
           onClick={() => setModalAddForm(true)}
@@ -152,7 +205,7 @@ const Charges = (): JSX.Element => {
       >
         <GeneralForm
           fieldsForm={formFields}
-          onSubmit={handleAddCharge}
+          onSubmit={handleFormSubmit}
           principalButtonForm="Registrar"
           showButtonSubmit={true}
           isRegisterMode={true}
@@ -167,7 +220,7 @@ const Charges = (): JSX.Element => {
       >
         <GeneralForm
           fieldsForm={formFields}
-          onSubmit={handleAddCharge}
+          onSubmit={handleFormSubmit}
           showButtonSubmit={false}
           valueEmployees={selectedCharge}
           isViewMode={true}
@@ -182,12 +235,26 @@ const Charges = (): JSX.Element => {
       >
         <GeneralForm
           fieldsForm={formFields}
-          onSubmit={handleEditChargeSubmit}
+          onSubmit={handleEditFormSubmit}
           showButtonSubmit={true}
           principalButtonForm="Guardar Cambios"
           valueEmployees={selectedCharge}
         />
       </ModalGeneral>
+      {showAlertRegister && (
+        <Alert
+          message="¿Está seguro de que desea agregar este cargo?"
+          onCancel={handleAlertCancel}
+          onContinue={handleAddCharge}
+        />
+      )}
+      {showAlertEdit && (
+        <Alert
+          message="¿Está seguro de que desea editar este cargo?"
+          onCancel={handleAlertEditCancel}
+          onContinue={handleEditChargeSubmit}
+        />
+      )}
     </div>
   );
 };

@@ -8,7 +8,7 @@ export const addEmployee = (newEmployee: Record<string, any>) => {
   const isDuplicate = EmployeesData.some(emp => emp.identificacion === newEmployee.identificacion);
 
   if (isDuplicate) {
-    return null; 
+    throw new Error('DUPLICATE_EMPLOYEE');
   }
 
   const newId = (EmployeesData.length + 1).toString();  

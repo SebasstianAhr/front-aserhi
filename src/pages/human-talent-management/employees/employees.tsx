@@ -7,6 +7,7 @@ import { formFields } from '../../../core/utils/user-template.util';
 import { useEffect, useState, useCallback } from 'react';
 import './employees.css';
 import Alert from '../../../components/alert/alert';
+import Toast from '../../../components/toast/toast';
 
 interface Employee {
   id: string;
@@ -29,6 +30,11 @@ const Employees = (): JSX.Element => {
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
   const [showAlertRegister, setShowAlertRegister] = useState(false);
   const [employeeToAdd, setEmployeeToAdd] = useState<Record<string, any> | null>(null);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastVariant, setToastVariant] = useState<'success' | 'danger'>('success');
+  const [showAlertEdit, setShowAlertEdit] = useState(false);
+  const [employeeToEdit, setEmployeeToEdit] = useState<Record<string, any> | null>(null);
   
   const fieldFilter = [
     {
@@ -136,19 +142,51 @@ const Employees = (): JSX.Element => {
     }
   };
 
-  const handleEditFormSubmit = async (data: Record<string, any>) => {
-    const updatedEmployee = await updateEmployee(data);
-    if (updatedEmployee) {
-      setEmployees((prevEmployees) =>
-        prevEmployees.map(emp =>
-          emp.id === updatedEmployee.id ? updatedEmployee : emp
-        )
-      );
-      setModalEditItem(false);
-    } else {
-      console.log("Error updating employee.");
+  const handleEditFormSubmit = useCallback((data: Record<string, any>) => {
+    setEmployeeToEdit(data);
+    setShowAlertEdit(true);
+  }, []);
+
+  const handleAlertEditCancel = useCallback(() => {
+    setShowAlertEdit(false);
+    setEmployeeToEdit(null);
+    setModalEditItem(false);
+  }, []);
+
+  const handleAlertEditContinue = useCallback(async () => {
+    if (employeeToEdit) {
+      try {
+        const updatedEmployee = await updateEmployee(employeeToEdit);
+        if (updatedEmployee) {
+          setEmployees((prevEmployees) =>
+            prevEmployees.map(emp =>
+              emp.id === updatedEmployee.id ? updatedEmployee : emp
+            )
+          );
+          setToastMessage('Empleado editado con éxito');
+          setToastVariant('success');
+          setShowToast(true);
+          setTimeout(() => setShowToast(false), 4000);
+          setShowAlertEdit(false);
+          setEmployeeToEdit(null);
+          setModalEditItem(false);
+        } else {
+          setToastMessage('Error al editar empleado.');
+          setToastVariant('danger');
+          setShowToast(true);
+          setTimeout(() => setShowToast(false), 4000);
+          setShowAlertEdit(false);
+        }
+      } catch (error) {
+        console.error("Error al editar el empleado:", error);
+        setToastMessage('Error al editar el empleado.');
+        setToastVariant('danger');
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 4000);
+        setShowAlertEdit(false);
+      }
     }
-  };
+  }, [employeeToEdit]);
 
   const handleAlertCancel = useCallback(() => {
     setShowAlertRegister(false);
@@ -165,22 +203,41 @@ const Employees = (): JSX.Element => {
           setEmployees((prevEmployees) => {
             const isDuplicate = prevEmployees.some(emp => emp.identificacion === newEmployee.identificacion);
             if (isDuplicate) {
-              console.log("Este empleado ya existe.");
+              setToastMessage('El empleado ya existe.');
+              setToastVariant('danger');
+              setShowToast(true);
+              setTimeout(() => setShowToast(false), 4000);
+              setShowAlertRegister(false);
               return prevEmployees;
             }
             return [...prevEmployees, newEmployee];
           });
+          setToastMessage('Empleado agregado');
+          setToastVariant('success');
+          setShowToast(true);
+          setTimeout(() => setShowToast(false), 4000);
+          setShowAlertRegister(false);
+          setEmployeeToAdd(null);
+          setModalAddForm(false);
         } else {
-          console.log("Error al agregar empleado.");
+          setToastMessage('Error al agregar empleado.');
+          setToastVariant('danger');
+          setShowToast(true);
+          setTimeout(() => setShowToast(false), 4000);
+          setShowAlertRegister(false);
         }
       } catch (error) {
-        console.error("Error al registrar el empleado:", error);
+        if (error.message === 'DUPLICATE_EMPLOYEE') {
+          setToastMessage('El empleado ya existe.');
+        } else {
+          setToastMessage('Error al registrar el empleado.');
+        }
+        setToastVariant('danger');
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), 4000);
+        setShowAlertRegister(false);
       }
     }
-  
-    setShowAlertRegister(false);
-    setEmployeeToAdd(null);
-    setModalAddForm(false);
   }, [employeeToAdd]);
   
   useEffect(() => {
@@ -192,6 +249,7 @@ const Employees = (): JSX.Element => {
   return (
     <div className='employees'>
       <h1 className='employees__title'>Gestión de Empleados</h1>
+      {showToast && <Toast variantAlert={toastVariant} message={toastMessage} show={showToast} />}
       <div className='employees__add-icon'>
         <svg
           onClick={() => setModalAddForm(!modalAddForm)}
@@ -277,6 +335,13 @@ const Employees = (): JSX.Element => {
           message="¿Está seguro de que desea agregar este empleado?"
           onCancel={handleAlertCancel}
           onContinue={handleAlertContinue}
+        />
+      )}
+      {showAlertEdit && (
+        <Alert
+          message="¿Está seguro de que desea editar este empleado?"
+          onCancel={handleAlertEditCancel}
+          onContinue={handleAlertEditContinue}
         />
       )}
     </div>
