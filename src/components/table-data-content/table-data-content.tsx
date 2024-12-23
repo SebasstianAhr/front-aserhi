@@ -12,6 +12,7 @@ interface DataTableProps<T> {
   minItemsPerPage?: number;
   onViewEmployee: (id: string) => void;
   onEditEmployee: (id: string) => void;
+  enableSorting?: boolean;
 }
 
 const TableDataContent = <T,>({
@@ -25,6 +26,7 @@ const TableDataContent = <T,>({
   onEditEmployee,
   maxItemsPerPage = 30,
   minItemsPerPage = 5,
+  enableSorting = false,
 }: DataTableProps<T>): JSX.Element => {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [sortField, setSortField] = useState<keyof T>('id');
@@ -112,22 +114,26 @@ const TableDataContent = <T,>({
           </select>
           por página
         </label>
-        <label htmlFor="sortOrder">
-          Ordenar:
-          <select id="sortOrder" value={sortOrder} onChange={handleSortOrderChange}>
-            <option value="desc">Más recientes</option>
-            <option value="asc">Más antiguos</option>
-          </select>
-        </label>
+        {enableSorting && (
+          <>
+            <label htmlFor="sortOrder">
+              Ordenar:
+              <select id="sortOrder" value={sortOrder} onChange={handleSortOrderChange}>
+                <option value="desc">Más recientes</option>
+                <option value="asc">Más antiguos</option>
+              </select>
+            </label>
 
-        <label htmlFor="sortField">
-          Ordenar alfabéticamente por:
-          <select id="sortField" value={sortField || ''} onChange={handleSortFieldChange}>
-            <option value="">Ninguno</option>
-            <option value="nombres">Nombre</option>
-            <option value="apellidos">Apellido</option>
-          </select>
-        </label>
+            <label htmlFor="sortField">
+              Ordenar alfabéticamente por:
+              <select id="sortField" value={sortField || ''} onChange={handleSortFieldChange}>
+                <option value="">Ninguno</option>
+                <option value="nombres">Nombre</option>
+                <option value="apellidos">Apellido</option>
+              </select>
+            </label>
+          </>
+        )}
       </div>
 
       <table className="table">

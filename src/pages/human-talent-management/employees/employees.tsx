@@ -283,6 +283,7 @@ const Employees = (): JSX.Element => {
           onItemsPerPageChange={handleItemsPerPageChange}
           onViewEmployee={handleViewEmployee}
           onEditEmployee={handleEditEmployee}
+          enableSorting={true}
         />
       </div>
       <ModalGeneral
