@@ -26,8 +26,6 @@
         font-size: 1rem;
         outline: none;
     }
-
-
 }
 
 .table__row {
@@ -133,6 +131,14 @@
         text-align: center;
         color: #555;
 
+    }
+}
+
+.table__th--clickable {
+    cursor: pointer;
+    transition: color 0.3s ease;
+    &:hover {
+        color: #02A4E6;
     }
 }
 

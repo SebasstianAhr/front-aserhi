@@ -1,5 +1,5 @@
 import './table-data-content.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface DataTableProps<T> {
   data: T[];
@@ -26,6 +26,9 @@ const TableDataContent = <T,>({
   maxItemsPerPage = 30,
   minItemsPerPage = 5,
 }: DataTableProps<T>): JSX.Element => {
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [sortField, setSortField] = useState<keyof T>('id');
+
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
   useEffect(() => {
@@ -34,7 +37,22 @@ const TableDataContent = <T,>({
     }
   }, [data, currentPage, totalPages, onPageChange]);
 
-  const currentData = data.slice(
+  const sortedData = [...data].sort((a, b) => {
+    const field = sortField || 'id';
+    if (field === 'id') {
+      const idA = parseInt(a[field] as unknown as string, 10);
+      const idB = parseInt(b[field] as unknown as string, 10);
+      return sortOrder === 'asc' ? idA - idB : idB - idA;
+    } else {
+      if (sortOrder === 'asc') {
+        return a[field] > b[field] ? 1 : -1;
+      } else {
+        return a[field] < b[field] ? 1 : -1;
+      }
+    }
+  });
+
+  const currentData = sortedData.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
@@ -65,6 +83,14 @@ const TableDataContent = <T,>({
     onPageChange(1);
   };
 
+  const handleSortOrderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOrder(e.target.value as 'asc' | 'desc');
+  };
+
+  const handleSortFieldChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortField(e.target.value as keyof T);
+  };
+
   return (
     <div>
       <div className="table__controls">
@@ -86,14 +112,33 @@ const TableDataContent = <T,>({
           </select>
           por página
         </label>
+        <label htmlFor="sortOrder">
+          Ordenar:
+          <select id="sortOrder" value={sortOrder} onChange={handleSortOrderChange}>
+            <option value="desc">Más recientes</option>
+            <option value="asc">Más antiguos</option>
+          </select>
+        </label>
+
+        <label htmlFor="sortField">
+          Ordenar alfabéticamente por:
+          <select id="sortField" value={sortField || ''} onChange={handleSortFieldChange}>
+            <option value="">Ninguno</option>
+            <option value="nombres">Nombre</option>
+            <option value="apellidos">Apellido</option>
+          </select>
+        </label>
       </div>
 
       <table className="table">
         <thead>
           <tr>
             {columns.map((col) => (
-              <th key={col.item.toString()} className="table__row table__th">
+              <th key={col.item.toString()}  className={`table__row table__th ${col.item === 'id' ? 'table__th--clickable' : ''}`} onClick={() => col.item === 'id' && setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}>
                 {col.label}
+                {col.item === 'id' && (
+                  <span>{sortOrder === 'asc' ? ' ↑' : ' ↓'}</span>
+                )}
               </th>
             ))}
           </tr>
