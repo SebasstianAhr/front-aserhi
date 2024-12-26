@@ -1,13 +1,16 @@
-import { getEmployees, addEmployee, getEmployeeById, updateEmployee } from '../../../services/employees.services';
+import { getEmployeeById, addEmployee, updateEmployee } from '../../../services/employees.services';
 import TableDataContent from '../../../components/table-data-content/table-data-content';
 import SearchFilter from '../../../components/search-filter/search-filter';
 import ModalGeneral from '../../../components/modal-general/modal-general';
 import GeneralForm from '../../../components/form-general/form-general';
 import { formFields } from '../../../core/utils/user-template.util';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import './employees.css';
 import Alert from '../../../components/alert/alert';
 import Toast from '../../../components/toast/toast';
+import useEmployees from '../../../hooks/employees.hook/useEmployees';
+import useModal from '../../../hooks/employees.hook/useModal';
+import useToast from '../../../hooks/employees.hook/useToast';
 
 interface Employee {
   id: string;
@@ -20,22 +23,27 @@ interface Employee {
 }
 
 const Employees = (): JSX.Element => {
-  const [employees, setEmployees] = useState<Employee[]>([]);
-  const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [modalAddForm, setModalAddForm] = useState<boolean>(false);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [modalViewItem, setModalViewItem] = useState<boolean>(false);
-  const [modalEditItem, setModalEditItem] = useState<boolean>(false);
+  const {
+    employees,
+    filteredEmployees,
+    setFilteredEmployees,
+    currentPage,
+    setCurrentPage,
+    itemsPerPage,
+    setItemsPerPage,
+  } = useEmployees();
+
+  const modalAddForm = useModal();
+  const modalViewItem = useModal();
+  const modalEditItem = useModal();
+  const { showToast, toastMessage, toastVariant, showToastMessage } = useToast();
+
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
-  const [showAlertRegister, setShowAlertRegister] = useState(false);
   const [employeeToAdd, setEmployeeToAdd] = useState<Record<string, any> | null>(null);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastVariant, setToastVariant] = useState<'success' | 'danger'>('success');
-  const [showAlertEdit, setShowAlertEdit] = useState(false);
   const [employeeToEdit, setEmployeeToEdit] = useState<Record<string, any> | null>(null);
-  
+  const [showAlertRegister, setShowAlertRegister] = useState(false);
+  const [showAlertEdit, setShowAlertEdit] = useState(false);
+
   const fieldFilter = [
     {
       name: "search",
@@ -64,36 +72,10 @@ const Employees = (): JSX.Element => {
     },
   ];
 
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        const data = await getEmployees();
-        setEmployees(data);
-        setFilteredEmployees(data);
-      } catch (error) {
-        console.error("Failed to fetch employees:", error);
-      }
-    };
-
-    fetchEmployees();
-  }, []);
-
-  const columns = [
-    { label: 'ID', item: 'id' as keyof Employee },
-    { label: 'Nombre', item: 'nombres' as keyof Employee },
-    { label: 'Apellido', item: 'apellidos' as keyof Employee },
-    { label: 'Teléfono', item: 'telefono' as keyof Employee },
-    { label: 'Identificación', item: 'identificacion' as keyof Employee },
-    { label: 'Cargo', item: 'cargo' as keyof Employee },
-    { label: 'Estado', item: 'estado' as keyof Employee },
-    { label: 'Acciones', item: 'acciones' as keyof Employee },
-  ];
-
   const handleFormSubmit = useCallback((data: Record<string, any>) => {
-    setEmployeeToAdd(data); 
+    setEmployeeToAdd(data);
     setShowAlertRegister(true);
   }, []);
-  
 
   const handleFilterChange = (filters: Record<string, any>) => {
     let filteredData = [...employees];
@@ -122,15 +104,11 @@ const Employees = (): JSX.Element => {
     setFilteredEmployees(filteredData);
   };
 
-  const handleItemsPerPageChange = (newItemsPerPage: number) => {
-    setItemsPerPage(newItemsPerPage);
-  };
-
   const handleViewEmployee = async (id: string) => {
     const employee = await getEmployeeById(id);
     if (employee) {
       setSelectedEmployee(employee);
-      setModalViewItem(true);
+      modalViewItem.toggleModal();
     }
   };
 
@@ -138,7 +116,7 @@ const Employees = (): JSX.Element => {
     const employee = await getEmployeeById(id);
     if (employee) {
       setSelectedEmployee(employee);
-      setModalEditItem(true);
+      modalEditItem.toggleModal();
     }
   };
 
@@ -150,8 +128,8 @@ const Employees = (): JSX.Element => {
   const handleAlertEditCancel = useCallback(() => {
     setShowAlertEdit(false);
     setEmployeeToEdit(null);
-    setModalEditItem(false);
-  }, []);
+    modalEditItem.toggleModal();
+  }, [modalEditItem]);
 
   const handleAlertEditContinue = useCallback(async () => {
     if (employeeToEdit) {
@@ -163,88 +141,78 @@ const Employees = (): JSX.Element => {
               emp.id === updatedEmployee.id ? updatedEmployee : emp
             )
           );
-          setToastMessage('Empleado editado con éxito');
-          setToastVariant('success');
-          setShowToast(true);
-          setTimeout(() => setShowToast(false), 4000);
+          showToastMessage('Empleado editado con éxito', 'success');
           setShowAlertEdit(false);
           setEmployeeToEdit(null);
-          setModalEditItem(false);
+          modalEditItem.toggleModal();
         } else {
-          setToastMessage('Error al editar empleado.');
-          setToastVariant('danger');
-          setShowToast(true);
-          setTimeout(() => setShowToast(false), 4000);
+          showToastMessage('Error al editar empleado.', 'danger');
           setShowAlertEdit(false);
         }
       } catch (error) {
         console.error("Error al editar el empleado:", error);
-        setToastMessage('Error al editar el empleado.');
-        setToastVariant('danger');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 4000);
+        showToastMessage('Error al editar el empleado.', 'danger');
         setShowAlertEdit(false);
       }
     }
-  }, [employeeToEdit]);
+  }, [employeeToEdit, showToastMessage]);
 
   const handleAlertCancel = useCallback(() => {
     setShowAlertRegister(false);
-    setEmployeeToAdd(null); 
-    setModalAddForm(false); 
-  }, []);
-  
+    setEmployeeToAdd(null);
+    modalAddForm.toggleModal();
+  }, [modalAddForm]);
+
   const handleAlertContinue = useCallback(async () => {
     if (employeeToAdd) {
       try {
         const newEmployee = await addEmployee(employeeToAdd);
-  
+
         if (newEmployee) {
           setEmployees((prevEmployees) => {
             const isDuplicate = prevEmployees.some(emp => emp.identificacion === newEmployee.identificacion);
             if (isDuplicate) {
-              setToastMessage('El empleado ya existe.');
-              setToastVariant('danger');
-              setShowToast(true);
-              setTimeout(() => setShowToast(false), 4000);
+              showToastMessage('El empleado ya existe.', 'danger');
               setShowAlertRegister(false);
               return prevEmployees;
             }
             return [...prevEmployees, newEmployee];
           });
-          setToastMessage('Empleado agregado');
-          setToastVariant('success');
-          setShowToast(true);
-          setTimeout(() => setShowToast(false), 4000);
+          showToastMessage('Empleado agregado', 'success');
           setShowAlertRegister(false);
           setEmployeeToAdd(null);
-          setModalAddForm(false);
+          modalAddForm.toggleModal();
         } else {
-          setToastMessage('Error al agregar empleado.');
-          setToastVariant('danger');
-          setShowToast(true);
-          setTimeout(() => setShowToast(false), 4000);
+          showToastMessage('Error al agregar empleado.', 'danger');
           setShowAlertRegister(false);
         }
       } catch (error) {
         if (error.message === 'DUPLICATE_EMPLOYEE') {
-          setToastMessage('El empleado ya existe.');
+          showToastMessage('El empleado ya existe.', 'danger');
         } else {
-          setToastMessage('Error al registrar el empleado.');
+          showToastMessage('Error al registrar el empleado.', 'danger');
         }
-        setToastVariant('danger');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 4000);
         setShowAlertRegister(false);
       }
     }
-  }, [employeeToAdd]);
-  
+  }, [employeeToAdd, showToastMessage, modalAddForm]);
+
   useEffect(() => {
     return () => {
       setShowAlertRegister(false);
     };
   }, []);
+
+  const columns = [
+    { label: 'ID', item: 'id' as keyof Employee },
+    { label: 'Nombre', item: 'nombres' as keyof Employee },
+    { label: 'Apellido', item: 'apellidos' as keyof Employee },
+    { label: 'Teléfono', item: 'telefono' as keyof Employee },
+    { label: 'Identificación', item: 'identificacion' as keyof Employee },
+    { label: 'Cargo', item: 'cargo' as keyof Employee },
+    { label: 'Estado', item: 'estado' as keyof Employee },
+    { label: 'Acciones', item: 'acciones' as keyof Employee },
+  ];
 
   return (
     <div className='employees'>
@@ -252,7 +220,7 @@ const Employees = (): JSX.Element => {
       {showToast && <Toast variantAlert={toastVariant} message={toastMessage} show={showToast} />}
       <div className='employees__add-icon'>
         <svg
-          onClick={() => setModalAddForm(!modalAddForm)}
+          onClick={modalAddForm.toggleModal}
           width={50}
           height={50}
           aria-hidden="true"
@@ -280,15 +248,15 @@ const Employees = (): JSX.Element => {
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
           onPageChange={setCurrentPage}
-          onItemsPerPageChange={handleItemsPerPageChange}
+          onItemsPerPageChange={setItemsPerPage}
           onViewEmployee={handleViewEmployee}
           onEditEmployee={handleEditEmployee}
           enableSorting={true}
         />
       </div>
       <ModalGeneral
-        openModal={modalAddForm}
-        closeModal={setModalAddForm}
+        openModal={modalAddForm.isOpen}
+        closeModal={modalAddForm.toggleModal}
         title="Registro de empleados"
         showHeader={true}
         showOverlay={true}
@@ -302,8 +270,8 @@ const Employees = (): JSX.Element => {
         />
       </ModalGeneral>
       <ModalGeneral
-        openModal={modalViewItem}
-        closeModal={setModalViewItem}
+        openModal={modalViewItem.isOpen}
+        closeModal={modalViewItem.toggleModal}
         title="Detalle del empleado"
         showHeader={true}
         showOverlay={true}
@@ -317,8 +285,8 @@ const Employees = (): JSX.Element => {
         />
       </ModalGeneral>
       <ModalGeneral
-        openModal={modalEditItem}
-        closeModal={setModalEditItem}
+        openModal={modalEditItem.isOpen}
+        closeModal={modalEditItem.toggleModal}
         title="Editar empleado"
         showHeader={true}
         showOverlay={true}
