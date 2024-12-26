@@ -1,35 +1,41 @@
+import { useState, useCallback } from 'react';
 import GeneralForm from '../../../components/form-general/form-general';
 import ModalGeneral from '../../../components/modal-general/modal-general';
 import SearchFilter from '../../../components/search-filter/search-filter';
 import TableDataContent from '../../../components/table-data-content/table-data-content';
-import { addCharge, getChargeById, getCharges, updateCharge } from '../../../services/charges.services';
 import './charges.css';
-import { useState, useEffect, useCallback } from 'react';
 import Alert from '../../../components/alert/alert';
 import Toast from '../../../components/toast/toast';
-
-interface Charge {
-  id: string;
-  cargo: string;
-  descripcion: string;
-}
+import useCharges from '../../../hooks/charges.hook/useCharges';
 
 const Charges = (): JSX.Element => {
-  const [charges, setCharges] = useState<Charge[]>([]);
-  const [filteredCharges, setFilteredCharges] = useState<Charge[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const {
+    charges,
+    filteredCharges,
+    currentPage,
+    itemsPerPage,
+    selectedCharge,
+    showAlertRegister,
+    showToast,
+    toastMessage,
+    toastVariant,
+    showAlertEdit,
+    handleFormSubmit,
+    handleAddCharge,
+    handleFilterChange,
+    handleViewCharge,
+    handleEditCharge,
+    handleEditFormSubmit,
+    handleEditChargeSubmit,
+    setCurrentPage,
+    setItemsPerPage,
+    setShowAlertRegister,
+    setShowAlertEdit,
+  } = useCharges();
+
   const [modalAddForm, setModalAddForm] = useState(false);
   const [modalViewItem, setModalViewItem] = useState<boolean>(false);
   const [modalEditItem, setModalEditItem] = useState<boolean>(false);
-  const [selectedCharge, setSelectedCharge] = useState<Charge | null>(null);
-  const [showAlertRegister, setShowAlertRegister] = useState(false);
-  const [chargeToAdd, setChargeToAdd] = useState<Record<string, any> | null>(null);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
-  const [toastVariant, setToastVariant] = useState<'success' | 'danger'>('success');
-  const [showAlertEdit, setShowAlertEdit] = useState(false);
-  const [chargeToEdit, setChargeToEdit] = useState<Record<string, any> | null>(null);
 
   const formFields = [
     { name: 'cargo', label: 'Cargo', type: 'text' as 'text', required: true, placeholder: 'Ingrese el cargo' },
@@ -40,122 +46,15 @@ const Charges = (): JSX.Element => {
     { name: 'cargo', label: 'Buscar por Cargo', type: 'text' as 'text', placeholder: 'Ejemplo: Gerente' },
   ];
 
-  useEffect(() => {
-    const fetchCharges = async () => {
-      try {
-        const data = await getCharges();
-        setCharges(data);
-        setFilteredCharges(data);
-      } catch (error) {
-        console.error('Failed to fetch charges', error)
-      }
-    }
-
-    fetchCharges()
-  }, []);
-
-  const handleFormSubmit = useCallback((data: Record<string, any>) => {
-    setChargeToAdd(data); 
-    setShowAlertRegister(true);
-  }, []);
-
-  const handleAddCharge = async () => {
-    if (chargeToAdd) {
-      try {
-        const newCharge = await addCharge(chargeToAdd);
-        setCharges((prevCharges) => [...prevCharges, newCharge]);
-        setFilteredCharges((prevCharges) => [...prevCharges, newCharge]);
-        setToastMessage('Cargo agregado con éxito');
-        setToastVariant('success');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 4000);
-        setShowAlertRegister(false);
-        setChargeToAdd(null);
-        setModalAddForm(false);
-      } catch (error) {
-        setToastMessage('Error al agregar cargo.');
-        setToastVariant('danger');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 4000);
-        setShowAlertRegister(false);
-      }
-    }
-  };
-
-  const handleFilterChange = (filters: Record<string, string>) => {
-    const { cargo = '' } = filters;
-
-    const newFilteredCharges = charges.filter((charge) =>
-      charge.cargo.toLowerCase().includes(cargo.toLowerCase())
-    );
-    setFilteredCharges(newFilteredCharges);
-  };
-
-  const columns = [
-    { label: 'ID', item: 'id' as keyof Charge },
-    { label: 'Cargo', item: 'cargo' as keyof Charge },
-    { label: 'Descripción', item: 'descripcion' as keyof Charge },
-    { label: 'Acciones', item: 'acciones' as keyof Charge },
-  ];
-
-  const handleViewCharge = async (id: string) => {
-    const charge = await getChargeById(id);
-    if (charge) {
-      setSelectedCharge(charge)
-      setModalViewItem(true)
-    }
-  };
-
-  const handleEditCharge = async (id: string) => {
-    const charge = await getChargeById(id);
-    if (charge) {
-      setSelectedCharge(charge)
-      setModalEditItem(true)
-    }
-  };
-
-  const handleEditFormSubmit = useCallback((data: Record<string, any>) => {
-    setChargeToEdit(data);
-    setShowAlertEdit(true);
-  }, []);
-
-  const handleEditChargeSubmit = async () => {
-    if (chargeToEdit) {
-      try {
-        const updatedCharge = await updateCharge(chargeToEdit);
-        setCharges((prevCharges) =>
-          prevCharges.map(item =>
-            item.id === updatedCharge.id ? updatedCharge : item
-          )
-        );
-        setToastMessage('Cargo editado con éxito');
-        setToastVariant('success');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 4000);
-        setShowAlertEdit(false);
-        setChargeToEdit(null);
-        setModalEditItem(false);
-      } catch (error) {
-        setToastMessage('Error al editar cargo.');
-        setToastVariant('danger');
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 4000);
-        setShowAlertEdit(false);
-      }
-    }
-  };
-
   const handleAlertCancel = useCallback(() => {
     setShowAlertRegister(false);
-    setChargeToAdd(null); 
-    setModalAddForm(false); 
-  }, []);
+    setModalAddForm(false);
+  }, [setShowAlertRegister]);
 
   const handleAlertEditCancel = useCallback(() => {
     setShowAlertEdit(false);
-    setChargeToEdit(null);
     setModalEditItem(false);
-  }, []);
+  }, [setShowAlertEdit]);
 
   return (
     <div className="charges">
@@ -187,7 +86,12 @@ const Charges = (): JSX.Element => {
       <div className="charges__content charges__content--table">
         <TableDataContent
           data={filteredCharges}
-          columns={columns}
+          columns={[
+            { label: 'ID', item: 'id' as keyof Charge },
+            { label: 'Cargo', item: 'cargo' as keyof Charge },
+            { label: 'Descripción', item: 'descripcion' as keyof Charge },
+            { label: 'Acciones', item: 'acciones' as keyof Charge },
+          ]}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
           onPageChange={setCurrentPage}
