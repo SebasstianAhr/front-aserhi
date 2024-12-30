@@ -3,6 +3,8 @@ import { createContext, useState, useEffect, ReactNode } from "react";
 interface User {
   identification: string;
   email: string;
+  name: string;
+  lastName: string;
 }
 
 interface AuthContextType {

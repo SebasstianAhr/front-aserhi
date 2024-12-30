@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import imgProfile from '../../assets/profile-image.jpg';
 import './menu-profile.css';
 import { AuthContext } from '../../context/auth-context';
 import LogoutButton from '../logout-button/logout-button';
@@ -12,9 +13,8 @@ const MenuProfile = (): JSX.Element => {
   };
 
   return (
-    <div className='menu__profile'>
+    <div onClick={toggleDropdown} className='menu__profile'>
       <svg
-        onClick={toggleDropdown}
         xmlns="http://www.w3.org/2000/svg"
         color='#000'
         width={15}
@@ -27,10 +27,15 @@ const MenuProfile = (): JSX.Element => {
       >
         <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
       </svg>
-      {isOpen && authContext && authContext.user && (
-        <div className='dropdown'>
-          <p>{authContext.user.identification}</p>
-          <p>{authContext.user.email}</p>
+      {authContext && authContext.user && (
+        <div className={`dropdown ${isOpen ? 'dropdown__show' : 'dropdown__hide'}`}>
+          <div className='dropdown__content'>
+            <img className='img__profile-menu' src={imgProfile} alt="profile image" />
+            <div>
+              <p>{authContext.user.name} {authContext.user.lastName}</p>
+              <p>{authContext.user.email}</p>
+            </div>
+          </div>
           <LogoutButton />
         </div>
       )}
