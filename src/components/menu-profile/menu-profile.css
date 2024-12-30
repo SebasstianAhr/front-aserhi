@@ -1,5 +1,40 @@
-.menu__profile{
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 0.6rem;
-}
+.menu__profile {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .menu__profile svg {
+    cursor: pointer;
+  }
+  
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 1000;
+    width: 200px;
+  }
+  
+  .dropdown p {
+    margin: 5px 0;
+  }
+  
+  .log__out {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    color: #84cc16;
+  }
+  
+  .log__out svg {
+    margin-right: 8px;
+  }
+  
+  .log__out:hover {
+    color: #6aa84f;
+  }
