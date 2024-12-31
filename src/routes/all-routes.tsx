@@ -16,6 +16,7 @@ import ContractClauses from "../pages/admin/contract-clauses/contract-clauses";
 import WasteManagement from "../pages/admin/waste-management/waste-management";
 import ForgotPassword from "../pages/forgot-password/forgot-password";
 import PrivateRoute from "./private-routes";
+import Downloads from "../pages/downloads/downloads";
 
 const AllRoutes = () => {
   return (
@@ -38,6 +39,7 @@ const AllRoutes = () => {
               <Route path={PageRouterEnum.Profiles} element={<Profiles />} />
               <Route path={PageRouterEnum.WasteManagement} element={<WasteManagement />} />
               <Route path={PageRouterEnum.ContractClauses} element={<ContractClauses />} />
+              <Route path={PageRouterEnum.Downloads} element={<Downloads />} />
             </Routes>
           </LayoutGeneral>
         } />
