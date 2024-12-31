@@ -31,8 +31,8 @@ const ItemNavigationMenu = ({ menuItems }: ItemNavigationMenuProps): JSX.Element
                 <ul className="item__submodule-list">
                   {item.subMenus.map((subMenu: MenuItem) => (
                     <li key={subMenu.title} className="item__submenu">
-                      {subMenu.icon}
-                      <Link to={subMenu.link} className='item__submenu-link'>
+                      <Link to={subMenu.link} className="item__submenu-link">
+                        {subMenu.icon}
                         <span>{subMenu.title}</span>
                       </Link>
                     </li>
