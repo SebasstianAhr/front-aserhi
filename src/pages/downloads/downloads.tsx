@@ -1,30 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { EmployeesData } from '../../core/mocks/mock-data-employees';
-
-interface Employee {
-  id: string;
-  nombres: string;
-  apellidos: string;
-  tipoIdentificacion: string;
-  identificacion: string;
-  telefono: string;
-  telefonoCorporativo: string;
-  fechaNacimiento: string;
-  direccion: string;
-  municipio: string;
-  eps: string;
-  riesgosLaborales: string;
-  fondoPensiones: string;
-  area: string;
-  cargo: string;
-  perfil: string;
-  fechaIngreso: string;
-  estado: boolean;
-  correo: string;
-  password: string;
-}
+import { getEmployees } from '../../services/employees.services';
+import SearchFilter from '../../components/search-filter/search-filter';
+import { Employee } from '../../core/interface/employee.interface';
+import './downloads.css';
 
 const generatePDF = (selectedEmployees: Employee[]) => {
   const doc = new jsPDF();
@@ -49,10 +29,25 @@ const generatePDF = (selectedEmployees: Employee[]) => {
 };
 
 const Downloads: React.FC = () => {
-  const [selectedEmployees, setSelectedEmployees] = useState<Employee[]>(EmployeesData);
+  const selectAllByDefault = false;
+  const [employees, setEmployees] = useState<Employee[]>([]);
+  const [selectedEmployees, setSelectedEmployees] = useState<Employee[]>([]);
+  const [filters, setFilters] = useState<Record<string, any>>({});
+
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      const data = getEmployees();
+      setEmployees(data);
+      if (selectAllByDefault) {
+        setSelectedEmployees(data);
+      }
+    };
+
+    fetchEmployees();
+  }, [selectAllByDefault]);
 
   const handleSelectAll = () => {
-    setSelectedEmployees(EmployeesData);
+    setSelectedEmployees(employees);
   };
 
   const handleSelectNone = () => {
@@ -64,24 +59,54 @@ const Downloads: React.FC = () => {
     if (isSelected) {
       setSelectedEmployees(selectedEmployees.filter(employee => employee.id !== id));
     } else {
-      const employee = EmployeesData.find(employee => employee.id === id);
+      const employee = employees.find(employee => employee.id === id);
       if (employee) {
         setSelectedEmployees([...selectedEmployees, employee]);
       }
     }
   };
 
+  const handleFilterChange = (newFilters: Record<string, any>) => {
+    setFilters(newFilters);
+  };
+
+  const filteredEmployees = employees.filter(employee => {
+    return (
+      (filters.nombres ? employee.nombres.toLowerCase().includes(filters.nombres.toLowerCase()) : true) &&
+      (filters.apellidos ? employee.apellidos.toLowerCase().includes(filters.apellidos.toLowerCase()) : true)
+    );
+  });
+
+  const sortedEmployees = filteredEmployees.sort((a, b) => a.nombres.localeCompare(b.nombres));
+
+  const fieldsFilter = [
+    { name: "nombres", label: "Nombres", type: "text", placeholder: "Buscar por nombres" },
+    { name: "apellidos", label: "Apellidos", type: "text", placeholder: "Buscar por apellidos" },
+  ];
+
   return (
-    <div>
-      <h1>Descargar Lista de Empleados</h1>
-      <button onClick={() => generatePDF(selectedEmployees)}>Descargar PDF</button>
-      <button onClick={handleSelectAll}>Seleccionar Todos</button>
-      <button onClick={handleSelectNone}>Deseleccionar Todos</button>
-      <ul>
-        {EmployeesData.map(employee => (
-          <li key={employee.id}>
+    <div className="downloads">
+      <div className="downloads__header">
+        <h1 className="downloads__title">Descargar Registro de Empleados</h1>
+      </div>
+      <SearchFilter fieldsFilter={fieldsFilter} onFilterChange={handleFilterChange} />
+      <div className="downloads__buttons">
+        <button
+          className="downloads__button"
+          onClick={() => generatePDF(selectedEmployees)}
+          disabled={selectedEmployees.length === 0}
+        >
+          Descargar PDF
+        </button>
+        <button className="downloads__button" onClick={handleSelectAll}>Seleccionar Todos</button>
+        <button className="downloads__button" onClick={handleSelectNone}>Deseleccionar Todos</button>
+      </div>
+      <ul className="downloads__list">
+        {sortedEmployees.map(employee => (
+          <li key={employee.id} className="downloads__list-item">
             <input
               type="checkbox"
+              className="downloads__checkbox"
               checked={selectedEmployees.some(e => e.id === employee.id)}
               onChange={() => handleSelectEmployee(employee.id)}
             />
