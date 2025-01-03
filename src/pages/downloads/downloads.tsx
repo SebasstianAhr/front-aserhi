@@ -5,6 +5,7 @@ import { getEmployees } from '../../services/employees.services';
 import SearchFilter from '../../components/search-filter/search-filter';
 import { Employee } from '../../core/interface/employee.interface';
 import './downloads.css';
+import Pagination from '../../components/pagination.tsx/pagination';
 
 const generatePDF = (selectedEmployees: Employee[]) => {
   const doc = new jsPDF();
@@ -33,6 +34,8 @@ const Downloads: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [selectedEmployees, setSelectedEmployees] = useState<Employee[]>([]);
   const [filters, setFilters] = useState<Record<string, any>>({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -79,6 +82,12 @@ const Downloads: React.FC = () => {
 
   const sortedEmployees = filteredEmployees.sort((a, b) => a.nombres.localeCompare(b.nombres));
 
+  const totalPages = Math.ceil(sortedEmployees.length / itemsPerPage);
+  const currentData = sortedEmployees.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   const fieldsFilter = [
     { name: "nombres", label: "Nombres", type: "text", placeholder: "Buscar por nombres" },
     { name: "apellidos", label: "Apellidos", type: "text", placeholder: "Buscar por apellidos" },
@@ -102,7 +111,7 @@ const Downloads: React.FC = () => {
         <button className="downloads__button" onClick={handleSelectNone}>Deseleccionar Todos</button>
       </div>
       <ul className="downloads__list">
-        {sortedEmployees.map(employee => (
+        {currentData.map(employee => (
           <li key={employee.id} className="downloads__list-item">
             <input
               type="checkbox"
@@ -114,6 +123,11 @@ const Downloads: React.FC = () => {
           </li>
         ))}
       </ul>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 };
