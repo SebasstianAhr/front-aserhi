@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import imgProfile from '../../assets/profile-image.jpg';
 import './menu-profile.css';
 import { AuthContext } from '../../context/auth-context';
@@ -7,13 +7,27 @@ import LogoutButton from '../logout-button/logout-button';
 const MenuProfile = (): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const authContext = useContext(AuthContext);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div onClick={toggleDropdown} className='menu__profile'>
+    <div ref={dropdownRef} onClick={toggleDropdown} className='menu__profile'>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         color='#000'

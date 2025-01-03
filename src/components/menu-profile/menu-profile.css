@@ -15,7 +15,6 @@
   background-color: #3838388f;
   border: 1px solid #ccc;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.596);
-  padding: 1rem;  
   z-index: 50;
   width: 300px;
   opacity: 0;
@@ -42,7 +41,7 @@
 .dropdown__content {
   display: flex;
   gap: 0.7rem;
-  padding: 1rem 0;
+  padding: 1rem 1rem 2rem 1rem;
   border-bottom: 1px solid #ccc;
 }
 
