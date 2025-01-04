@@ -42,51 +42,51 @@ const SearchFilter = ({ fieldsFilter, onFilterChange }: SearchFilterProps): JSX.
 
   return (
     <form className="filter">
-    <div className="filter__content">
-      {fieldsFilter.map((fieldFilter) => (
-        <div key={fieldFilter.name} className="filter__group">
-          <label className="filter__label" htmlFor={fieldFilter.name}>
-            {fieldFilter.label}
-          </label>
-          {fieldFilter.type === "select" ? (
-            <select
-              className="filter__input filter__input--select"
-              id={fieldFilter.name}
-              name={fieldFilter.name}
-              onChange={handleInputChange}
-              value={filters[fieldFilter.name] || "all"}
-            >
-              <option className="filter__option" value="all">All</option>
-              {fieldFilter.options?.map((option) => (
-                <option className="filter__option" key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <input
-              className="filter__input filter__input--text"
-              id={fieldFilter.name}
-              name={fieldFilter.name}
-              type={fieldFilter.type}
-              placeholder={fieldFilter.placeholder}
-              value={filters[fieldFilter.name] || ""}
-              onChange={handleInputChange}
-            />
-          )}
-        </div>
-      ))}
-    </div>
-    <div className="filter__actions">
-      <button
-        type="button"
-        className="filter__clear--button"
-        onClick={handleClearFilters}
-      >
-        Limpiar
-      </button>
-    </div>
-  </form>  
+      <div className="filter__content">
+        {fieldsFilter.map((fieldFilter) => (
+          <div key={fieldFilter.name} className="filter__group">
+            <label className="filter__label" htmlFor={fieldFilter.name}>
+              {fieldFilter.label}
+            </label>
+            {fieldFilter.type === "select" ? (
+              <select
+                className="filter__input filter__input--select"
+                id={fieldFilter.name}
+                name={fieldFilter.name}
+                onChange={handleInputChange}
+                value={filters[fieldFilter.name] || "all"}
+              >
+                <option className="filter__option" value="all">All</option>
+                {fieldFilter.options?.map((option) => (
+                  <option className="filter__option" key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                className="filter__input filter__input--text"
+                id={fieldFilter.name}
+                name={fieldFilter.name}
+                type={fieldFilter.type}
+                placeholder={fieldFilter.placeholder}
+                value={filters[fieldFilter.name] || ""}
+                onChange={handleInputChange}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="filter__actions">
+        <button
+          type="button"
+          className="filter__clear--button"
+          onClick={handleClearFilters}
+        >
+          Limpiar
+        </button>
+      </div>
+    </form>
   );
 };
 

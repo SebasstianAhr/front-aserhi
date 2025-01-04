@@ -3,6 +3,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { getEmployees } from '../../services/employees.services';
 import SearchFilter from '../../components/search-filter/search-filter';
+import ItemsPerPageSelector from '../../components/items-per-page-selector/items-per-page-selector';
 import { Employee } from '../../core/interface/employee.interface';
 import './downloads.css';
 import Pagination from '../../components/pagination.tsx/pagination';
@@ -39,7 +40,7 @@ const Downloads: React.FC = () => {
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      const data = getEmployees();
+      const data = await getEmployees();
       setEmployees(data);
       if (selectAllByDefault) {
         setSelectedEmployees(data);
@@ -88,9 +89,9 @@ const Downloads: React.FC = () => {
     currentPage * itemsPerPage
   );
 
-  const fieldsFilter = [
-    { name: "nombres", label: "Nombres", type: "text", placeholder: "Buscar por nombres" },
-    { name: "apellidos", label: "Apellidos", type: "text", placeholder: "Buscar por apellidos" },
+  const fieldsFilter: FilterField[] = [
+    { name: "nombres", label: "Nombres", type: 'text', placeholder: "Buscar por nombres" },
+    { name: "apellidos", label: "Apellidos", type: 'text', placeholder: "Buscar por apellidos" },
   ];
 
   return (
@@ -110,8 +111,14 @@ const Downloads: React.FC = () => {
         <button className="downloads__button" onClick={handleSelectAll}>Seleccionar Todos</button>
         <button className="downloads__button" onClick={handleSelectNone}>Deseleccionar Todos</button>
       </div>
+      <div className='downloads__items-per-page'>
+        <ItemsPerPageSelector
+          itemsPerPage={itemsPerPage}
+          onItemsPerPageChange={setItemsPerPage}
+        />
+      </div>
       <ul className="downloads__list">
-        {currentData.map(employee => (
+        {currentData.map(employee => (  
           <li key={employee.id} className="downloads__list-item">
             <input
               type="checkbox"

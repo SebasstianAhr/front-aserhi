@@ -62,3 +62,8 @@
   .downloads__checkbox {
     margin-right: 10px;
   }
+
+  .downloads__items-per-page{
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #d1d5db;
+  }

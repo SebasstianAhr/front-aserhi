@@ -1,3 +1,4 @@
+import ItemsPerPageSelector from '../items-per-page-selector/items-per-page-selector';
 import Pagination from '../pagination.tsx/pagination';
 import './table-data-content.css';
 import { useEffect, useState } from 'react';
@@ -60,12 +61,6 @@ const TableDataContent = <T,>({
     currentPage * itemsPerPage
   );
 
-  const handleItemsPerPageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = Number(e.target.value);
-    onItemsPerPageChange(value);
-    onPageChange(1);
-  };
-
   const handleSortOrderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortOrder(e.target.value as 'asc' | 'desc');
   };
@@ -77,24 +72,12 @@ const TableDataContent = <T,>({
   return (
     <div>
       <div className="table__controls">
-        <label htmlFor="itemsPerPage">
-          Mostrar:
-          <select
-            id="itemsPerPage"
-            value={itemsPerPage}
-            onChange={handleItemsPerPageChange}
-          >
-            {Array.from(
-              { length: (maxItemsPerPage - minItemsPerPage) / 5 + 1 },
-              (_, i) => minItemsPerPage + i * 5
-            ).map((value) => (
-              <option key={value} value={value}>
-                {value}
-              </option>
-            ))}
-          </select>
-          por página
-        </label>
+        <ItemsPerPageSelector
+          itemsPerPage={itemsPerPage}
+          onItemsPerPageChange={onItemsPerPageChange}
+          maxItemsPerPage={maxItemsPerPage}
+          minItemsPerPage={minItemsPerPage}
+        />
         {enableSorting && (
           <>
             <label htmlFor="sortOrder">
