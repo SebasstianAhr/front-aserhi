@@ -1,13 +1,10 @@
-import { useForm } from "react-hook-form";
+import { ForgotPasswordFormInputs } from "../../core/interface/forgot-password.interface";
 import { requestPasswordReset } from "../../services/auth.services";
+import { PageRouterEnum } from "../../core/enum/page-router.enum";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import './forgot-password.css';
-import { Link } from "react-router-dom";
-import { PageRouterEnum } from "../../core/enum/page-router.enum";
-
-interface ForgotPasswordFormInputs {
-  email: string;
-}
 
 const ForgotPassword = (): JSX.Element => {
   const { register, handleSubmit, formState: { errors } } = useForm<ForgotPasswordFormInputs>();

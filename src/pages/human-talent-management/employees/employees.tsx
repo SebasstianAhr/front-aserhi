@@ -11,16 +11,9 @@ import Toast from '../../../components/toast/toast';
 import useEmployees from '../../../hooks/employees.hook/useEmployees';
 import useModal from '../../../hooks/employees.hook/useModal';
 import useToast from '../../../hooks/employees.hook/useToast';
+import { EmployeeFormInputs } from '../../../core/interface/employee.interface';
 
-interface Employee {
-  id: string;
-  nombres: string;
-  apellidos: string;
-  identificacion: string;
-  telefono: string;
-  cargo: string;
-  estado: boolean;
-}
+
 
 const Employees = (): JSX.Element => {
   const {
@@ -38,7 +31,7 @@ const Employees = (): JSX.Element => {
   const modalEditItem = useModal();
   const { showToast, toastMessage, toastVariant, showToastMessage } = useToast();
 
-  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+  const [selectedEmployee, setSelectedEmployee] = useState<EmployeeFormInputs | null>(null);
   const [employeeToAdd, setEmployeeToAdd] = useState<Record<string, any> | null>(null);
   const [employeeToEdit, setEmployeeToEdit] = useState<Record<string, any> | null>(null);
   const [showAlertRegister, setShowAlertRegister] = useState(false);
@@ -204,14 +197,14 @@ const Employees = (): JSX.Element => {
   }, []);
 
   const columns = [
-    { label: 'ID', item: 'id' as keyof Employee },
-    { label: 'Nombre', item: 'nombres' as keyof Employee },
-    { label: 'Apellido', item: 'apellidos' as keyof Employee },
-    { label: 'Teléfono', item: 'telefono' as keyof Employee },
-    { label: 'Identificación', item: 'identificacion' as keyof Employee },
-    { label: 'Cargo', item: 'cargo' as keyof Employee },
-    { label: 'Estado', item: 'estado' as keyof Employee },
-    { label: 'Acciones', item: 'acciones' as keyof Employee },
+    { label: 'ID', item: 'id' as keyof EmployeeFormInputs },
+    { label: 'Nombre', item: 'nombres' as keyof EmployeeFormInputs },
+    { label: 'Apellido', item: 'apellidos' as keyof EmployeeFormInputs },
+    { label: 'Teléfono', item: 'telefono' as keyof EmployeeFormInputs },
+    { label: 'Identificación', item: 'identificacion' as keyof EmployeeFormInputs },
+    { label: 'Cargo', item: 'cargo' as keyof EmployeeFormInputs },
+    { label: 'Estado', item: 'estado' as keyof EmployeeFormInputs },
+    { label: 'Acciones', item: 'acciones' as keyof EmployeeFormInputs },
   ];
 
   return (
@@ -242,7 +235,7 @@ const Employees = (): JSX.Element => {
         <SearchFilter fieldsFilter={fieldFilter} onFilterChange={handleFilterChange} />
       </div>
       <div className='employees__content employees__content--table'>
-        <TableDataContent<Employee>
+        <TableDataContent<EmployeeFormInputs>
           data={filteredEmployees}
           columns={columns}
           itemsPerPage={itemsPerPage}

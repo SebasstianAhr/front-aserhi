@@ -1,11 +1,8 @@
+import { ChildrenProps } from "../../core/interface/layout-general.interface";
+import BurgerMenu from "../../components/burger-menu/burger-menu";
 import Sidebar from "../../components/sidebar/sidebar";
 import Navbar from "../../components/navbar/navbar";
-import BurgerMenu from "../../components/burger-menu/burger-menu";
 import "./layout-general.css";
-
-interface ChildrenProps {
-    children: JSX.Element;
-}
 
 const LayoutGeneral = ({ children }: ChildrenProps): JSX.Element => {
 

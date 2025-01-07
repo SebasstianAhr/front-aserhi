@@ -20,3 +20,13 @@ export interface Employee {
     correo: string;
     password: string;
   }
+
+  export interface EmployeeFormInputs {
+    id: string;
+  nombres: string;
+  apellidos: string;
+  identificacion: string;
+  telefono: string;
+  cargo: string;
+  estado: boolean;
+  }
