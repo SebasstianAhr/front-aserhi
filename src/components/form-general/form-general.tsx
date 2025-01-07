@@ -1,32 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useEffect } from "react";
 import './form-general.css';
-
-type InputType = "text" | "email" | "number" | "select" | "password" | "tel" | "date";
-
-interface Option {
-  label: string;
-  value: string;
-}
-
-interface FormField {
-  name: string;
-  label: string;
-  type: InputType;
-  placeholder?: string;
-  options?: Option[];
-  required?: boolean;
-}
-
-interface GeneralFormProps {
-  fieldsForm: FormField[];
-  onSubmit: (data: any) => void;
-  principalButtonForm?: string;
-  showButtonSubmit: boolean;
-  valueEmployees?: any;
-  isRegisterMode?: boolean;
-  isViewMode?: boolean;
-}
+import { GeneralFormProps } from "../../core/interface/form-general.interface";
 
 const GeneralForm = ({
   fieldsForm,

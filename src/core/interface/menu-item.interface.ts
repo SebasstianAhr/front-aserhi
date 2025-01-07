@@ -4,3 +4,7 @@ export  interface MenuItem {
     subMenus: MenuItem[];
     link: string
 }
+
+export interface ItemNavigationMenuProps {
+    menuItems: MenuItem[];
+  }

@@ -2,10 +2,7 @@ import { useState } from 'react';
 import './burger-menu.css'
 import Sidebar from '../sidebar/sidebar';
 
-const BurgerMenu = () => {
-
-
-
+const BurgerMenu = (): JSX.Element => {
     const [isOpen, setIsOpen] = useState(false)
 
     const toggleMenu = () => {

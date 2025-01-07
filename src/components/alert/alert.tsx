@@ -1,13 +1,10 @@
 import "./alert.css"
 import { IconAlerts } from "../../core/utils/alert-icons.util";
+import { AlertProps } from "../../core/interface/alert-props.interface";
 
-interface AlertProps {
-  message: string;
-  onCancel: () => void;
-  onContinue: () => void;
-}
 
-const Alert: React.FC<AlertProps> = ({ message, onCancel, onContinue }) => {
+
+const Alert = ({ message, onCancel, onContinue }: AlertProps):JSX.Element => {
   return (
     <div className="alert__overlay">
       <div className="alert__box">

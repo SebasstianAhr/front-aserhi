@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { getEmployees } from '../../services/employees.services';
@@ -30,7 +30,7 @@ const generatePDF = (selectedEmployees: Employee[]) => {
   doc.save(`empleados_${new Date().toISOString()}.pdf`);
 };
 
-const Downloads: React.FC = () => {
+const Downloads = ():JSX.Element => {
   const selectAllByDefault = false;
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [selectedEmployees, setSelectedEmployees] = useState<Employee[]>([]);
@@ -89,7 +89,7 @@ const Downloads: React.FC = () => {
     currentPage * itemsPerPage
   );
 
-  const fieldsFilter: FilterField[] = [
+  const fieldsFilter = [
     { name: "nombres", label: "Nombres", type: 'text', placeholder: "Buscar por nombres" },
     { name: "apellidos", label: "Apellidos", type: 'text', placeholder: "Buscar por apellidos" },
   ];

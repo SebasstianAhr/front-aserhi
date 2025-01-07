@@ -1,19 +1,14 @@
-import React from 'react';
 import './items-per-page-selector.css';
+import { ItemsPerPageSelectorProps } from '../../core/interface/items-per-page-selector.interface';
 
-interface ItemsPerPageSelectorProps {
-  itemsPerPage: number;
-  onItemsPerPageChange: (itemsPerPage: number) => void;
-  maxItemsPerPage?: number;
-  minItemsPerPage?: number;
-}
 
-const ItemsPerPageSelector: React.FC<ItemsPerPageSelectorProps> = ({
+
+const ItemsPerPageSelector = ({
   itemsPerPage,
   onItemsPerPageChange,
   maxItemsPerPage = 30,
   minItemsPerPage = 5,
-}) => {
+}: ItemsPerPageSelectorProps): JSX.Element => {
   const handleItemsPerPageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = Number(e.target.value);
     onItemsPerPageChange(value);
