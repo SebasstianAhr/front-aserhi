@@ -1,6 +1,6 @@
-import "./alert.css"
-import { IconAlerts } from "../../core/utils/alert-icons.util";
 import { AlertProps } from "../../core/interface/alert-props.interface";
+import { IconAlerts } from "../../core/utils/alert-icons.util";
+import "./alert.css"
 
 
 

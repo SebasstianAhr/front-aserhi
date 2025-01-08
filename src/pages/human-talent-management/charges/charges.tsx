@@ -1,12 +1,13 @@
-import { useState, useCallback } from 'react';
-import GeneralForm from '../../../components/form-general/form-general';
+import TableDataContent from '../../../components/table-data-content/table-data-content';
 import ModalGeneral from '../../../components/modal-general/modal-general';
 import SearchFilter from '../../../components/search-filter/search-filter';
-import TableDataContent from '../../../components/table-data-content/table-data-content';
-import './charges.css';
+import GeneralForm from '../../../components/form-general/form-general';
+import useCharges from '../../../hooks/charges.hook/useCharges';
 import Alert from '../../../components/alert/alert';
 import Toast from '../../../components/toast/toast';
-import useCharges from '../../../hooks/charges.hook/useCharges';
+import { useState, useCallback } from 'react';
+import './charges.css';
+import { formFields } from '../../../core/utils/charges-template.util';
 
 const Charges = (): JSX.Element => {
   const {
@@ -37,10 +38,6 @@ const Charges = (): JSX.Element => {
   const [modalViewItem, setModalViewItem] = useState<boolean>(false);
   const [modalEditItem, setModalEditItem] = useState<boolean>(false);
 
-  const formFields = [
-    { name: 'cargo', label: 'Cargo', type: 'text' as 'text', required: true, placeholder: 'Ingrese el cargo' },
-    { name: 'descripcion', label: 'Descripción', type: 'text' as 'text', required: true, placeholder: 'Ingrese la descripción' },
-  ];
 
   const filterFields = [
     { name: 'cargo', label: 'Buscar por Cargo', type: 'text' as 'text', placeholder: 'Ejemplo: Gerente' },

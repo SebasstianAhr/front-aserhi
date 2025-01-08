@@ -1,7 +1,5 @@
-import './items-per-page-selector.css';
 import { ItemsPerPageSelectorProps } from '../../core/interface/items-per-page-selector.interface';
-
-
+import './items-per-page-selector.css';
 
 const ItemsPerPageSelector = ({
   itemsPerPage,

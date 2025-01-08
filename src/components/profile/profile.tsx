@@ -1,8 +1,8 @@
-import { useContext } from 'react';
-import MenuProfile from '../menu-profile/menu-profile';
-import imgProfile from '../../assets/profile-image.jpg';
-import './profile.css';
 import { AuthContext } from '../../context/auth-context';
+import imgProfile from '../../assets/profile-image.jpg';
+import MenuProfile from '../menu-profile/menu-profile';
+import { useContext } from 'react';
+import './profile.css';
 
 const Profile = (): JSX.Element => {
   const authContext = useContext(AuthContext);

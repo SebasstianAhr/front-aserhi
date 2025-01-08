@@ -1,14 +1,8 @@
-import React from 'react';
+import { ToastProps } from '../../core/interface/toast.interface';
 import { IconAlerts } from '../../core/utils/alert-icons.util';
 import './toast.css';
 
-interface ToastProps {
-  variantAlert: 'success' | 'danger' | 'warning' | 'info';
-  message: string;
-  show: boolean;
-}
-
-const Toast: React.FC<ToastProps> = ({ variantAlert, message, show }) => {
+const Toast = ({ variantAlert, message, show }: ToastProps): JSX.Element => {
   const classVariants = {
     success: 'toast__box toast__box--success',
     danger: 'toast__box toast__box--danger',

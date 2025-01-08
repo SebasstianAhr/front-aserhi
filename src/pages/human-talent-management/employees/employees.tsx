@@ -1,17 +1,19 @@
 import { getEmployeeById, addEmployee, updateEmployee } from '../../../services/employees.services';
 import TableDataContent from '../../../components/table-data-content/table-data-content';
-import SearchFilter from '../../../components/search-filter/search-filter';
+import { EmployeeFormInputs } from '../../../core/interface/employee.interface';
+import { columnsEmployees } from '../../../core/utils/colums-table-data.util';
 import ModalGeneral from '../../../components/modal-general/modal-general';
+import SearchFilter from '../../../components/search-filter/search-filter';
 import GeneralForm from '../../../components/form-general/form-general';
+import useEmployees from '../../../hooks/employees.hook/useEmployees';
 import { formFields } from '../../../core/utils/user-template.util';
+import { fieldFilter } from '../../../core/utils/field-filter.util';
+import useToast from '../../../hooks/employees.hook/useToast';
+import useModal from '../../../hooks/employees.hook/useModal';
 import { useCallback, useState, useEffect } from 'react';
-import './employees.css';
 import Alert from '../../../components/alert/alert';
 import Toast from '../../../components/toast/toast';
-import useEmployees from '../../../hooks/employees.hook/useEmployees';
-import useModal from '../../../hooks/employees.hook/useModal';
-import useToast from '../../../hooks/employees.hook/useToast';
-import { EmployeeFormInputs } from '../../../core/interface/employee.interface';
+import './employees.css';
 
 
 
@@ -36,34 +38,6 @@ const Employees = (): JSX.Element => {
   const [employeeToEdit, setEmployeeToEdit] = useState<Record<string, any> | null>(null);
   const [showAlertRegister, setShowAlertRegister] = useState(false);
   const [showAlertEdit, setShowAlertEdit] = useState(false);
-
-  const fieldFilter = [
-    {
-      name: "search",
-      label: "Buscar",
-      type: "text" as "text",
-      placeholder: "Buscar por nombre, apellido o identificación",
-    },
-    {
-      name: "cargo",
-      label: "Cargo",
-      type: "select" as "select",
-      options: [
-        { label: "Super Administrador", value: "Super Administrador" },
-        { label: "Conductor", value: "Conductor" },
-        { label: "Ayudante de obra", value: "Ayudante de obra" },
-      ],
-    },
-    {
-      name: "estado",
-      label: "Estado",
-      type: "select" as "select",
-      options: [
-        { label: "Activo", value: "Activo" },
-        { label: "Inactivo", value: "Inactivo" },
-      ],
-    },
-  ];
 
   const handleFormSubmit = useCallback((data: Record<string, any>) => {
     setEmployeeToAdd(data);
@@ -196,17 +170,6 @@ const Employees = (): JSX.Element => {
     };
   }, []);
 
-  const columns = [
-    { label: 'ID', item: 'id' as keyof EmployeeFormInputs },
-    { label: 'Nombre', item: 'nombres' as keyof EmployeeFormInputs },
-    { label: 'Apellido', item: 'apellidos' as keyof EmployeeFormInputs },
-    { label: 'Teléfono', item: 'telefono' as keyof EmployeeFormInputs },
-    { label: 'Identificación', item: 'identificacion' as keyof EmployeeFormInputs },
-    { label: 'Cargo', item: 'cargo' as keyof EmployeeFormInputs },
-    { label: 'Estado', item: 'estado' as keyof EmployeeFormInputs },
-    { label: 'Acciones', item: 'acciones' as keyof EmployeeFormInputs },
-  ];
-
   return (
     <div className='employees'>
       <h1 className='employees__title'>Gestión de Empleados</h1>
@@ -237,7 +200,7 @@ const Employees = (): JSX.Element => {
       <div className='employees__content employees__content--table'>
         <TableDataContent<EmployeeFormInputs>
           data={filteredEmployees}
-          columns={columns}
+          columns={columnsEmployees}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
           onPageChange={setCurrentPage}

@@ -1,7 +1,7 @@
-import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/auth-context';
 import { PageRouterEnum } from '../../core/enum/page-router.enum';
+import { AuthContext } from '../../context/auth-context';
+import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
 import Alert from '../alert/alert';
 import './logout-button.css';
 

@@ -1,7 +1,7 @@
+import { GeneralFormProps } from "../../core/interface/form-general.interface";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useEffect } from "react";
 import './form-general.css';
-import { GeneralFormProps } from "../../core/interface/form-general.interface";
 
 const GeneralForm = ({
   fieldsForm,

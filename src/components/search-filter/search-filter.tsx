@@ -1,25 +1,6 @@
 import React, { useState } from "react";
 import "./search-filter.css";
-
-type InputType = "text" | "select";
-
-interface Option {
-  label: string;
-  value: string;
-}
-
-interface FilterField {
-  name: string;
-  label: string;
-  type: InputType;
-  placeholder?: string;
-  options?: Option[];
-}
-
-interface SearchFilterProps {
-  fieldsFilter: FilterField[];
-  onFilterChange: (filters: Record<string, any>) => void;
-}
+import { SearchFilterProps } from "../../core/interface/search-filter.interface";
 
 const SearchFilter = ({ fieldsFilter, onFilterChange }: SearchFilterProps): JSX.Element => {
   const [filters, setFilters] = useState<Record<string, any>>({});

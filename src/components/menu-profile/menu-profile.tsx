@@ -1,8 +1,8 @@
 import { useState, useContext, useEffect, useRef } from 'react';
+import LogoutButton from '../logout-button/logout-button';
+import { AuthContext } from '../../context/auth-context';
 import imgProfile from '../../assets/profile-image.jpg';
 import './menu-profile.css';
-import { AuthContext } from '../../context/auth-context';
-import LogoutButton from '../logout-button/logout-button';
 
 const MenuProfile = (): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);

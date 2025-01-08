@@ -1,7 +1,7 @@
+import { ItemNavigationMenuProps, MenuItem } from '../../core/interface/menu-item.interface';
 import { Link } from 'react-router-dom';
 import './item-navigation-menu.css';
 import { useState } from 'react';
-import { ItemNavigationMenuProps, MenuItem } from '../../core/interface/menu-item.interface';
 
 const ItemNavigationMenu = ({ menuItems }: ItemNavigationMenuProps): JSX.Element => {
   const [openMenu, setOpenMenu] = useState<string | null>(null);

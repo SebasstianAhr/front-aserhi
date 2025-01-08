@@ -1,17 +1,5 @@
+import { AuthContextType, User } from "../core/interface/auth-context.interface";
 import { createContext, useState, useEffect, ReactNode } from "react";
-
-interface User {
-  identification: string;
-  email: string;
-  name: string;
-  lastName: string;
-}
-
-interface AuthContextType {
-  user: User | null;
-  login: (userData: User) => void;
-  logout: () => void;
-}
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

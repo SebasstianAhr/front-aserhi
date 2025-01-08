@@ -1,9 +1,9 @@
 import ItemNavigationMenu from '../item-navigation-menu/item-navigation-menu';
 import { MenuItem } from '../../core/interface/menu-item.interface';
 import { MenuItemsUtil } from '../../core/utils/menu-items.util';
+import LogoutButton from '../logout-button/logout-button';
 import logo from '../../assets/Logo.jpeg';
 import './sidebar.css';
-import LogoutButton from '../logout-button/logout-button';
 
 const Sidebar = (): JSX.Element => {
   const menuItems: MenuItem[] = MenuItemsUtil.getMenuItems();

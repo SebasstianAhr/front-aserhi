@@ -1,21 +1,8 @@
 import ItemsPerPageSelector from '../items-per-page-selector/items-per-page-selector';
+import { DataTableProps } from '../../core/interface/table-data.interface';
 import Pagination from '../pagination.tsx/pagination';
 import './table-data-content.css';
 import { useEffect, useState } from 'react';
-
-interface DataTableProps<T> {
-  data: T[];
-  columns: { label: string; item: keyof T }[];
-  itemsPerPage: number;
-  currentPage: number;
-  onPageChange: (page: number) => void;
-  onItemsPerPageChange: (itemsPerPage: number) => void;
-  maxItemsPerPage?: number;
-  minItemsPerPage?: number;
-  onViewEmployee: (id: string) => void;
-  onEditEmployee: (id: string) => void;
-  enableSorting?: boolean;
-}
 
 const TableDataContent = <T,>({
   data,
