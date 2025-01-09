@@ -1,4 +1,4 @@
-export const fieldFilter = [
+export const fieldFilterEmployee = [
     {
         name: "search",
         label: "Buscar",
@@ -25,3 +25,31 @@ export const fieldFilter = [
         ],
     },
 ];
+
+export const fieldFilterPotentialCustomer = [
+    {
+        name: "search",
+        label: "Buscar",
+        type: "text" as "text",
+        placeholder: "Buscar por nombre, razón social o identificación",
+    },
+    {
+        name: "tipoPersona",
+        label: "Tipo de persona",
+        type: "select" as "select",
+        options: [
+            { label: "Jurídica", value: "juridica" },
+            { label: "Natural", value: "natural" },
+        ],
+    },
+    {
+        name: "tamanoClientePotencial",
+        label: "Tamaño Cliente Potencial",
+        type: "select" as "select",
+        options: [
+            { label: "Grande", value: "grande" },
+            { label: "Mediano", value: "mediano" },
+            { label: "Pequeño", value: "pequeno" },
+        ],
+    },
+]

@@ -1,19 +1,11 @@
 import { useState, useEffect } from 'react';
 import { getEmployees } from '../../services/employees.services';
+import { EmployeeFormInputs } from '../../core/interface/employee.interface';
 
-interface Employee {
-  id: string;
-  nombres: string;
-  apellidos: string;
-  identificacion: string;
-  telefono: string;
-  cargo: string;
-  estado: boolean;
-}
 
 const useEmployees = () => {
-  const [employees, setEmployees] = useState<Employee[]>([]);
-  const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);
+  const [employees, setEmployees] = useState<EmployeeFormInputs[]>([]);
+  const [filteredEmployees, setFilteredEmployees] = useState<EmployeeFormInputs[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 

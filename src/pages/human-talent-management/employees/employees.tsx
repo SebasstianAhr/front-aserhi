@@ -7,7 +7,7 @@ import SearchFilter from '../../../components/search-filter/search-filter';
 import GeneralForm from '../../../components/form-general/form-general';
 import useEmployees from '../../../hooks/employees.hook/useEmployees';
 import { formFields } from '../../../core/utils/user-template.util';
-import { fieldFilter } from '../../../core/utils/field-filter.util';
+import { fieldFilterEmployee } from '../../../core/utils/field-filter.util';
 import useToast from '../../../hooks/employees.hook/useToast';
 import useModal from '../../../hooks/employees.hook/useModal';
 import { useCallback, useState, useEffect } from 'react';
@@ -195,7 +195,7 @@ const Employees = (): JSX.Element => {
         </svg>
       </div>
       <div className='employees__content employees__content--search-filter'>
-        <SearchFilter fieldsFilter={fieldFilter} onFilterChange={handleFilterChange} />
+        <SearchFilter fieldsFilter={fieldFilterEmployee} onFilterChange={handleFilterChange} />
       </div>
       <div className='employees__content employees__content--table'>
         <TableDataContent<EmployeeFormInputs>

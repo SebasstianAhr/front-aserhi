@@ -1,4 +1,6 @@
-export const potentialCustomerFields =[
+import { FormField } from '../interface/form-general.interface';
+
+export const potentialCustomerFields: FormField[] = [
   {
     name: 'tipoPersona',
     label: 'Tipo de Persona',

@@ -1,19 +1,19 @@
 import { getPotentialCustomerById, addPotentialCustomer, updatePotentialCustomer } from '../../../services/potential-customers.services';
 import TableDataContent from '../../../components/table-data-content/table-data-content';
-import { PotentialCustomerFormInputs } from '../../../core/interface/potential-customer.interface';
-import { columnsPotentialCustomers } from '../../../core/utils/columns-table-data.util';
+import { columnsPotentialCustomers } from '../../../core/utils/colums-table-data.util'; 
 import ModalGeneral from '../../../components/modal-general/modal-general';
 import SearchFilter from '../../../components/search-filter/search-filter';
 import GeneralForm from '../../../components/form-general/form-general';
 import usePotentialCustomers from '../../../hooks/potential-customers.hook/usePotentialCustomers';
-import { formFieldsPotentialCustomers } from '../../../core/utils/potential-customers.util';
-import { fieldFilterPotentialCustomers } from '../../../core/utils/field-filter-potential-customers.util';
+import { potentialCustomerFields } from '../../../core/utils/potential-customers-template.util';
 import useToast from '../../../hooks/potential-customers.hook/useToast';
 import useModal from '../../../hooks/potential-customers.hook/useModal';
 import { useCallback, useState, useEffect } from 'react';
 import Alert from '../../../components/alert/alert';
 import Toast from '../../../components/toast/toast';
 import './potential-customers.css';
+import { PotentialCustomerFormInputs } from '../../../core/interface/potential-customer.interface';
+import { fieldFilterPotentialCustomer } from '../../../core/utils/field-filter.util';
 
 const PotentialCustomers = (): JSX.Element => {
   const {
@@ -47,8 +47,7 @@ const PotentialCustomers = (): JSX.Element => {
 
     if (filters.search) {
       filteredData = filteredData.filter(customer =>
-        customer.nombresRepresentanteLegal.toLowerCase().includes(filters.search.toLowerCase()) ||
-        customer.apellidosRepresentanteLegal.toLowerCase().includes(filters.search.toLowerCase())
+        customer.nombresRepresentanteLegal.toLowerCase().includes(filters.search.toLowerCase())
       );
     }
 
@@ -191,7 +190,7 @@ const PotentialCustomers = (): JSX.Element => {
         </svg>
       </div>
       <div className='potential-customers__content potential-customers__content--search-filter'>
-        <SearchFilter fieldsFilter={fieldFilterPotentialCustomers} onFilterChange={handleFilterChange} />
+        <SearchFilter fieldsFilter={fieldFilterPotentialCustomer} onFilterChange={handleFilterChange} />
       </div>
       <div className='potential-customers__content potential-customers__content--table'>
         <TableDataContent<PotentialCustomerFormInputs>
@@ -214,7 +213,7 @@ const PotentialCustomers = (): JSX.Element => {
         showOverlay={true}
       >
         <GeneralForm
-          fieldsForm={formFieldsPotentialCustomers}
+          fieldsForm={potentialCustomerFields}
           onSubmit={handleFormSubmit}
           principalButtonForm="Registrar"
           showButtonSubmit={true}
@@ -229,7 +228,7 @@ const PotentialCustomers = (): JSX.Element => {
         showOverlay={true}
       >
         <GeneralForm
-          fieldsForm={formFieldsPotentialCustomers}
+          fieldsForm={potentialCustomerFields}
           onSubmit={handleFormSubmit}
           showButtonSubmit={false}
           valueEmployees={selectedPotentialCustomer}
@@ -244,7 +243,7 @@ const PotentialCustomers = (): JSX.Element => {
         showOverlay={true}
       >
         <GeneralForm
-          fieldsForm={formFieldsPotentialCustomers}
+          fieldsForm={potentialCustomerFields}
           onSubmit={handleEditFormSubmit}
           showButtonSubmit={true}
           principalButtonForm="Guardar Cambios"

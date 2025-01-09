@@ -1,0 +1,30 @@
+.potential-customers__title {
+    margin-bottom: 0.5rem;
+}
+
+.potential-customers__add-icon {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.potential-customers__icon-add {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.potential-customers__icon-add:hover {
+    color: #8cbe42;
+}
+
+.potential-customers__content {
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 9px;
+    border: 1px solid #e5e7eb;
+}
+
+.potential-customers__content--table {
+    margin-top: 2rem;
+}
