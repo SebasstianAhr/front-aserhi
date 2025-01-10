@@ -1,6 +1,6 @@
 import { getPotentialCustomerById, addPotentialCustomer, updatePotentialCustomer } from '../../../services/potential-customers.services';
 import TableDataContent from '../../../components/table-data-content/table-data-content';
-import { columnsPotentialCustomers } from '../../../core/utils/colums-table-data.util'; 
+import { columnsPotentialCustomers } from '../../../core/utils/colums-table-data.util';
 import ModalGeneral from '../../../components/modal-general/modal-general';
 import SearchFilter from '../../../components/search-filter/search-filter';
 import GeneralForm from '../../../components/form-general/form-general';
@@ -138,6 +138,7 @@ const PotentialCustomers = (): JSX.Element => {
               setShowAlertRegister(false);
               return prevCustomers;
             }
+
             return [...prevCustomers, newCustomer];
           });
           showToastMessage('Cliente potencial agregado', 'success');
