@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { getEmployees } from '../../services/employees.services';
 import { EmployeeFormInputs } from '../../core/interface/employee.interface';
 
-
 const useEmployees = () => {
   const [employees, setEmployees] = useState<EmployeeFormInputs[]>([]);
   const [filteredEmployees, setFilteredEmployees] = useState<EmployeeFormInputs[]>([]);
@@ -11,13 +10,9 @@ const useEmployees = () => {
 
   useEffect(() => {
     const fetchEmployees = async () => {
-      try {
-        const data = await getEmployees();
-        setEmployees(data);
-        setFilteredEmployees(data);
-      } catch (error) {
-        console.error("Failed to fetch employees:", error);
-      }
+      const employeesData = await getEmployees();
+      setEmployees(employeesData);
+      setFilteredEmployees(employeesData);
     };
 
     fetchEmployees();
@@ -25,6 +20,7 @@ const useEmployees = () => {
 
   return {
     employees,
+    setEmployees, 
     filteredEmployees,
     setFilteredEmployees,
     currentPage,

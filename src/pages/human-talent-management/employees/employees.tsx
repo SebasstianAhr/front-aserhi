@@ -20,6 +20,7 @@ import './employees.css';
 const Employees = (): JSX.Element => {
   const {
     employees,
+    setEmployees, 
     filteredEmployees,
     setFilteredEmployees,
     currentPage,
@@ -134,35 +135,37 @@ const Employees = (): JSX.Element => {
     if (employeeToAdd) {
       try {
         const newEmployee = await addEmployee(employeeToAdd);
-
+  
         if (newEmployee) {
           setEmployees((prevEmployees) => {
             const isDuplicate = prevEmployees.some(emp => emp.identificacion === newEmployee.identificacion);
             if (isDuplicate) {
               showToastMessage('El empleado ya existe.', 'danger');
-              setShowAlertRegister(false);
+              setShowAlertRegister(false); 
               return prevEmployees;
             }
             return [...prevEmployees, newEmployee];
           });
-          showToastMessage('Empleado agregado', 'success');
-          setShowAlertRegister(false);
-          setEmployeeToAdd(null);
-          modalAddForm.toggleModal();
-        } else {
-          showToastMessage('Error al agregar empleado.', 'danger');
-          setShowAlertRegister(false);
+          showToastMessage('Empleado agregado correctamente.', 'success');
+          modalAddForm.toggleModal(); // Cierra el modal
         }
       } catch (error) {
         if (error.message === 'DUPLICATE_EMPLOYEE') {
           showToastMessage('El empleado ya existe.', 'danger');
         } else {
-          showToastMessage('Error al registrar el empleado.', 'danger');
+          console.error('Error al registrar empleado:', error);
+          showToastMessage('Ocurrió un error inesperado al registrar el empleado.', 'danger');
         }
-        setShowAlertRegister(false);
+      } finally {
+        setShowAlertRegister(false); // Asegura que la alerta se cierre siempre
+        setEmployeeToAdd(null); // Resetea los datos
       }
     }
   }, [employeeToAdd, showToastMessage, modalAddForm]);
+  
+
+
+
 
   useEffect(() => {
     return () => {

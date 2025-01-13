@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { getProposals } from '../../../services/management-proposals.services';
 import TableDataContent from '../../../components/table-data-content/table-data-content';
 import SearchFilter from '../../../components/search-filter/search-filter';
 import './management-proposals.css';
 
 const ManagementProposals = (): JSX.Element => {
-  const [proposals, setProposals] = useState([]);
-  const [filteredProposals, setFilteredProposals] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [proposals, setProposals] = useState<any[]>([]);
+  const [filteredProposals, setFilteredProposals] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
 
   useEffect(() => {
     const fetchProposals = async () => {
@@ -24,7 +24,7 @@ const ManagementProposals = (): JSX.Element => {
     fetchProposals();
   }, []);
 
-  const handleFilterChange = (filters: Record<string, any>) => {
+  const handleFilterChange = useCallback((filters: Record<string, any>) => {
     let filteredData = [...proposals];
 
     if (filters.search) {
@@ -54,7 +54,7 @@ const ManagementProposals = (): JSX.Element => {
     }
 
     setFilteredProposals(filteredData);
-  };
+  }, [proposals]);
 
   const fieldsFilter = [
     { name: 'search', label: 'Buscar', type: 'text', placeholder: 'Buscar por razón social o nombre solicitante' },
