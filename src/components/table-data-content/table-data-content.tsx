@@ -148,3 +148,5 @@ const TableDataContent = <T,>({
 };
 
 export default TableDataContent;
+
+//{col.render ? col.render(row) : (row[col.item] as React.ReactNode)}

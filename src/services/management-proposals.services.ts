@@ -16,7 +16,7 @@ export const addProposal = async (newProposal: Record<string, any>) => {
   }
 
   const newId = (mockDataProposals.length + 1).toString();
-  const proposalWithId = { ...newProposal, id: newId };
+  const proposalWithId = { ...newProposal, id: newId, estadoRevision: 'Pendiente', estadoPropuesta: 'En Proceso' };
   mockDataProposals.push(proposalWithId);
   return proposalWithId;
 };
