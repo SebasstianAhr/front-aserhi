@@ -10,4 +10,5 @@ export interface DataTableProps<T> {
     onViewEmployee: (id: string) => void;
     onEditEmployee: (id: string) => void;
     enableSorting?: boolean;
-  }
+    renderActions?: (row: T) => JSX.Element;
+}
