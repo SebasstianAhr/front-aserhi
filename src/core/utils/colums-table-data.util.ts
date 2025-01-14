@@ -21,3 +21,22 @@ export const columnsPotentialCustomers = [
   { label: 'Correo electrónico', item: 'correoElectronicoContacto' as keyof PotentialCustomerFormInputs },
   { label: 'Acciones', item: 'acciones' as keyof PotentialCustomerFormInputs },
 ];
+
+export const columnsManagementProposals = [
+  { item: 'id', label: 'ID' },
+  { item: 'razonSocial', label: 'Razón Social' },
+  { item: 'nombreSolicitante', label: 'Nombre Solicitante' },
+  { item: 'fechaPropuesta', label: 'Fecha Propuesta' },
+  { item: 'estadoRevision', label: 'Estado Revisión' },
+  { item: 'estadoPropuesta', label: 'Estado Propuesta' },
+  { item: 'acciones', label: 'Acciones' },
+];
+
+export const columsPotentialCustomersInManagementProposals = [
+  { item: 'id', label: 'ID' },
+  { item: 'fecha', label: 'Fecha' },
+  { item: 'razonSocial', label: 'Razón Social' },
+  { item: 'nitEmpresa', label: 'NIT' },
+  { item: 'nombreCompleto', label: 'Nombres' },
+  { item: 'accion', label: 'Acción' }
+];

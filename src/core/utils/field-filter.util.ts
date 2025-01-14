@@ -53,3 +53,24 @@ export const fieldFilterPotentialCustomer = [
         ],
     },
 ]
+
+export const fieldsFilterManagementProposals = [
+    { name: 'search', label: 'Buscar', type: 'text', placeholder: 'Buscar por razón social o nombre solicitante' },
+    { name: 'fechaPropuestaDesde', label: 'Fecha Propuesta Desde', type: 'date' },
+    { name: 'fechaPropuestaHasta', label: 'Fecha Propuesta Hasta', type: 'date' },
+    {
+      name: 'estadoRevision', label: 'Estado Revisión', type: 'select', options: [
+        { label: 'Todos', value: 'all' },
+        { label: 'Pendiente', value: 'Pendiente' },
+        { label: 'Aprobado', value: 'Aprobado' },
+        { label: 'Rechazado', value: 'Rechazado' },
+      ]
+    },
+    {
+      name: 'estadoPropuesta', label: 'Estado Propuesta', type: 'select', options: [
+        { label: 'Todos', value: 'all' },
+        { label: 'En Proceso', value: 'En Proceso' },
+        { label: 'Finalizado', value: 'Finalizado' },
+      ]
+    },
+  ];
