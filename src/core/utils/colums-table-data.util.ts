@@ -40,3 +40,11 @@ export const columsPotentialCustomersInManagementProposals = [
   { item: 'nombreCompleto', label: 'Nombres' },
   { item: 'accion', label: 'Acción' }
 ];
+
+export const columsHistoryManagementProposals = [
+  {item: 'fechaPropuesta', label: 'Fecha'},
+  {item: 'id', label: 'Propuesta'},
+  {item: 'empleado', label: 'Empleado'},
+  {item: 'observacion', label: 'Observación'},
+  {item: 'accion', label: 'Acción'},
+]

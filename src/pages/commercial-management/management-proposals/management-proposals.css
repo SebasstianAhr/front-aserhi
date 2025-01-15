@@ -5,7 +5,7 @@
 .potential-customers__add-icon {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content:space-between;
 }
 
 .potential-customers__icon-add {
