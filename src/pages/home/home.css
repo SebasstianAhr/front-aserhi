@@ -30,11 +30,11 @@
     padding: 2rem;
     border-radius: 12px;
     border: 1px solid #e5e7eb;
+}
 
-    h3 {
-        font-size: 1.4rem;
-        margin-bottom: 1.8rem;
-    }
+.home__page-content h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1.8rem;
 }
 
 .home__section-bottom {

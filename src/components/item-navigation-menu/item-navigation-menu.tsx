@@ -23,18 +23,20 @@ const ItemNavigationMenu = ({ menuItems }: ItemNavigationMenuProps): JSX.Element
                 {item.icon && <span>{item.icon}</span>}
                 <span>{item.title}</span>
               </div>
-              {openMenu === item.title && (
-                <ul className="item__submodule-list">
-                  {item.subMenus.map((subMenu: MenuItem) => (
-                    <li key={subMenu.title} className="item__submenu">
-                      <Link to={subMenu.link} className="item__submenu-link">
-                        {subMenu.icon}
-                        <span>{subMenu.title}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <ul
+                className={`item__submodule-list ${
+                  openMenu === item.title ? 'item__submodule-list--open' : ''
+                }`}
+              >
+                {item.subMenus.map((subMenu: MenuItem) => (
+                  <li key={subMenu.title} className="item__submenu">
+                    <Link to={subMenu.link} className="item__submenu-link">
+                      {subMenu.icon}
+                      <span>{subMenu.title}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </>
           ) : (
             <Link to={item.link} className="item__dropdown-with-submenu">

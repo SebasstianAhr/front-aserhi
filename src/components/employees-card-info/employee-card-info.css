@@ -5,9 +5,10 @@
     border-top: 4px solid #84cc16;
     border-radius: 9px;
     padding: 1.5rem;
-    h4{
-        color: #6b7280;
-    }
+}
+
+.card__component h4{
+    color: #6b7280;
 }
 
 .card__component h5{

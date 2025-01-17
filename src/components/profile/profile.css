@@ -7,13 +7,14 @@
     border-bottom-right-radius: 10px;
     align-items: center;
     gap: 0.6rem;
-
-    p{
-        color: #fff;
-        font-size: 1.2rem;
-        font-weight: 700;
-    }
 }
+
+.profile__component p{
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
 .img__profile{
     width: 40px;
     height: 40px;

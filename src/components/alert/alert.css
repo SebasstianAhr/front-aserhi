@@ -1,56 +1,79 @@
 .alert__overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 50;
-  }
-  
-  .alert__box {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    width: 90%;
-    max-width: 400px;
-  }
-  
-  .alert__message {
-    margin-top: 2rem;
-    font-size: 18px;
-    margin: 2rem 0;
-  }
-  
-  .alert__buttons {
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .alert__button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .alert__button--cancel {
-    background-color: #f44336;
-    color: white;
-  }
-  
-  .alert__button--continue {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  .alert__button:hover {
-    opacity: 0.9;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.alert__overlay--visible {
+  opacity: 1;
+}
+
+.alert__overlay--exiting {
+  opacity: 0;
+}
+
+.alert__box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.alert__box--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.alert__box--exiting {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+
+.alert__message {
+  margin-top: 2rem;
+  font-size: 18px;
+  margin: 2rem 0;
+}
+
+.alert__buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.alert__button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.alert__button--cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+.alert__button--continue {
+  background-color: #4caf50;
+  color: white;
+}
+
+.alert__button:hover {
+  opacity: 0.9;
+}

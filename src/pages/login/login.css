@@ -18,21 +18,16 @@
     box-shadow: 2px 10px 20px rgba(168, 168, 168, 0.2);
 }
 
-.login__container {
-    h3 {
-        font-size: 2rem;
-        letter-spacing: 0.3rem;
-        margin-bottom: 2rem;
-        text-align: center;
-    }
-
-    h3 span {
-        color: #8cbe42;
-    }
-
+.login__container h3 {
+    font-size: 2rem;
+    letter-spacing: 0.3rem;
+    margin-bottom: 2rem;
+    text-align: center;
 }
 
-
+.login__container h3 span {
+    color: #8cbe42;
+}
 
 .login__form-container {
     width: 100%;
@@ -65,23 +60,23 @@
     justify-content: center;
     margin-top: 2rem;
     width: 100%;
+}
 
-    button {
-        width: 100%;
-        padding: 0.8rem;
-        border-radius: 9px;
-        border: none;
-        background-color: #02A4E6;
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: #fff;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
+.login__form-button button {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 9px;
+    border: none;
+    background-color: #02A4E6;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
-    button:hover {
-        background-color: #00aff4;
-    }
+.login__form-button:hover {
+    background-color: #00aff4;
 }
 
 .login__link {
