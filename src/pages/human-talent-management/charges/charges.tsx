@@ -88,8 +88,8 @@ const Charges = (): JSX.Element => {
         <svg
           onClick={() => setModalAddForm(true)}
           aria-hidden="true"
-          width={50}
-          height={50}
+          width={44}
+          height={44}
           focusable="false"
           data-prefix="fas"
           data-icon="plus"

@@ -11,7 +11,7 @@ const useCharges = () => {
   const [charges, setCharges] = useState<Charge[]>([]);
   const [filteredCharges, setFilteredCharges] = useState<Charge[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const [selectedCharge, setSelectedCharge] = useState<Charge | null>(null);
   const [showAlertRegister, setShowAlertRegister] = useState(false);
   const [chargeToAdd, setChargeToAdd] = useState<Record<string, any> | null>(null);

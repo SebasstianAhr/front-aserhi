@@ -193,8 +193,8 @@ const Employees = (): JSX.Element => {
       <div className='employees__add-icon'>
         <svg
           onClick={modalAddForm.toggleModal}
-          width={50}
-          height={50}
+          width={44}
+          height={44}
           aria-hidden="true"
           focusable="false"
           data-prefix="fas"
