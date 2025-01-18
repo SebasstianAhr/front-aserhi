@@ -147,7 +147,7 @@ const Employees = (): JSX.Element => {
             return [...prevEmployees, newEmployee];
           });
           showToastMessage('Empleado agregado correctamente.', 'success');
-          modalAddForm.toggleModal(); // Cierra el modal
+          modalAddForm.toggleModal();
         }
       } catch (error) {
         if (error.message === 'DUPLICATE_EMPLOYEE') {
@@ -157,8 +157,8 @@ const Employees = (): JSX.Element => {
           showToastMessage('Ocurrió un error inesperado al registrar el empleado.', 'danger');
         }
       } finally {
-        setShowAlertRegister(false); // Asegura que la alerta se cierre siempre
-        setEmployeeToAdd(null); // Resetea los datos
+        setShowAlertRegister(false);
+        setEmployeeToAdd(null);
       }
     }
   }, [employeeToAdd, showToastMessage, modalAddForm]);
