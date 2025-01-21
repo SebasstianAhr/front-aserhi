@@ -60,7 +60,6 @@ export const fieldsFilterManagementProposals = [
     { name: 'fechaPropuestaHasta', label: 'Fecha Propuesta Hasta', type: 'date' },
     {
       name: 'estadoRevision', label: 'Estado Revisión', type: 'select', options: [
-        { label: 'Todos', value: 'all' },
         { label: 'Pendiente', value: 'Pendiente' },
         { label: 'Aprobado', value: 'Aprobado' },
         { label: 'Rechazado', value: 'Rechazado' },
@@ -68,7 +67,6 @@ export const fieldsFilterManagementProposals = [
     },
     {
       name: 'estadoPropuesta', label: 'Estado Propuesta', type: 'select', options: [
-        { label: 'Todos', value: 'all' },
         { label: 'En Proceso', value: 'En Proceso' },
         { label: 'Finalizado', value: 'Finalizado' },
       ]

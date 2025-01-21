@@ -11,7 +11,7 @@
     background-color: #fff;
     border-right: 1px solid #e5e7eb;
     width: 100%;
-    max-width: 17%;
+    max-width: 16%;
 
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -25,7 +25,7 @@
     overflow-y: scroll;
     height: 100%;
     width: 100%;
-    max-width: 83%;
+    max-width: 84%;
 
     scrollbar-width: none;
     -ms-overflow-style: none;

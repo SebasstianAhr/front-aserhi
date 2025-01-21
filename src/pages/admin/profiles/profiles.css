@@ -1,0 +1,39 @@
+.profile-page__title {
+    margin-bottom: 0.5rem;
+}
+
+.profile-page__add-icon {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.profile-page__icon-add {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.profile-page__icon-add:hover {
+    color: #8cbe42;
+}
+
+.profile-page__content {
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 9px;
+    border: 1px solid #e5e7eb;
+}
+
+.profile-page__content--table {
+    margin-top: 2rem;
+}
+
+.profile-page__header--table{
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 0.7rem;
+    margin-bottom: 0.3rem;
+    border-bottom: 1px solid #e5e7eb;
+    align-items: center;
+}
