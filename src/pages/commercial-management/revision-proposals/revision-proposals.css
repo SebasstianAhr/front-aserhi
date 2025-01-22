@@ -36,5 +36,6 @@
 }
 
 .revicion-proposals__header--page{
+    cursor: pointer;
     color: #3d3d3d;
 }

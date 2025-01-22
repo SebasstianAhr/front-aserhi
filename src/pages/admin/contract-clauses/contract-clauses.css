@@ -1,0 +1,51 @@
+.contract-clauses__title {
+    margin-bottom: 0.5rem;
+}
+
+.contract-clauses__add-icon {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.contract-clauses__icon-add {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.contract-clauses__icon-add:hover {
+    color: #8cbe42;
+}
+
+.contract-clauses__content {
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 9px;
+    border: 1px solid #e5e7eb;
+}
+
+.contract-clauses__header--table {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.3rem;
+    border-bottom: 1px solid #e5e7eb;
+    align-items: center;
+}
+
+.contract-clauses__header--page {
+    cursor: pointer;
+    color: #3d3d3d;
+    padding-bottom: 0.7rem;
+    border-bottom: 2px solid transparent;
+}
+
+.contract-clauses__header--selected {
+    color: #02A4E6;
+    border-bottom: 2px solid #02A4E6;
+}
+
+.contract-clauses__header--page:not(.contract-clauses__header--selected):hover {
+    color: #616161;
+    border-bottom: 2px solid #616161;
+}

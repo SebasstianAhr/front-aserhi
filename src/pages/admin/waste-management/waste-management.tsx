@@ -63,7 +63,7 @@ const WasteManagement = (): JSX.Element => {
           focusable="false"
           data-prefix="fas"
           data-icon="plus"
-          className="charges__icon-add svg-inline--fa fa-plus fa-xl "
+          className="waste-management__icon-add svg-inline--fa fa-plus fa-xl "
           role="img"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 448 512"
