@@ -1,6 +1,6 @@
 import { GeneralFormProps } from "../../core/interface/form-general.interface";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import './form-general.css';
 
 const GeneralForm = ({
@@ -13,6 +13,7 @@ const GeneralForm = ({
   isViewMode = false,
 }: GeneralFormProps): JSX.Element => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm(valueEmployees);
+  const [touchedFields, setTouchedFields] = useState<{ [key: string]: boolean }>({});
 
   const handleFormSubmit: SubmitHandler<any> = (data) => {
     onSubmit(data);
@@ -21,6 +22,10 @@ const GeneralForm = ({
   useEffect(() => {
     reset(valueEmployees);
   }, [valueEmployees, reset]);
+
+  const handleChange = (fieldName: string) => {
+    setTouchedFields((prev) => ({ ...prev, [fieldName]: true }));
+  };
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="form">
@@ -32,7 +37,7 @@ const GeneralForm = ({
               className={fieldForm.required && errors[fieldForm.name] ? "form__error-required" : ""}
             >
               {fieldForm.label}  
-              {fieldForm.required && isRegisterMode && <span className="form__asterisk--required">*</span>}
+              {fieldForm.required && isRegisterMode && !touchedFields[fieldForm.name] && <span className="form__asterisk--required">*</span>}
             </label>
             
             {fieldForm.type === "select" ? (
@@ -41,6 +46,7 @@ const GeneralForm = ({
                 {...register(fieldForm.name, { required: fieldForm.required })}
                 className={`${errors[fieldForm.name] ? "form__error--input-border" : ""} ${isViewMode ? "form__input--disabled" : ""}`}
                 disabled={isViewMode}
+                onChange={() => handleChange(fieldForm.name)}
               >
                 <option value="">Seleccione una opción</option>
                 {fieldForm.options?.map((option) => (
@@ -75,6 +81,7 @@ const GeneralForm = ({
                 })}
                 className={`${errors[fieldForm.name] ? "form__error--input-border" : ""} ${isViewMode ? "form__input--disabled" : ""}`}
                 disabled={isViewMode}
+                onChange={() => handleChange(fieldForm.name)}
               />
             )}
             {errors[fieldForm.name] && (

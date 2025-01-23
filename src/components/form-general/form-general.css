@@ -1,14 +1,13 @@
 .form__content {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 1rem;
+  grid-template-columns: repeat(auto-fill,
+   minmax(300px, 1fr));
 }
 
 .form__group {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  flex-basis: 200;
   margin-bottom: 1rem;
 }
 

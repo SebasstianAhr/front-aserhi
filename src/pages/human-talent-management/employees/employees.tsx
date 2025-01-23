@@ -2,12 +2,13 @@ import { getEmployeeById, addEmployee, updateEmployee } from '../../../services/
 import TableDataContent from '../../../components/table-data-content/table-data-content';
 import { EmployeeFormInputs } from '../../../core/interface/employee.interface';
 import { columnsEmployees } from '../../../core/utils/colums-table-data.util';
+import { fieldFilterEmployee } from '../../../core/utils/field-filter.util';
 import ModalGeneral from '../../../components/modal-general/modal-general';
 import SearchFilter from '../../../components/search-filter/search-filter';
 import GeneralForm from '../../../components/form-general/form-general';
 import useEmployees from '../../../hooks/employees.hook/useEmployees';
 import { formFields } from '../../../core/utils/user-template.util';
-import { fieldFilterEmployee } from '../../../core/utils/field-filter.util';
+import { EmployeeEnum } from '../../../core/enum/employee.enum';
 import useToast from '../../../hooks/employees.hook/useToast';
 import useModal from '../../../hooks/employees.hook/useModal';
 import { useCallback, useState, useEffect } from 'react';
@@ -56,16 +57,16 @@ const Employees = (): JSX.Element => {
       );
     }
 
-    if (filters.cargo && filters.cargo !== "all") {
+    if (filters.cargo && filters.cargo !== EmployeeEnum.All) {
       filteredData = filteredData.filter(employee =>
         employee.cargo === filters.cargo
       );
     }
 
-    if (filters.estado && filters.estado !== "all") {
+    if (filters.estado && filters.estado !== EmployeeEnum.All) {
       filteredData = filteredData.filter(employee =>
-        (filters.estado === "Activo" && employee.estado) ||
-        (filters.estado === "Inactivo" && !employee.estado)
+        (filters.estado === EmployeeEnum.Activo && employee.estado) ||
+        (filters.estado === EmployeeEnum.Inactivo && !employee.estado)
       );
     }
 
@@ -109,17 +110,17 @@ const Employees = (): JSX.Element => {
               emp.id === updatedEmployee.id ? updatedEmployee : emp
             )
           );
-          showToastMessage('Empleado editado con éxito', 'success');
+          showToastMessage('Empleado editado con éxito', EmployeeEnum.Success);
           setShowAlertEdit(false);
           setEmployeeToEdit(null);
           modalEditItem.toggleModal();
         } else {
-          showToastMessage('Error al editar empleado.', 'danger');
+          showToastMessage('Error al editar empleado.', EmployeeEnum.Danger);
           setShowAlertEdit(false);
         }
       } catch (error) {
         console.error("Error al editar el empleado:", error);
-        showToastMessage('Error al editar el empleado.', 'danger');
+        showToastMessage('Error al editar el empleado.', EmployeeEnum.Danger);
         setShowAlertEdit(false);
       }
     }
@@ -140,21 +141,21 @@ const Employees = (): JSX.Element => {
           setEmployees((prevEmployees) => {
             const isDuplicate = prevEmployees.some(emp => emp.identificacion === newEmployee.identificacion);
             if (isDuplicate) {
-              showToastMessage('El empleado ya existe.', 'danger');
+              showToastMessage('El empleado ya existe.', EmployeeEnum.Danger);
               setShowAlertRegister(false); 
               return prevEmployees;
             }
             return [...prevEmployees, newEmployee];
           });
-          showToastMessage('Empleado agregado correctamente.', 'success');
+          showToastMessage('Empleado agregado correctamente.', EmployeeEnum.Success);
           modalAddForm.toggleModal();
         }
       } catch (error) {
         if (error.message === 'DUPLICATE_EMPLOYEE') {
-          showToastMessage('El empleado ya existe.', 'danger');
+          showToastMessage('El empleado ya existe.', EmployeeEnum.Danger);
         } else {
           console.error('Error al registrar empleado:', error);
-          showToastMessage('Ocurrió un error inesperado al registrar el empleado.', 'danger');
+          showToastMessage('Ocurrió un error inesperado al registrar el empleado.', EmployeeEnum.Danger);
         }
       } finally {
         setShowAlertRegister(false);
