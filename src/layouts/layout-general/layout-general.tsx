@@ -3,17 +3,20 @@ import BurgerMenu from "../../components/burger-menu/burger-menu";
 import Sidebar from "../../components/sidebar/sidebar";
 import Navbar from "../../components/navbar/navbar";
 import "./layout-general.css";
+import LogoutButton from "../../components/logout-button/logout-button";
 
 const LayoutGeneral = ({ children }: ChildrenProps): JSX.Element => {
 
     return (
         <div className="layout__general">
             <div className="laytout__burger-menu">
-            <BurgerMenu />
+                <BurgerMenu />
             </div>
             <div className="layout__sidebar-part">
                 <div className="layout__sidebar-menu">
-                    <Sidebar />
+                    <div>
+                        <Sidebar />
+                    </div>
                 </div>
             </div>
             <div className="layout__next-content">

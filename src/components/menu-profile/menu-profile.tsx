@@ -46,8 +46,8 @@ const MenuProfile = (): JSX.Element => {
           <div className='dropdown__content'>
             <img className='img__profile-menu' src={imgProfile} alt="profile image" />
             <div>
-              <p>{authContext.user.name} {authContext.user.lastName}</p>
-              <p>{authContext.user.email}</p>
+              <p className='dropdown__content--text'>{authContext.user.email}</p>
+              <p className='dropdown__content--text'>{authContext.user.name} {authContext.user.lastName}</p>
             </div>
           </div>
           <LogoutButton />

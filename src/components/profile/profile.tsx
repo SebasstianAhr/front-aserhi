@@ -11,7 +11,7 @@ const Profile = (): JSX.Element => {
     <div className='profile__component'>
       <img className='img__profile' src={imgProfile} alt="profile image" />
       {authContext && authContext.user && (
-        <p>{authContext.user.name} {authContext.user.lastName}</p>
+        <p className='profile__component--title'>{authContext.user.name} {authContext.user.lastName}</p>
       )}
       <MenuProfile />
     </div>

@@ -6,6 +6,8 @@
 }
 
 .layout__sidebar-part {
+    display: flex;
+    flex-direction: column;
     overflow-y: scroll;
     position: sticky;
     background-color: #fff;
