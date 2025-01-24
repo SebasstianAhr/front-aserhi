@@ -1,13 +1,15 @@
 import TableDataContent from '../../../components/table-data-content/table-data-content';
+import { filterFieldsCharges } from '../../../core/utils/field-filter.util';
+import { columsCharges } from '../../../core/utils/colums-table-data.util';
 import ModalGeneral from '../../../components/modal-general/modal-general';
 import SearchFilter from '../../../components/search-filter/search-filter';
 import GeneralForm from '../../../components/form-general/form-general';
+import { formFields } from '../../../core/utils/charges-template.util';
 import useCharges from '../../../hooks/charges.hook/useCharges';
 import Alert from '../../../components/alert/alert';
 import Toast from '../../../components/toast/toast';
 import { useState, useCallback } from 'react';
 import './charges.css';
-import { formFields } from '../../../core/utils/charges-template.util';
 
 const Charges = (): JSX.Element => {
   const {
@@ -36,10 +38,6 @@ const Charges = (): JSX.Element => {
   const [modalAddForm, setModalAddForm] = useState(false);
   const [modalViewItem, setModalViewItem] = useState<boolean>(false);
   const [modalEditItem, setModalEditItem] = useState<boolean>(false);
-
-  const filterFields = [
-    { name: 'cargo', label: 'Buscar por Cargo', type: 'text' as 'text', placeholder: 'Ejemplo: Gerente' },
-  ];
 
   const handleAlertCancel = useCallback(() => {
     setShowAlertRegister(false);
@@ -105,17 +103,12 @@ const Charges = (): JSX.Element => {
         </svg>
       </div>
       <div className='charges__content charges__content--search-filter'>
-        <SearchFilter fieldsFilter={filterFields} onFilterChange={handleFilterChange} />
+        <SearchFilter fieldsFilter={filterFieldsCharges} onFilterChange={handleFilterChange} />
       </div>
       <div className="charges__content charges__content--table">
         <TableDataContent
           data={filteredCharges}
-          columns={[
-            { label: 'ID', item: 'id' as keyof Charge },
-            { label: 'Cargo', item: 'cargo' as keyof Charge },
-            { label: 'Descripción', item: 'descripcion' as keyof Charge },
-            { label: 'Acciones', item: 'acciones' as keyof Charge },
-          ]}
+          columns={columsCharges}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
           onPageChange={setCurrentPage}

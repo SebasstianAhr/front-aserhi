@@ -15,6 +15,7 @@ import { useCallback, useState, useEffect } from 'react';
 import Alert from '../../../components/alert/alert';
 import Toast from '../../../components/toast/toast';
 import './employees.css';
+import { ToastEnum } from '../../../core/enum/toast.enum';
 
 
 
@@ -110,17 +111,17 @@ const Employees = (): JSX.Element => {
               emp.id === updatedEmployee.id ? updatedEmployee : emp
             )
           );
-          showToastMessage('Empleado editado con éxito', EmployeeEnum.Success);
+          showToastMessage('Empleado editado con éxito', ToastEnum.Success);
           setShowAlertEdit(false);
           setEmployeeToEdit(null);
           modalEditItem.toggleModal();
         } else {
-          showToastMessage('Error al editar empleado.', EmployeeEnum.Danger);
+          showToastMessage('Error al editar empleado.', ToastEnum.Danger);
           setShowAlertEdit(false);
         }
       } catch (error) {
         console.error("Error al editar el empleado:", error);
-        showToastMessage('Error al editar el empleado.', EmployeeEnum.Danger);
+        showToastMessage('Error al editar el empleado.', ToastEnum.Danger);
         setShowAlertEdit(false);
       }
     }
@@ -141,21 +142,21 @@ const Employees = (): JSX.Element => {
           setEmployees((prevEmployees) => {
             const isDuplicate = prevEmployees.some(emp => emp.identificacion === newEmployee.identificacion);
             if (isDuplicate) {
-              showToastMessage('El empleado ya existe.', EmployeeEnum.Danger);
+              showToastMessage('El empleado ya existe.', ToastEnum.Danger);
               setShowAlertRegister(false); 
               return prevEmployees;
             }
             return [...prevEmployees, newEmployee];
           });
-          showToastMessage('Empleado agregado correctamente.', EmployeeEnum.Success);
+          showToastMessage('Empleado agregado correctamente.', ToastEnum.Success);
           modalAddForm.toggleModal();
         }
       } catch (error) {
         if (error.message === 'DUPLICATE_EMPLOYEE') {
-          showToastMessage('El empleado ya existe.', EmployeeEnum.Danger);
+          showToastMessage('El empleado ya existe.', ToastEnum.Danger);
         } else {
           console.error('Error al registrar empleado:', error);
-          showToastMessage('Ocurrió un error inesperado al registrar el empleado.', EmployeeEnum.Danger);
+          showToastMessage('Ocurrió un error inesperado al registrar el empleado.', ToastEnum.Danger);
         }
       } finally {
         setShowAlertRegister(false);

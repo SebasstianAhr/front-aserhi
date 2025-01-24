@@ -1,19 +1,21 @@
 import { getPotentialCustomerById, addPotentialCustomer, updatePotentialCustomer } from '../../../services/potential-customers.services';
+import { PotentialCustomerFormInputs } from '../../../core/interface/potential-customer.interface';
+import usePotentialCustomers from '../../../hooks/potential-customers.hook/usePotentialCustomers';
+import { potentialCustomerFields } from '../../../core/utils/potential-customers-template.util';
 import TableDataContent from '../../../components/table-data-content/table-data-content';
 import { columnsPotentialCustomers } from '../../../core/utils/colums-table-data.util';
+import { fieldFilterPotentialCustomer } from '../../../core/utils/field-filter.util';
+import { PotentialCustomersEnum } from '../../../core/enum/potential-customers.enum';
 import ModalGeneral from '../../../components/modal-general/modal-general';
 import SearchFilter from '../../../components/search-filter/search-filter';
 import GeneralForm from '../../../components/form-general/form-general';
-import usePotentialCustomers from '../../../hooks/potential-customers.hook/usePotentialCustomers';
-import { potentialCustomerFields } from '../../../core/utils/potential-customers-template.util';
 import useToast from '../../../hooks/potential-customers.hook/useToast';
 import useModal from '../../../hooks/potential-customers.hook/useModal';
+import { ToastEnum } from '../../../core/enum/toast.enum';
 import { useCallback, useState, useEffect } from 'react';
 import Alert from '../../../components/alert/alert';
 import Toast from '../../../components/toast/toast';
 import './potential-customers.css';
-import { PotentialCustomerFormInputs } from '../../../core/interface/potential-customer.interface';
-import { fieldFilterPotentialCustomer } from '../../../core/utils/field-filter.util';
 
 const PotentialCustomers = (): JSX.Element => {
   const {
@@ -51,13 +53,13 @@ const PotentialCustomers = (): JSX.Element => {
       );
     }
 
-    if (filters.tipoPersona && filters.tipoPersona !== "all") {
+    if (filters.tipoPersona && filters.tipoPersona !== PotentialCustomersEnum.All) {
       filteredData = filteredData.filter(customer =>
         customer.tipoPersona === filters.tipoPersona
       );
     }
 
-    if (filters.tamanoClientePotencial && filters.tamanoClientePotencial !== "all") {
+    if (filters.tamanoClientePotencial && filters.tamanoClientePotencial !== PotentialCustomersEnum.All) {
       filteredData = filteredData.filter(customer =>
         customer.tamanoClientePotencial === filters.tamanoClientePotencial
       );
@@ -103,17 +105,17 @@ const PotentialCustomers = (): JSX.Element => {
               cust.id === updatedCustomer.id ? updatedCustomer : cust
             )
           );
-          showToastMessage('Cliente potencial editado con éxito', 'success');
+          showToastMessage('Cliente potencial editado con éxito', ToastEnum.Success);
           setShowAlertEdit(false);
           setPotentialCustomerToEdit(null);
           modalEditItem.toggleModal();
         } else {
-          showToastMessage('Error al editar cliente potencial.', 'danger');
+          showToastMessage('Error al editar cliente potencial.', ToastEnum.Danger);
           setShowAlertEdit(false);
         }
       } catch (error) {
         console.error("Error al editar el cliente potencial:", error);
-        showToastMessage('Error al editar el cliente potencial.', 'danger');
+        showToastMessage('Error al editar el cliente potencial.', ToastEnum.Danger);
         setShowAlertEdit(false);
       }
     }
@@ -134,26 +136,26 @@ const PotentialCustomers = (): JSX.Element => {
           setPotentialCustomers((prevCustomers) => {
             const isDuplicate = prevCustomers.some(cust => cust.identificacionRepresentante === newCustomer.identificacionRepresentante);
             if (isDuplicate) {
-              showToastMessage('El cliente potencial ya existe.', 'danger');
+              showToastMessage('El cliente potencial ya existe.', ToastEnum.Danger);
               setShowAlertRegister(false);
               return prevCustomers;
             }
 
             return [...prevCustomers, newCustomer];
           });
-          showToastMessage('Cliente potencial agregado', 'success');
+          showToastMessage('Cliente potencial agregado', ToastEnum.Success);
           setShowAlertRegister(false);
           setPotentialCustomerToAdd(null);
           modalAddForm.toggleModal();
         } else {
-          showToastMessage('Error al agregar cliente potencial.', 'danger');
+          showToastMessage('Error al agregar cliente potencial.', ToastEnum.Danger);
           setShowAlertRegister(false);
         }
       } catch (error) {
         if (error.message === 'DUPLICATE_CUSTOMER') {
-          showToastMessage('El cliente potencial ya existe.', 'danger');
+          showToastMessage('El cliente potencial ya existe.', ToastEnum.Danger);
         } else {
-          showToastMessage('Error al registrar el cliente potencial.', 'danger');
+          showToastMessage('Error al registrar el cliente potencial.', ToastEnum.Danger);
         }
         setShowAlertRegister(false);
       }

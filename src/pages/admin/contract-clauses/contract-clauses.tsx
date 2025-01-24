@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import './contract-clauses.css';
 import TableDataContent from '../../../components/table-data-content/table-data-content';
 import { getContractClauses2, getContractClauses1 } from '../../../services/clasuses.services';
+import { columnsContractClauses } from '../../../core/utils/colums-table-data.util';
+import { ContractClausesEnum } from '../../../core/enum/contract-clauses.enum';
 
 const ContractClauses = (): JSX.Element => {
   const [clauses, setClauses] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
-  const [selectedClause, setSelectedClause] = useState<string>('Pequeña/Mediana');
+  const [selectedClause, setSelectedClause] = useState<string>(ContractClausesEnum.PackageSmall);
 
   useEffect(() => {
     fetchClauses2();
@@ -16,20 +18,14 @@ const ContractClauses = (): JSX.Element => {
   const fetchClauses1 = async () => {
     const data = await getContractClauses1();
     setClauses(data);
-    setSelectedClause('Pacientes en Casa');
+    setSelectedClause(ContractClausesEnum.PackageHome);
   };
 
   const fetchClauses2 = async () => {
     const data = await getContractClauses2();
     setClauses(data);
-    setSelectedClause('Pequeña/Mediana');
+    setSelectedClause(ContractClausesEnum.PackageSmall);
   };
-
-  const columns = [
-    { label: 'ID', item: 'id' },
-    { label: 'Cláusula', item: 'clausula' },
-    { label: 'Acción', item: 'acciones' },
-  ];
 
   const renderActions = (row: any) => (
     <div className="table__actions">
@@ -47,13 +43,13 @@ const ContractClauses = (): JSX.Element => {
       <div className='contract-clauses__content contract-clauses__content--table'>
         <div className='contract-clauses__header--table'>
           <p
-            className={`contract-clauses__header--page ${selectedClause === 'Pequeña/Mediana' ? 'contract-clauses__header--selected' : ''}`}
+            className={`contract-clauses__header--page ${selectedClause === ContractClausesEnum.PackageSmall ? 'contract-clauses__header--selected' : ''}`}
             onClick={fetchClauses2}
           >
             Cláusula Pequeña/Mediana
           </p>
           <p
-            className={`contract-clauses__header--page ${selectedClause === 'Pacientes en Casa' ? 'contract-clauses__header--selected' : ''}`}
+            className={`contract-clauses__header--page ${selectedClause === ContractClausesEnum.PackageHome ? 'contract-clauses__header--selected' : ''}`}
             onClick={fetchClauses1}
           >
             Cláusula Pacientes en casa
@@ -61,7 +57,7 @@ const ContractClauses = (): JSX.Element => {
         </div>
         <TableDataContent
           data={clauses}
-          columns={columns}
+          columns={columnsContractClauses}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
           onPageChange={setCurrentPage}

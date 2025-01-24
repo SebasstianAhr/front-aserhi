@@ -42,9 +42,56 @@ export const columsPotentialCustomersInManagementProposals = [
 ];
 
 export const columsHistoryManagementProposals = [
-  {item: 'fechaPropuesta', label: 'Fecha'},
-  {item: 'id', label: 'Propuesta'},
-  {item: 'empleado', label: 'Empleado'},
-  {item: 'observacion', label: 'Observación'},
-  {item: 'accion', label: 'Acción'},
+  { item: 'fechaPropuesta', label: 'Fecha' },
+  { item: 'id', label: 'Propuesta' },
+  { item: 'empleado', label: 'Empleado' },
+  { item: 'observacion', label: 'Observación' },
+  { item: 'accion', label: 'Acción' },
 ]
+
+export const columsCharges = [
+  { label: 'ID', item: 'id' as keyof Charge },
+  { label: 'Cargo', item: 'cargo' as keyof Charge },
+  { label: 'Descripción', item: 'descripcion' as keyof Charge },
+  { label: 'Acciones', item: 'acciones' as keyof Charge },
+]
+
+export const columsRevisionProposals = [
+  { label: 'ID', item: 'id' },
+  { label: 'Razón Social', item: 'razonSocial' },
+  { label: 'NIT', item: 'nitDV' },
+  { label: 'Nombre Solicitante', item: 'nombreSolicitante' },
+  { label: 'Fecha Propuesta', item: 'fechaPropuesta' },
+  { label: 'Estado Revisión', item: 'estadoRevision' },
+  { label: 'Acción', item: 'acciones' }
+]
+
+export  const columnsContractManagement = [
+  { label: 'ID', item: 'id' },
+  { label: 'Fecha de Inicio', item: 'fechaInicio' },
+  { label: 'Contratante', item: 'contratante' },
+  { label: 'Estado del Contrato', item: 'estadoContrato' },
+  { label: 'Tipo de Contrato', item: 'topoContrato' },
+  { label: 'Acción', item: 'acciones' },
+];
+
+export const columnsProfilePage = [
+  { label: 'ID', item: 'id' },
+  { label: 'Nombre', item: 'nombre' },
+  { label: 'Acción', item: 'acciones' },
+];
+
+export   const columnsWasteManagement = [
+  { label: 'ID', item: 'id' },
+  { label: 'Tipo de Residuo', item: 'TipoResiduo' },
+  { label: 'Corriente', item: 'corriente' },
+  { label: 'Residuo', item: 'Residuo' },
+  { label: 'Tratamiento', item: 'tratamiento' },
+  { label: 'Acción', item: 'acciones' },
+];
+
+export   const columnsContractClauses = [
+  { label: 'ID', item: 'id' },
+  { label: 'Cláusula', item: 'clausula' },
+  { label: 'Acción', item: 'acciones' },
+];

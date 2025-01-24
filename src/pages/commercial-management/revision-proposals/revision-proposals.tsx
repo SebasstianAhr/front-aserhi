@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
-import './revision-proposals.css';
 import TableDataContent from '../../../components/table-data-content/table-data-content';
 import { getProposals } from '../../../services/management-proposals.services';
+import { useEffect, useState } from 'react';
+import './revision-proposals.css';
+import { columsRevisionProposals } from '../../../core/utils/colums-table-data.util';
 
 const RevisionProposals = (): JSX.Element => {
   const [proposals, setProposals] = useState<any[]>([]);
@@ -17,15 +18,7 @@ const RevisionProposals = (): JSX.Element => {
     fetchProposals();
   }, []);
 
-  const columns = [
-    { label: 'ID', item: 'id' },
-    { label: 'Razón Social', item: 'razonSocial' },
-    { label: 'NIT', item: 'nitDV' },
-    { label: 'Nombre Solicitante', item: 'nombreSolicitante' },
-    { label: 'Fecha Propuesta', item: 'fechaPropuesta' },
-    { label: 'Estado Revisión', item: 'estadoRevision' },
-    { label: 'Acción', item: 'acciones' },
-  ];
+
 
   const renderActions = (row: any) => (
     <div className="table__actions">
@@ -49,7 +42,7 @@ const RevisionProposals = (): JSX.Element => {
         </div>
         <TableDataContent
           data={proposals}
-          columns={columns}
+          columns={columsRevisionProposals}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
           onPageChange={setCurrentPage}

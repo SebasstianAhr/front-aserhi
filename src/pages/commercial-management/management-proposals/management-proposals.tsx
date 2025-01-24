@@ -1,15 +1,17 @@
-import { useEffect, useState, useCallback } from 'react';
+import { columnsManagementProposals, columsHistoryManagementProposals, columsPotentialCustomersInManagementProposals } from '../../../core/utils/colums-table-data.util';
 import { getProposals, addProposal } from '../../../services/management-proposals.services';
-import { getPotentialCustomers } from '../../../services/potential-customers.services';
 import TableDataContent from '../../../components/table-data-content/table-data-content';
+import { fieldsFilterManagementProposals } from '../../../core/utils/field-filter.util';
+import { getPotentialCustomers } from '../../../services/potential-customers.services';
 import SearchFilter from '../../../components/search-filter/search-filter';
 import ModalGeneral from '../../../components/modal-general/modal-general';
 import GeneralForm from '../../../components/form-general/form-general';
+import { useEffect, useState, useCallback } from 'react';
 import Toast from '../../../components/toast/toast';
 import Alert from '../../../components/alert/alert';
 import './management-proposals.css';
-import { fieldsFilterManagementProposals } from '../../../core/utils/field-filter.util';
-import { columnsManagementProposals, columsHistoryManagementProposals, columsPotentialCustomersInManagementProposals } from '../../../core/utils/colums-table-data.util';
+import { ToastEnum } from '../../../core/enum/toast.enum';
+import { ManagementProposalsEnum } from '../../../core/enum/management-proposals.enum';
 
 const ManagementProposals = (): JSX.Element => {
   const [proposals, setProposals] = useState<any[]>([]);
@@ -21,7 +23,7 @@ const ManagementProposals = (): JSX.Element => {
   const [showHistoryManagementProposalsModal, setShowHistoryManagementProposalsModal] = useState(false);
   const [showProposalFormModal, setShowProposalFormModal] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<any>(null);
-  const [toast, setToast] = useState<{ show: boolean, message: string, variant: 'success' | 'danger' }>({ show: false, message: '', variant: 'success' });
+  const [toast, setToast] = useState<{ show: boolean, message: string, variant: ToastEnum.Success | ToastEnum.Danger }>({ show: false, message: '', variant: ToastEnum.Success });
   const [alert, setAlert] = useState<{ show: boolean, message: string, onContinue: () => void }>({ show: false, message: '', onContinue: () => { } });
 
   useEffect(() => {
@@ -65,13 +67,13 @@ const ManagementProposals = (): JSX.Element => {
       );
     }
 
-    if (filters.estadoRevision && filters.estadoRevision !== "all") {
+    if (filters.estadoRevision && filters.estadoRevision !== ManagementProposalsEnum.All) {
       filteredData = filteredData.filter(proposal =>
         proposal.estadoRevision === filters.estadoRevision
       );
     }
 
-    if (filters.estadoPropuesta && filters.estadoPropuesta !== "all") {
+    if (filters.estadoPropuesta && filters.estadoPropuesta !== ManagementProposalsEnum.All) {
       filteredData = filteredData.filter(proposal =>
         proposal.estadoPropuesta === filters.estadoPropuesta
       );
@@ -97,12 +99,12 @@ const ManagementProposals = (): JSX.Element => {
       onContinue: async () => {
         try {
           await addProposal({ ...data, cliente: selectedCustomer.nombre });
-          setToast({ show: true, message: 'Propuesta creada exitosamente', variant: 'success' });
+          setToast({ show: true, message: 'Propuesta creada exitosamente', variant: ToastEnum.Success });
           setShowProposalFormModal(false);
           setSelectedCustomer(null);
           fetchProposals();
         } catch (error) {
-          setToast({ show: true, message: 'Error al crear la propuesta', variant: 'danger' });
+          setToast({ show: true, message: 'Error al crear la propuesta', variant: ToastEnum.Danger });
         }
         setAlert({ show: false, message: '', onContinue: () => { } });
       }
@@ -127,7 +129,7 @@ const ManagementProposals = (): JSX.Element => {
   );
 
   const handleHistoryProposalClick = () => {
-    setShowHistoryManagementProposalsModal(true); // set el estado para mostrar el modal
+    setShowHistoryManagementProposalsModal(true);
   };
 
 
