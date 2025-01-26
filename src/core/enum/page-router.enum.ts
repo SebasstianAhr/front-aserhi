@@ -14,5 +14,6 @@ export enum PageRouterEnum {
     WasteManagement = "/waste-management",
     ContractClauses = "/contract-clauses",
     Downloads = "/downloads",
+    LandingPage = "/landing-page",
   }
   

@@ -1,0 +1,184 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.landing-page {
+  color: #fff;
+  background-color: #002b5c;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.landing-page__header {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  width: 100%;
+  background-color: #2c2c2c;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5rem;
+}
+
+.landing-page__logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+
+.landing-page__nav {
+  display: flex;
+}
+
+.landing-page__nav-list {
+  display: flex;
+  list-style: none;
+}
+
+.landing-page__nav-link {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.landing-page__nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel__overlay {
+  position: absolute;
+  padding-left: 4rem;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, rgb(0, 0, 0) 10%, transparent);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+}
+
+.carousel__text {
+  color: #fff;
+  text-align: left;
+}
+
+.carousel__text h1 {
+  font-size: 2.5rem;
+  text-shadow: 10px 10px 50px rgba(0, 0, 0, 1), 0 0 50px rgba(0, 0, 0, 1);
+}
+
+.carousel__text p {
+  margin: 10px 0 0 0;
+  font-size: 1.2rem;
+  text-shadow: 10px 10px 50px rgba(0, 0, 0, 1), 0 0 50px rgba(0, 0, 0, 1);
+}
+
+.explore__button{
+  margin: 1rem 0;
+}
+
+.button__started{
+  text-decoration: none;
+  max-width: 250px;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem;
+  border: none;
+  background-color: #ffffff;
+  color: #000000;
+  box-shadow: 10px 10px 50px rgba(0, 0, 0, 1);
+}
+
+.button__started:hover{
+  background-color: #ffffffa8;
+}
+
+.carousel__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel__button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  z-index: 3;
+  font-size: 2rem;
+}
+
+.carousel__button:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+
+}
+
+
+.carousel__button--prev {
+  left: 10px;
+}
+
+.carousel__button--next {
+  right: 10px;
+}
+
+.carousel__pagination {
+  margin-top: 1rem;
+  display: flex;
+  gap: 5px;
+  z-index: 3;
+}
+
+.carousel__dot {
+  width: 25px;
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: width 0.3s ease;
+}
+
+.carousel__dot--active {
+  background-color: white;
+  width: 47px;
+}
+
+
+.section {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.section h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.section p {
+  font-size: 1.2rem;
+  margin: 0 auto;
+  max-width: 800px;
+}
