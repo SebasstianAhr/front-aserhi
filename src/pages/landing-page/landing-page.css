@@ -4,18 +4,17 @@ html {
 
 .landing-page {
   color: #fff;
-  background-color: #002b5c;
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
 .landing-page__header {
-  position: sticky;
+  position: fixed;
   z-index: 10;
-  top: 0;
   width: 100%;
-  background-color: #2c2c2c;
+  background-color: #2c2c2c56;
+  backdrop-filter: blur(30px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -27,6 +26,11 @@ html {
   font-weight: bold;
   color: #fff;
   text-decoration: none;
+  transition: all 0.1s ease;
+}
+
+.landing-page__logo:hover{
+  color: var(--primary-bg-color) ;
 }
 
 .landing-page__nav {
@@ -43,7 +47,7 @@ html {
   text-decoration: none;
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 1.2rem 1rem;
 }
 
 .landing-page__nav-link:hover {
@@ -51,6 +55,7 @@ html {
 }
 
 .carousel {
+  background-color: #000000;
   position: relative;
   width: 100%;
   height: 100vh;
@@ -90,11 +95,11 @@ html {
   text-shadow: 10px 10px 50px rgba(0, 0, 0, 1), 0 0 50px rgba(0, 0, 0, 1);
 }
 
-.explore__button{
+.explore__button {
   margin: 1rem 0;
 }
 
-.button__started{
+.button__started {
   text-decoration: none;
   max-width: 250px;
   display: flex;
@@ -108,7 +113,7 @@ html {
   box-shadow: 10px 10px 50px rgba(0, 0, 0, 1);
 }
 
-.button__started:hover{
+.button__started:hover {
   background-color: #ffffffa8;
 }
 
@@ -116,6 +121,7 @@ html {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  mask-image: linear-gradient(#000000 80%, transparent);
 }
 
 .carousel__button {
@@ -133,9 +139,7 @@ html {
 
 .carousel__button:hover {
   background-color: rgba(0, 0, 0, 0.4);
-
 }
-
 
 .carousel__button--prev {
   left: 10px;
@@ -158,27 +162,43 @@ html {
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 50px;
   cursor: pointer;
-  transition: width 0.3s ease;
+  transition: width 0.6s ease;
 }
 
 .carousel__dot--active {
-  background-color: white;
+  background-color: var(--primary-bg-color);
   width: 47px;
 }
 
+.about {
+  background: #002b5c;
+}
 
-.section {
-  padding: 4rem 2rem;
+.about__content--margin{
+  margin-top: 2rem;
+}
+
+.about__content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 
-.section h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+.about__us{
+  background: linear-gradient(rgba(0, 0, 0) 10%, transparent);
+  padding: 5rem 20rem 0 20rem;
+
 }
 
-.section p {
+.about__title{
+  font-weight: 500;
+  font-size: 2.6rem;
+}
+
+.about__paragrapht{
   font-size: 1.2rem;
-  margin: 0 auto;
-  max-width: 800px;
+  line-height: 1.5;
+  letter-spacing: 1px;
+  margin-top: 1.6rem;
 }
