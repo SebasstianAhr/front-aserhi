@@ -3,6 +3,8 @@ html {
 }
 
 .landing-page {
+  background: #002b5c;
+
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -66,13 +68,13 @@ html {
 }
 
 .carousel__overlay {
+  background: linear-gradient(to left, transparent,  rgb(0, 0, 0, 1) 80%);
   position: absolute;
   padding-left: 4rem;
   top: 0;
   left: 0;
   width: 50%;
   height: 100%;
-  background: linear-gradient(to right, rgb(0, 0, 0) 10%, transparent);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -170,12 +172,8 @@ html {
   width: 47px;
 }
 
-.about {
-  background: #002b5c;
-}
-
 .about__content--margin {
-  margin-top: 2rem;
+  margin-top: 4rem;
 }
 
 .about__content {
@@ -201,15 +199,13 @@ html {
 
 .about__content--flex {
   margin-top: 4rem;
-  padding: 0 10rem;
+  padding: 0 10rem 3rem 10rem;
   display: flex;
   justify-content: center;
   gap: 2rem;
-  width: 100%;
 }
 
 .abaut-content__card {
-  max-width: 600px;
   border-width: 2px;
   border: 2px solid var(--primary-bg-color);
   background-color: transparent;
@@ -227,41 +223,36 @@ html {
   }
 }
 
-/*====================*/
-
 .card__content {
   display: inline-flex;
   flex-direction: column;
-  gap: 1rem; /* 8 * 0.25rem */
+  gap: 1rem;
   color: white;
   align-items: center;
   justify-content: center;
   align-self: stretch;
-  padding: 3rem 1rem; /* px-4 py-12 */
-  font-size: 1.125rem; /* text-lg */
+  padding: 3rem 1rem;
+  font-size: 1.125rem;
   text-align: center;
   background-color: var(--primary-bg-color);
-  border-width: 1px;
-  border-color: var(--primary-bg-color); /* ring-1 ring-custom-purple */
-  box-shadow: 0 0 0 1px var(--primary-bg-color); /* ring-offset-1 ring-offset-custom-purple */
   transition: transform 0.2s ease-in-out;
 }
 
 .card__content:hover {
-  transform: translate(-0.75rem, 0.75rem); /* group-hover:-translate-y-3 group-hover:translate-x-3 */
+  transform: translate(-0.75rem, 0.75rem);
 }
 
 .card__content:focus {
-  transform: translate(0.25rem, -0.25rem); /* group-focus:-translate-y-1 group-focus:-translate-x-1 */
+  transform: translate(0.25rem, -0.25rem);
 }
 
-.icon__container{
+.icon__container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.card__content--text{
+.card__content--text {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
@@ -269,12 +260,74 @@ html {
   align-items: center;
 }
 
-.card__content--title{
+.card__content--title {
   font-size: 1.5rem;
 }
 
-.card__content--description{
+.card__content--description {
   font-size: 1.2rem;
   line-height: 1.5;
   letter-spacing: 1px;
 }
+
+.abaut-content__card--special {
+  border: 2px solid #ffffff;
+}
+
+.card__content--special {
+  align-self: stretch;
+  background-color: transparent;
+}
+
+.card__content--special:hover {
+  border: 2px solid #ffffff;
+  background-color: #ffffff80;
+  backdrop-filter: blur(4px);
+  transform: translate(-0.75rem, 0.75rem);
+}
+
+.card__content--special:focus {
+  transform: translate(0.25rem, -0.25rem);
+}
+
+.abaut__content--services {
+  padding: 5rem 20rem 0 20rem;
+}
+
+.footer{
+  background-color: #000000;
+  color: #fff;
+  padding: 2rem;
+  margin-top: 4rem;
+}
+
+.footer__container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer__section{
+  margin-top: 2rem;
+}
+
+.footer__section--items{
+  display: flex;
+  gap: 3rem;
+}
+
+.footer__item p{
+  opacity: 0.7;
+}
+
+.footer__section--activity{
+  text-align: center;
+}
+
+.footer__section--activity p{
+  opacity: 0.7;
+}
+
+.footer__copyright--modified-text{
+  opacity: 0.7;
+}	
