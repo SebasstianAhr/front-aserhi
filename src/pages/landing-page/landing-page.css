@@ -117,6 +117,25 @@ html {
   margin-top: 2rem;
 }
 
+@media (max-width: 736px) {
+  .about__container{
+  padding: 2rem 1rem 0 1rem;
+
+  }
+  .about__container--cards {
+    flex-direction: column;
+    margin-top: 1rem;
+    padding: 0 1rem 2rem 1rem;
+  }
+}
+
+@media (min-width: 600px) and (max-width:736px) {
+  .about__container--cards{
+    padding: 0 3rem 2rem 3rem;
+
+  }
+}
+
 @media (max-width: 1023px) {
 
   .landing-page__header-container{
@@ -143,8 +162,7 @@ html {
 
 @media (min-width: 1024px) and (max-width: 1277px) {
   .landing-page__header-container{
-    background-color: aqua;
     padding: 0 1rem;
-    max-width:  90%;
+    max-width:  100%;
   }
 }

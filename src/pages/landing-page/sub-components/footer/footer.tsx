@@ -15,7 +15,7 @@ const Footer = () => {
         </div>
         <div className="footer__item">
           <h4 className="footer__item-title">CONTACTOS</h4>
-          <p className="footer__item-description">602 834 6956 / 315 462 8623</p>
+          <p className="footer__item-description footer__item-description--numbers">602 834 6956 / 315 462 8623</p>
         </div>
         <div className="footer__item">
           <h4 className="footer__item-title">EMAIL</h4>
