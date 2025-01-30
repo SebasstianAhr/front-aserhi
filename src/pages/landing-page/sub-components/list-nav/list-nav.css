@@ -1,0 +1,28 @@
+.landing-page__nav-list {
+  display: flex;
+  list-style: none;
+}
+
+.landing-page__nav-link {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.landing-page__nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 1023px) {
+  .burger-menu__content .landing-page__nav-list {
+    flex-direction: column;
+    padding: 3rem 1rem;
+  }
+
+  .burger-menu__content .landing-page__nav-link {
+    color: #000;
+  }
+}

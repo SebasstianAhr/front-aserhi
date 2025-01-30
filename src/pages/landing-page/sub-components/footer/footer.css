@@ -1,0 +1,37 @@
+.footer {
+    width: 100%;
+    background-color: #000000;
+    color: #fff;
+    padding: 2rem;
+  }
+  
+  .footer__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .footer__section {
+    margin-top: 2rem;
+  }
+  
+  .footer__section--items {
+    display: flex;
+    gap: 3rem;
+  }
+  
+  .footer__item p {
+    opacity: 0.7;
+  }
+  
+  .footer__section--activity {
+    text-align: center;
+  }
+  
+  .footer__section--activity p {
+    opacity: 0.7;
+  }
+  
+  .footer__copyright--modified-text {
+    opacity: 0.7;
+  }
