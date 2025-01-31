@@ -1,4 +1,4 @@
-import { mockDataContextManagement } from '../core/mocks/mock-data-contrsxt-management';
+import { mockDataContextManagement } from '../core/mocks/mock-data-contract-management';
 
 export const getContracts = async () => {
   return new Promise((resolve) => {

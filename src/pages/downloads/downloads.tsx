@@ -7,6 +7,7 @@ import ItemsPerPageSelector from '../../components/items-per-page-selector/items
 import { Employee } from '../../core/interface/employee.interface';
 import './downloads.css';
 import Pagination from '../../components/pagination.tsx/pagination';
+import PdfContract from '../../components/pdf-contract/pdf-contract';
 
 const generatePDF = (selectedEmployees: Employee[]) => {
   const doc = new jsPDF();
@@ -30,7 +31,7 @@ const generatePDF = (selectedEmployees: Employee[]) => {
   doc.save(`empleados_${new Date().toISOString()}.pdf`);
 };
 
-const Downloads = ():JSX.Element => {
+const Downloads = (): JSX.Element => {
   const selectAllByDefault = false;
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [selectedEmployees, setSelectedEmployees] = useState<Employee[]>([]);
@@ -118,7 +119,7 @@ const Downloads = ():JSX.Element => {
         />
       </div>
       <ul className="downloads__list">
-        {currentData.map(employee => (  
+        {currentData.map(employee => (
           <li key={employee.id} className="downloads__list-item">
             <input
               type="checkbox"
@@ -135,6 +136,13 @@ const Downloads = ():JSX.Element => {
         totalPages={totalPages}
         onPageChange={setCurrentPage}
       />
+
+      <div>
+        <h1>Generar Contratos</h1>
+        <PdfContract contractType="general" />
+        <PdfContract contractType="hospitalario" />
+      </div>
+
     </div>
   );
 };
